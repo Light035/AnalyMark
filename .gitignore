@@ -1,0 +1,32 @@
+# Python and tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local databases and generated files
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-shm
+*.sqlite3-wal
+staticfiles/
+media/
+*.log
+
+# Secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

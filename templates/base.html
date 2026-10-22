@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="AnalyMark is a pricing decision-support MVP for small marketplace sellers in Kazakhstan.">
+    <title>{{ page_title }} | AnalyMark</title>
+    <link rel="stylesheet" href="{% static 'core/css/app.css' %}">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Workspace navigation">
+            <a class="brand" href="{% url 'core:dashboard' %}" aria-label="AnalyMark dashboard">
+                <span class="brand-mark" aria-hidden="true">A<span></span></span>
+                <span>AnalyMark<span class="brand-caption">SELLER WORKSPACE</span></span>
+            </a>
+            <p class="nav-label">Workspace</p>
+            {% with current=request.resolver_match.url_name %}
+            <nav class="navigation" aria-label="Main navigation">
+                <a href="{% url 'core:dashboard' %}"{% if current == 'dashboard' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">◫</span>Dashboard</a>
+                <a href="{% url 'core:product_search' %}"{% if current == 'product_search' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">⌕</span>Product Search</a>
+                <a href="{% url 'core:watchlist' %}"{% if current == 'watchlist' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">☆</span>Watchlist</a>
+                <a href="{% url 'core:analytics' %}"{% if current == 'analytics' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">▥</span>Analytics</a>
+            </nav>
+            {% endwith %}
+            <div class="sidebar-note">
+                <span class="small-label">BUILT FOR SELLERS</span>
+                <p>Pricing clarity.<br>Seller control.</p>
+                <span class="sidebar-meta">Kazakhstan · Kaspi.kz first</span>
+            </div>
+            <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span>University startup MVP</div>
+        </aside>
+        <div class="main-shell">
+            <header class="topbar">
+                <div class="breadcrumb">Workspace <span aria-hidden="true">/</span> <strong>{{ page_title }}</strong></div>
+                <span class="preview-badge">Scaffold preview</span>
+            </header>
+            <main id="main-content" tabindex="-1">
+                <div class="data-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>No live data connected.</strong> This version is an application shell. Marketplace integrations and product data are not available yet.</p></div>
+                {% block content %}{% endblock %}
+            </main>
+            <footer class="page-footer"><span>AnalyMark · Pricing decision support</span><span>Built for small sellers in Kazakhstan</span></footer>
+        </div>
+    </div>
+</body>
+</html>

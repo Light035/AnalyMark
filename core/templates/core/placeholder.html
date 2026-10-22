@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading">
+    <p class="eyebrow">{{ eyebrow }}</p>
+    <h1>{{ heading }}</h1>
+    <p class="page-description">{{ description }}</p>
+</section>
+<section class="empty-state" aria-labelledby="empty-title">
+    <span class="empty-state-mark" aria-hidden="true">◇</span>
+    <span class="pill pill-neutral">Not implemented yet</span>
+    <h2 id="empty-title">{{ empty_title }}</h2>
+    <p>{{ empty_description }}</p>
+    <a class="button button-secondary" href="{% url 'core:dashboard' %}">Back to Dashboard <span aria-hidden="true">→</span></a>
+</section>
+<section aria-labelledby="planned-title">
+    <div class="section-heading planned-heading"><h2 id="planned-title">What’s planned for this area</h2><span class="small-label">MVP DIRECTION</span></div>
+    <div class="feature-grid">
+        {% for title, description in planned_features %}
+        <article class="panel feature-card"><span class="feature-number">0{{ forloop.counter }}</span><h3>{{ title }}</h3><p>{{ description }}</p></article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

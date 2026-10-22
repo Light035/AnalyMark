@@ -1,0 +1,25 @@
+        <article class="panel offer-card">
+            <div class="offer-heading">
+                <div><p class="offer-brand">{% if offer.product.brand %}{{ offer.product.brand }} · {% endif %}{{ offer.product.category }}</p><h3><a href="{% url 'core:product_detail' offer.product_id %}">{{ offer.product.name }}</a></h3></div>
+                {% if offer.is_demo %}<span class="pill pill-demo">Demonstration data · not live</span>{% else %}<span class="pill pill-neutral">Manually entered · unverified</span>{% endif %}
+            </div>
+            <p class="offer-source"><strong>{{ offer.marketplace.name }}</strong> <span aria-hidden="true">/</span> Seller: {{ offer.seller_name }}</p>
+            {% if offer.product.description %}<p class="offer-description">{{ offer.product.description }}</p>{% endif %}
+            <dl class="offer-amounts">
+                <div><dt>Listed price</dt><dd>{{ offer.price|floatformat:"2g" }} <small>KZT</small></dd></div>
+                <div><dt>Buyer delivery</dt><dd>{% if offer.delivery_cost != None %}{{ offer.delivery_cost|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">Unknown</span>{% endif %}</dd></div>
+                <div><dt>Discount amount</dt><dd>{% if offer.discount != None %}{{ offer.discount|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">Unknown</span>{% endif %}</dd></div>
+                <div class="buyer-total"><dt>Final buyer price</dt><dd>{% if offer.total_buyer_cost != None %}{{ offer.total_buyer_cost|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">Unavailable</span>{% endif %}</dd></div>
+            </dl>
+            <div class="offer-footer">
+                {% if offer.total_buyer_cost == None %}<span class="incomplete-warning">Total unavailable: {% if offer.delivery_cost == None %}delivery{% endif %}{% if offer.delivery_cost == None and offer.discount == None %} and {% endif %}{% if offer.discount == None %}discount{% endif %} information missing.</span>{% else %}<span>Delivery and discount are explicitly known.</span>{% endif %}
+                {% if offer.product_url %}<span><a href="{{ offer.product_url }}" target="_blank" rel="noopener noreferrer">{% if offer.is_demo %}Example product URL{% else %}Product URL{% endif %} ↗</a>{% if offer.is_demo %}<small>Illustrative link; may not resolve.</small>{% endif %}</span>{% else %}<span>Product URL not provided</span>{% endif %}
+            </div>
+            <div class="offer-actions">
+                <div class="offer-links">{% if request.resolver_match.url_name != 'product_detail' %}<a href="{% url 'core:product_detail' offer.product_id %}">Product analytics</a>{% endif %}<a href="{% url 'core:price_history' offer.pk %}">View recorded listed-price history</a></div>
+                {% if user.is_authenticated %}
+                    {% if offer.product_id in saved_product_ids %}<a href="{% url 'core:watchlist' %}">Saved to your Watchlist</a>
+                    {% else %}<form method="post" action="{% url 'core:watchlist_add' offer.product_id %}">{% csrf_token %}<button class="button button-secondary" type="submit">Save product</button></form>{% endif %}
+                {% else %}<a href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">Log in to save product</a>{% endif %}
+            </div>
+        </article>

@@ -22,7 +22,7 @@
                 <a href="{% url 'core:dashboard' %}"{% if current == 'dashboard' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">◫</span>Dashboard</a>
                 <a href="{% url 'core:product_search' %}"{% if current == 'product_search' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">⌕</span>Product Search</a>
                 <a href="{% url 'core:watchlist' %}"{% if current == 'watchlist' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">☆</span>Watchlist</a>
-                <a href="{% url 'core:analytics' %}"{% if current == 'analytics' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">▥</span>Analytics</a>
+                <a href="{% url 'core:analytics' %}"{% if current == 'analytics' or current == 'product_detail' or current == 'price_history' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">▥</span>Analytics</a>
             </nav>
             {% endwith %}
             <div class="sidebar-note">
@@ -35,10 +35,17 @@
         <div class="main-shell">
             <header class="topbar">
                 <div class="breadcrumb">Workspace <span aria-hidden="true">/</span> <strong>{{ page_title }}</strong></div>
-                <span class="preview-badge">Scaffold preview</span>
+                <span class="preview-badge">Demonstration MVP</span>
+                <div class="account-controls">
+                    {% if user.is_authenticated %}
+                    <span class="account-name">{{ user.get_username }}</span>
+                    <form method="post" action="{% url 'core:logout' %}">{% csrf_token %}<button class="button button-secondary" type="submit">Log out</button></form>
+                    {% elif request.resolver_match.url_name != 'login' %}<a class="button button-secondary" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">Log in</a>{% endif %}
+                </div>
             </header>
             <main id="main-content" tabindex="-1">
-                <div class="data-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>No live data connected.</strong> This version is an application shell. Marketplace integrations and product data are not available yet.</p></div>
+                <div class="data-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>No live data connected.</strong> Product Search supports demonstration and manually entered records. No marketplace integration is available.</p></div>
+                {% if messages %}<div class="feedback-list" aria-live="polite">{% for message in messages %}<p class="feedback feedback-{{ message.tags }}"{% if message.tags == 'error' %} role="alert"{% endif %}>{{ message }}</p>{% endfor %}</div>{% endif %}
                 {% block content %}{% endblock %}
             </main>
             <footer class="page-footer"><span>AnalyMark · Pricing decision support</span><span>Built for small sellers in Kazakhstan</span></footer>

@@ -1,0 +1,18 @@
+<figure class="panel observation-figure">
+    <div class="chart-frame" role="region" aria-label="Scrollable stored price chart" tabindex="0">
+    <svg class="observation-chart" viewBox="0 0 760 290" role="img" aria-labelledby="chart-title chart-description" xmlns="http://www.w3.org/2000/svg">
+        <title id="chart-title">Stored listed-price observations for {{ product.name }}</title>
+        <desc id="chart-description">Each point is one stored observation. Colors identify offers. Filled points are demonstration data; open points are manually recorded, unverified data. The following table contains every date, price, seller, and source label. No lines join observations.</desc>
+        <line x1="112" y1="24" x2="112" y2="220" class="chart-axis"/>
+        <line x1="112" y1="220" x2="720" y2="220" class="chart-axis"/>
+        {% if chart.single_price %}<text x="104" y="126" text-anchor="end">{{ chart.minimum|floatformat:2 }}</text>
+        {% else %}<line x1="112" y1="24" x2="720" y2="24" class="chart-grid"/><text x="104" y="28" text-anchor="end">{{ chart.maximum|floatformat:2 }}</text><text x="104" y="224" text-anchor="end">{{ chart.minimum|floatformat:2 }}</text>{% endif %}
+        <text x="112" y="14">Listed price · KZT</text>
+        {% for point in chart.points %}<circle class="observation-point" cx="{{ point.x }}" cy="{{ point.y }}" r="5" fill="{% if point.observation.is_demo %}{{ point.color }}{% else %}white{% endif %}" stroke="{{ point.color }}" stroke-width="2"><title>{{ point.observation.observed_at|date:"Y-m-d H:i:s O" }} · {{ point.observation.price|floatformat:2 }} KZT · {{ point.observation.offer.marketplace.name }} / {{ point.observation.offer.seller_name }} · {% if point.observation.is_demo %}Demonstration observation · not live{% else %}Manually recorded · unverified{% endif %}</title></circle>{% endfor %}
+        {% if chart.single_time %}<text x="416" y="247" text-anchor="middle">{{ chart.first_at|date:"Y-m-d H:i:s O" }}</text>
+        {% else %}<text x="112" y="247">{{ chart.first_at|date:"Y-m-d" }}<tspan x="112" dy="16">{{ chart.first_at|date:"H:i:s O" }}</tspan></text><text x="720" y="247" text-anchor="end">{{ chart.last_at|date:"Y-m-d" }}<tspan x="720" dy="16">{{ chart.last_at|date:"H:i:s O" }}</tspan></text>{% endif %}
+    </svg>
+    </div>
+    <figcaption>One point per stored snapshot; no connecting lines or inferred trends. Filled = demo; open = manually recorded, unverified. Points can overlap; the table lists every record. On small screens, scroll the chart sideways.<br>Recorded {% if chart.single_time %}at {{ chart.first_at|date:"Y-m-d H:i:s O" }}{% else %}from {{ chart.first_at|date:"Y-m-d H:i:s O" }} to {{ chart.last_at|date:"Y-m-d H:i:s O" }}{% endif %}.</figcaption>
+    <ul class="chart-legend" aria-label="Offer colors">{% for series in chart.series %}<li><span class="legend-dot" style="background-color: {{ series.color }}" aria-hidden="true"></span>{{ series.offer.marketplace.name }} / {{ series.offer.seller_name }}</li>{% endfor %}</ul>
+</figure>

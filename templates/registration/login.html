@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">Your private workspace</p><h1>Log in to AnalyMark</h1><p class="page-description">Use your local account to save products. Product Search and recorded price history remain public.</p></section>
+<form class="panel login-form" method="post" action="{% url 'core:login' %}">
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="field-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}<div class="form-field">{{ field.label_tag }}{{ field }}{% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}</div>{% endfor %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="button button-primary" type="submit">Log in</button>
+    <p class="comparison-explanation">Accounts are created locally by the project administrator. See the README for setup instructions.</p>
+</form>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% for item in products %}
+<article class="catalog-item">
+    <div><h3><a href="{% url 'core:product_detail' item.pk %}">{{ item.name }}</a></h3><p>{% if item.brand %}{{ item.brand }} · {% endif %}{{ item.category }}</p><p>{{ item.offer_count }} offer{{ item.offer_count|pluralize }} · {{ item.demo_offer_count }} demo · product identity unverified</p></div>
+    <a class="button button-secondary" href="{% url 'core:product_detail' item.pk %}">View analytics</a>
+</article>
+{% endfor %}

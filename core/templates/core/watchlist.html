@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">Your private workspace</p><h1>Your Watchlist</h1><p class="page-description">Products saved to your account. Saving a product does not verify its identity or refresh its prices.</p></section>
+<div class="offer-list">
+    {% for entry in entries %}
+    <article class="panel">
+        <p class="offer-brand">{% if entry.product.brand %}{{ entry.product.brand }} · {% endif %}{{ entry.product.category }}</p>
+        <h2 class="watchlist-product">{{ entry.product.name }}</h2>
+        <div class="offer-actions">
+            <a class="button button-secondary" href="{% url 'core:product_detail' entry.product_id %}">Compare this product</a>
+            <form method="post" action="{% url 'core:watchlist_remove' entry.product_id %}">{% csrf_token %}<button class="button button-secondary" type="submit">Remove product</button></form>
+        </div>
+    </article>
+    {% empty %}
+    <div class="empty-state"><span class="empty-state-mark" aria-hidden="true">☆</span><h2>Your Watchlist is empty</h2><p>Save a product from Product Search to return to its comparison later.</p><a class="button button-primary" href="{% url 'core:product_search' %}">Find products</a></div>
+    {% endfor %}
+</div>
+{% endblock %}

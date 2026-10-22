@@ -1,9 +1,17 @@
 from django.contrib.staticfiles import finders
-from django.test import SimpleTestCase
+from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.urls import resolve, reverse
 
 
-class ApplicationShellTests(SimpleTestCase):
+class ApplicationShellTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = get_user_model().objects.create_user(username="shell-user")
+
+    def setUp(self):
+        self.client.force_login(self.user)
+
     routes = {
         "dashboard": "/",
         "product_search": "/products/",
@@ -40,15 +48,13 @@ class ApplicationShellTests(SimpleTestCase):
             with self.subTest(url=url):
                 response = self.client.get(url)
                 self.assertContains(response, "No live data connected.")
-                self.assertContains(response, "Scaffold preview")
+                self.assertContains(response, "Demonstration MVP")
 
-    def test_future_sections_are_explicit_placeholders(self):
-        for name in ("product_search", "watchlist", "analytics"):
-            with self.subTest(route=name):
-                response = self.client.get(reverse(f"core:{name}"))
-                self.assertTemplateUsed(response, "core/placeholder.html")
-                self.assertContains(response, "Not implemented yet")
-                self.assertContains(response, "What’s planned for this area")
+    def test_analytics_is_a_product_selection_page(self):
+        response = self.client.get(reverse("core:analytics"))
+        self.assertTemplateUsed(response, "core/analytics.html")
+        self.assertContains(response, "Product analytics")
+        self.assertContains(response, "No products to analyze")
 
     def test_pages_accept_head_but_reject_post(self):
         for url in self.routes.values():

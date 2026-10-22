@@ -1,0 +1,6 @@
+    <dl class="benchmark-grid">
+        <div><dt>Minimum</dt><dd>{% if summary.minimum != None %}{{ summary.minimum|floatformat:"2g" }} <small>KZT</small>{% else %}Unavailable{% endif %}</dd></div>
+        <div><dt>Maximum</dt><dd>{% if summary.maximum != None %}{{ summary.maximum|floatformat:"2g" }} <small>KZT</small>{% else %}Unavailable{% endif %}</dd></div>
+        <div><dt>Average</dt><dd>{% if summary.average != None %}{{ summary.average|floatformat:"2g" }} <small>KZT</small>{% else %}Unavailable{% endif %}</dd></div>
+        <div><dt>Median</dt><dd>{% if summary.median != None %}{{ summary.median|floatformat:"2g" }} <small>KZT</small>{% else %}Unavailable{% endif %}</dd></div>
+    </dl>

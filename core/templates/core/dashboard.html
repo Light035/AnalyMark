@@ -2,41 +2,27 @@
 {% block content %}
 <section class="page-heading">
     <p class="eyebrow">Your pricing workspace</p>
-    <h1>A clearer view of your next decision.</h1>
-    <p class="page-description">Compare with context, understand the gaps, and stay in control of your prices.</p>
+    <h1>Your catalog, at a glance.</h1>
+    <p class="page-description">Database records you can explore, with the context to judge them. Counts describe this local workspace, not marketplace coverage.</p>
 </section>
-<section class="hero-card" aria-labelledby="welcome-title">
-    <div class="hero-copy">
-        <span class="hero-tag">THE START OF ANALYMARK</span>
-        <h2 id="welcome-title">Good pricing starts with<br class="desktop-break"> a fair comparison.</h2>
-        <p>We’re building a focused workspace for Kaspi.kz sellers: comparable products, transparent buyer costs, and useful price benchmarks.</p>
-        <a class="button button-primary" href="{% url 'core:product_search' %}">Explore Product Search <span aria-hidden="true">→</span></a>
-        <span class="hero-caption">Preview the planned workflow</span>
-    </div>
-    <div class="hero-illustration" aria-hidden="true">
-        <div class="illustration-orbit orbit-one"></div><div class="illustration-orbit orbit-two"></div>
-        <div class="comparison-card"><span class="illustration-label">COMPARE WITH CONTEXT</span><div class="illustration-line wide"></div><div class="illustration-line"></div><div class="illustration-bars"><span></span><span></span><span></span><span></span></div><span class="illustration-caption">Concept illustration · no price data</span></div>
-    </div>
-</section>
-<section class="status-grid" aria-label="Workspace data status">
-    <article class="status-card"><span class="card-kicker">Marketplace focus</span><h2>Kaspi.kz</h2><p><span class="pill pill-neutral">Planned</span> Integration not connected</p></article>
-    <article class="status-card"><span class="card-kicker">Product data</span><h2>Not available</h2><p>No catalog or offers loaded</p></article>
-    <article class="status-card"><span class="card-kicker">Last data update</span><h2>Not available</h2><p>No observations recorded</p></article>
+<section class="status-grid dashboard-metrics" aria-label="Current database metrics">
+    <article class="status-card"><span class="card-kicker">Products</span><h2>{{ metrics.products }}</h2><p>Catalog records · identity unverified</p></article>
+    <article class="status-card"><span class="card-kicker">Offers</span><h2>{{ metrics.offers }}</h2><p>{{ metrics.demo_offers }} demo · {{ metrics.unverified_offers }} manually entered, unverified</p></article>
+    <article class="status-card"><span class="card-kicker">Marketplaces</span><h2>{{ metrics.marketplaces }}</h2><p>Named records · no live integration</p></article>
+    <article class="status-card"><span class="card-kicker">Recorded observations</span><h2>{{ metrics.observations }}</h2><p>{{ metrics.demo_observations }} demo · {{ metrics.unverified_observations }} manually recorded, unverified</p></article>
+    {% if user.is_authenticated %}<article class="status-card"><span class="card-kicker">Your Watchlist</span><h2>{{ metrics.watchlist }}</h2><p><a href="{% url 'core:watchlist' %}">View your saved products</a></p></article>{% endif %}
 </section>
 <div class="dashboard-bottom">
-    <section class="panel" aria-labelledby="workflow-title">
-        <div class="section-heading"><h2 id="workflow-title">A simple workflow, coming next</h2><span class="pill pill-neutral">Planned</span></div>
-        <ol class="workflow-list">
-            <li><span class="step-number" aria-hidden="true">01</span><div><h3>Find a comparable product</h3><p>Check the model, variant, and bundle before comparing.</p></div></li>
-            <li><span class="step-number" aria-hidden="true">02</span><div><h3>Understand the full buyer price</h3><p>Review available discounts and delivery, with gaps made clear.</p></div></li>
-            <li><span class="step-number" aria-hidden="true">03</span><div><h3>Review it against your own costs</h3><p>Keep seller cost and desired margin separate from buyer delivery.</p></div></li>
-        </ol>
+    <section class="panel" aria-labelledby="catalog-title">
+        <div class="section-heading"><h2 id="catalog-title">Explore your catalog</h2><a href="{% url 'core:analytics' %}">All product analytics →</a></div>
+        {% if products %}<div class="catalog-list">{% include "core/includes/catalog_list.html" %}</div>
+        {% else %}<div class="compact-empty"><h3>No products loaded</h3><p>Add products through local administration or load the demonstration catalog using the README. No prices or history are inferred.</p><a class="button button-secondary" href="{% url 'core:product_search' %}">Open Product Search</a></div>{% endif %}
     </section>
-    <section class="panel principles-panel" aria-labelledby="principles-title">
-        <p class="eyebrow">Our approach</p><h2 id="principles-title">Trust the context.<br>Keep the control.</h2>
-        <p>Sources, timestamps, and match warnings will help you judge what the data can tell you.</p>
-        <div class="principle-note">Any demonstration data added later will be clearly labeled.</div>
-        <p class="muted">Your prices remain your decision. Automatic repricing is outside the MVP scope.</p>
+    <section class="panel principles-panel" aria-labelledby="data-title">
+        <p class="eyebrow">Understand the evidence</p><h2 id="data-title">Transparent data.<br>Your decision.</h2>
+        <p>Demonstration prices are invented examples. Manually entered records are unverified. Neither is verified live marketplace data.</p>
+        <div class="principle-note">{% if latest_observation %}Latest stored observation:<br><time datetime="{{ latest_observation|date:'c' }}">{{ latest_observation|date:"Y-m-d H:i:s O" }}</time><br>This is a recording time, not a marketplace refresh time.{% else %}No price observations recorded. History remains empty until observations are explicitly captured.{% endif %}</div>
+        <div class="offer-actions"><a class="button button-primary" href="{% url 'core:product_search' %}">Search offers</a>{% if user.is_authenticated %}<a href="{% url 'core:watchlist' %}">Your Watchlist</a>{% else %}<a href="{% url 'core:login' %}?next={% url 'core:watchlist' %}">Log in for a private Watchlist</a>{% endif %}</div>
     </section>
 </div>
 {% endblock %}

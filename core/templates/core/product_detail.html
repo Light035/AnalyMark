@@ -10,8 +10,14 @@
     <form method="post" action="{% if is_saved %}{% url 'core:watchlist_remove' product.pk %}{% else %}{% url 'core:watchlist_add' product.pk %}{% endif %}">{% csrf_token %}<button class="button button-primary" type="submit">{% if is_saved %}Remove from your Watchlist{% else %}Save to your Watchlist{% endif %}</button></form>
     {% else %}<a class="button button-primary" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">Log in to save product</a>{% endif %}
 </div>
-<section class="comparison-summary" aria-labelledby="summary-title"><div class="section-heading"><h2 id="summary-title">Listed-price benchmarks <span class="pill pill-neutral">KZT</span></h2><span class="results-count">{{ summary.count }} valid offer{{ summary.count|pluralize }}</span></div><p class="comparison-explanation">These statistics use valid listed prices for this product ID only, not the entire marketplace. Delivery and discounts are excluded. Demo and unverified records can appear together; no verified live benchmark is implied.</p>{% include "core/includes/price_summary.html" %}</section>
-<section class="product-history" aria-labelledby="product-history-title">
+<nav class="page-links" aria-label="Product sections"><a href="#price-benchmarks">Listed-price benchmarks</a><a href="#product-offers">Compare offers</a><a href="#price-history">Recorded history</a></nav>
+<section id="price-benchmarks" class="comparison-summary" aria-labelledby="summary-title"><div class="section-heading"><h2 id="summary-title">Listed-price benchmarks <span class="pill pill-neutral">KZT</span></h2><span class="results-count">{{ summary.count }} valid offer{{ summary.count|pluralize }}</span></div><p class="comparison-explanation">These statistics use valid listed prices for this product ID only, not the entire marketplace. Delivery and discounts are excluded. Demo and unverified records can appear together; no verified live benchmark is implied.</p>{% include "core/includes/price_summary.html" %}</section>
+<section id="product-offers" class="product-offers" aria-labelledby="product-offers-title">
+    <div class="section-heading"><h2 id="product-offers-title">Available offers</h2><span class="results-count">{{ offers|length }} offer{{ offers|length|pluralize }}</span></div>
+    <p class="comparison-explanation">Each offer identifies its marketplace and seller. Buyer total = listed price − discount amount + buyer delivery. Unknown inputs remain unknown.</p>
+    <div class="offer-list">{% for offer in offers %}{% include "core/includes/offer_card.html" %}{% empty %}<div class="empty-state"><h3>No offers for this product</h3><p>No current prices are available. Benchmarks are unavailable rather than zero.</p></div>{% endfor %}</div>
+</section>
+<section id="price-history" class="product-history" aria-labelledby="product-history-title">
     <div class="section-heading"><h2 id="product-history-title">Recorded listed-price observations</h2><span class="results-count">{{ observations|length }} stored record{{ observations|length|pluralize }}</span></div>
     <p class="comparison-explanation">Only actual stored observations are shown, oldest first. Demo observations are invented application snapshots, not real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend. Observations are discrete, not continuous or live monitoring. No synthetic points or interpolated prices are added. Times use {{ display_timezone }} with UTC offsets.</p>
     {% if observations %}
@@ -27,10 +33,5 @@
             </tr>{% endfor %}</tbody>
         </table></div></div>
     {% else %}<div class="empty-state"><h3>No observations recorded</h3><p>No stored history exists for this product’s offers. Visiting this page does not generate observations.</p></div>{% endif %}
-</section>
-<section class="product-offers" aria-labelledby="product-offers-title">
-    <div class="section-heading"><h2 id="product-offers-title">Available offers</h2><span class="results-count">{{ offers|length }} offer{{ offers|length|pluralize }}</span></div>
-    <p class="comparison-explanation">Each offer identifies its marketplace and seller. Buyer total = listed price − discount amount + buyer delivery. Unknown inputs remain unknown.</p>
-    <div class="offer-list">{% for offer in offers %}{% include "core/includes/offer_card.html" %}{% empty %}<div class="empty-state"><h3>No offers for this product</h3><p>No current prices are available. Benchmarks are unavailable rather than zero.</p></div>{% endfor %}</div>
 </section>
 {% endblock %}

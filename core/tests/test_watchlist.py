@@ -43,6 +43,8 @@ class WatchlistTests(TestCase):
         self.assertContains(response, "Lighting")
         self.assertNotContains(response, self.other.name)
         self.assertContains(response, reverse("core:product_detail", args=[self.lamp.pk]))
+        self.assertContains(response, 'aria-label="Remove product: Shared lamp"')
+        self.assertContains(response, f'<a href="{reverse("core:product_detail", args=[self.lamp.pk])}">Shared lamp</a>', html=True)
         self.assertIn("no-store", response.headers["Cache-Control"])
 
     def test_add_uses_session_owner_ignoring_posted_user_id(self):

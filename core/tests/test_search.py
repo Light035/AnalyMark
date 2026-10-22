@@ -110,6 +110,16 @@ class ProductSearchTests(TestCase):
                 self.assertContains(response, "Check your filters")
                 self.assertEqual(response.context["offers"], [])
 
+    def test_error_summary_links_to_visible_fields_but_not_hidden_filters(self):
+        response = self.search(marketplace=99999, sort="invalid")
+        for name in ("marketplace", "sort"):
+            self.assertContains(response, f'href="#id_{name}"')
+            self.assertContains(response, f'id="id_{name}_error"')
+        self.assertContains(response, 'aria-invalid="true"')
+        response = self.search(product=99999)
+        self.assertContains(response, "The saved product filter is invalid")
+        self.assertNotContains(response, 'href="#id_product"')
+
     def test_demo_disclosures_and_statistic_scope_are_visible(self):
         response = self.search()
         self.assertContains(response, "Demonstration data · not live", count=4)

@@ -4,10 +4,10 @@
 {% get_current_timezone as display_timezone %}
 <section class="page-heading"><p class="eyebrow">Stored observations</p><h1>Recorded listed-price history</h1><p class="page-description">{{ offer.product.name }} · {{ offer.marketplace.name }} · {{ offer.seller_name }}</p></section>
 <p class="comparison-explanation">These are actual stored snapshots, not reconstructed past prices. Demonstration observations record invented demo prices at command execution time; they do not represent real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend or continuous monitoring. Delivery and discounts are excluded. Product associations are unverified.</p>
-<p><a href="{% url 'core:product_detail' offer.product_id %}">Back to this product’s analytics</a></p>
+<p><a class="button button-secondary" href="{% url 'core:product_detail' offer.product_id %}"><span aria-hidden="true">←</span> Back to this product’s analytics</a></p>
 {% if observations %}
 <div class="panel history-panel"><div class="table-scroll" role="region" aria-label="Scrollable offer observation table" tabindex="0"><table class="history-table">
-    <caption>Listed-price observations for this offer. Times shown in {{ display_timezone }} with UTC offsets.</caption>
+    <caption>Listed-price observations for this offer, newest first. Times shown in {{ display_timezone }} with UTC offsets.</caption>
     <thead><tr><th scope="col">Recorded at</th><th scope="col">Listed price (KZT)</th><th scope="col">Data source</th></tr></thead>
     <tbody>{% for observation in observations %}<tr>
         <td><time datetime="{{ observation.observed_at|date:'c' }}">{{ observation.observed_at|date:"Y-m-d H:i:s O" }}</time></td>

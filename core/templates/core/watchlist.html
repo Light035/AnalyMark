@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="page-heading"><p class="eyebrow">Your private workspace</p><h1>Your Watchlist</h1><p class="page-description">Products saved to your account. Saving a product does not verify its identity or refresh its prices.</p></section>
+<section class="page-heading page-heading-row"><div><p class="eyebrow">Your private workspace</p><h1>Your Watchlist</h1><p class="page-description">Products saved to your account. Saving a product does not verify its identity or refresh its prices.</p></div><a class="button button-secondary" href="{% url 'core:product_search' %}">Browse product offers</a></section>
 <div class="offer-list">
     {% for entry in entries %}
     <article class="panel">
         <p class="offer-brand">{% if entry.product.brand %}{{ entry.product.brand }} · {% endif %}{{ entry.product.category }}</p>
-        <h2 class="watchlist-product">{{ entry.product.name }}</h2>
+        <h2 class="watchlist-product"><a href="{% url 'core:product_detail' entry.product_id %}">{{ entry.product.name }}</a></h2>
         <div class="offer-actions">
             <a class="button button-secondary" href="{% url 'core:product_detail' entry.product_id %}">Compare this product</a>
-            <form method="post" action="{% url 'core:watchlist_remove' entry.product_id %}">{% csrf_token %}<button class="button button-secondary" type="submit">Remove product</button></form>
+            <form method="post" action="{% url 'core:watchlist_remove' entry.product_id %}">{% csrf_token %}<button class="button button-secondary" type="submit" aria-label="Remove product: {{ entry.product.name }}">Remove product</button></form>
         </div>
     </article>
     {% empty %}

@@ -67,3 +67,15 @@ class ApplicationShellTests(TestCase):
 
     def test_local_stylesheet_is_discoverable(self):
         self.assertIsNotNone(finders.find("core/css/app.css"))
+
+    def test_dashboard_places_the_search_action_before_database_metrics(self):
+        response = self.client.get(reverse("core:dashboard"))
+        content = response.content.decode()
+        action = '<a class="button button-primary" href="/products/">Search offers'
+        self.assertIn(action, content)
+        self.assertLess(content.index(action), content.index('aria-label="Current database metrics"'))
+
+    def test_login_offers_a_public_search_exit_and_preserves_the_return_destination(self):
+        response = self.client.get(reverse("core:login"), {"next": "/products/?q=Luma&sort=price"})
+        self.assertContains(response, 'href="/products/">Continue to public Product Search')
+        self.assertContains(response, 'name="next" value="/products/?q=Luma&amp;sort=price"')

@@ -5,6 +5,7 @@
     <h1>Find the product. Understand the price.</h1>
     <p class="page-description">Explore fictional offers with Kaspi.kz as the first marketplace focus. All sample prices are invented demonstration data, not live or verified marketplace prices.</p>
 </section>
+{% if form.errors %}<div class="feedback feedback-error" role="alert"><strong>Check your filters.</strong><ul>{% for field in form %}{% if field.errors %}<li>{% if field.is_hidden %}The saved product filter is invalid. <a href="{% url 'core:product_search' %}">Reset filters</a>{% else %}<a href="#{{ field.id_for_label }}">{{ field.label }}: {{ field.errors|striptags }}</a>{% endif %}</li>{% endif %}{% endfor %}</ul></div>{% endif %}
 <form class="panel search-form" method="get" action="{% url 'core:product_search' %}" aria-label="Filter product offers">
     {% for field in form %}
     {% if field.is_hidden %}{{ field }}{% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}{% else %}

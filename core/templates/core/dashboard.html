@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="page-heading">
+<section class="page-heading page-heading-row"><div>
     <p class="eyebrow">Your pricing workspace</p>
     <h1>Your catalog, at a glance.</h1>
     <p class="page-description">Database records you can explore, with the context to judge them. Counts describe this local workspace, not marketplace coverage.</p>
-</section>
+</div><div class="heading-actions"><a class="button button-primary" href="{% url 'core:product_search' %}">Search offers <span aria-hidden="true">→</span></a><a class="button button-secondary" href="{% url 'core:analytics' %}">Browse product analytics</a></div></section>
 <section class="status-grid dashboard-metrics" aria-label="Current database metrics">
     <article class="status-card"><span class="card-kicker">Products</span><h2>{{ metrics.products }}</h2><p>Catalog records · identity unverified</p></article>
     <article class="status-card"><span class="card-kicker">Offers</span><h2>{{ metrics.offers }}</h2><p>{{ metrics.demo_offers }} demo · {{ metrics.unverified_offers }} manually entered, unverified</p></article>

@@ -67,7 +67,7 @@ Before exposing the app, provide a separate deployment settings module with debu
 
 ```text
 AnalyMark/
-├── Reports/                      Existing university reports, preserved unchanged
+├── Reports/                      Local university reports, excluded from Git
 ├── config/
 │   ├── settings/{base,local}.py  Shared and local settings
 │   ├── urls.py                  Project routes, including Django admin
@@ -113,6 +113,10 @@ AnalyMark/
 | `/admin/` | Standard Django admin; optional local superuser required |
 
 The shell uses Django templates, HTML, and local CSS with responsive navigation and visible keyboard focus. JavaScript is not needed at this stage. `migrate` creates the catalog tables as well as Django's standard authentication/session tables. Marketplace, Product, and Offer are registered in Django admin. Optionally create a local admin account with `.\.venv\Scripts\python.exe manage.py createsuperuser`. No account is created automatically.
+
+The presentation layout uses shared type, spacing, button, card, and feedback styles across the workspace. The dashboard starts with a direct **Search offers** action. Product analytics puts current offer comparison before recorded history, with section links for benchmarks, offers, and history. **Buyer total** consistently means listed price minus discount plus buyer delivery; unavailable totals use an explicit warning treatment and never stand in for zero. Login also offers a return to public Product Search without signing in.
+
+On small screens, navigation stays visible in a two-column layout, forms stack, and wide history tables/charts scroll inside keyboard-focusable, labeled regions. Error summaries link to invalid visible search fields; hidden product-filter errors offer Reset filters instead. Long names wrap, price figures use aligned numerals, and demo/unknown/unverified labels remain readable. These presentation changes do not change calculations, capture observations, or alter authentication/CSRF rules. No frontend framework, external fonts, or new dependency is required.
 
 ## Dashboard and product analytics
 
@@ -237,4 +241,4 @@ No marketplace scraping or external API integration exists. Demonstration prices
 
 The local branch is `main`; the configured remote is <https://github.com/Light035/AnalyMark>. The scaffold has an initial local commit. Review feature changes before committing; no automatic commit or push is part of this feature. Inspect remote content before any future push and preserve any existing remote work.
 
-The assignment documents in `Reports/` are retained as project history. They describe research and proposals, not evidence of implemented integrations.
+The assignment documents in `Reports/` are kept locally and excluded from future commits. Earlier commits may still contain them; removing them from the current branch does not rewrite Git history. They describe research and proposals, not evidence of implemented integrations.

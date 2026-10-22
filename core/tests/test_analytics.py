@@ -102,6 +102,8 @@ class ProductAnalyticsTests(TestCase):
         self.assertNotContains(response, "Bundle-only seller")
         self.assertNotContains(response, "9,999.00")
         self.assertContains(response, "Product associations are unverified")
+        for offer in (self.a, self.b, self.c, self.d):
+            self.assertContains(response, f"<h3>{offer.seller_name}</h3>", html=True)
 
     def test_product_summary_reuses_listed_prices_not_totals_or_other_products(self):
         response = self.detail()
@@ -195,6 +197,11 @@ class ProductAnalyticsTests(TestCase):
         self.assertContains(response, f'href="{reverse("core:price_history", args=[self.a.pk])}"')
         self.assertContains(response, f'href="{reverse("core:analytics")}" aria-current="page"')
         self.assertContains(response, 'aria-current="page"', count=1)
+        for destination in ("price-benchmarks", "product-offers", "price-history"):
+            self.assertContains(response, f'href="#{destination}"')
+            self.assertContains(response, f'id="{destination}"')
+        content = response.content.decode()
+        self.assertLess(content.index('id="product-offers"'), content.index('id="price-history"'))
 
     def test_chart_and_table_have_accessible_responsive_structure(self):
         response = self.detail()

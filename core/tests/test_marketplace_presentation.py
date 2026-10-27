@@ -117,3 +117,25 @@ class MarketplacePresentationTests(TestCase):
         self.assertContains(response, '100.00')
         self.assertNotContains(response, private.name)
         self.assertNotContains(response, 'Archive seller')
+
+    def test_russian_demo_count_uses_correct_plural_forms(self):
+        for count, expected in [(1, '1 демопредложение'), (2, '2 демопредложения'),
+                                (5, '5 демопредложений'), (21, '21 демопредложение')]:
+            while self.product.offers.count() < count:
+                self.add_offer(f'Demo {self.product.offers.count()}')
+            with self.subTest(count=count):
+                response = self.client.get(reverse('core:data_sources'), HTTP_ACCEPT_LANGUAGE='ru')
+                self.assertIn(expected, self.card(response))
+
+    def test_russian_csv_instructions_identify_the_destination_file(self):
+        response = self.client.get(reverse('core:data_sources'), HTTP_ACCEPT_LANGUAGE='ru')
+        self.assertContains(response, 'в файл')
+        self.assertContains(response, 'offers.local.csv')
+
+    def test_dashboard_does_not_label_imported_observations_as_only_manual(self):
+        from core.models import PriceObservation
+        offer = self.add_offer('Supplied', demo=False)
+        PriceObservation.objects.create(offer=offer, price='100', is_demo=False, recorded_by_import=True)
+        response = self.client.get(reverse('core:dashboard'))
+        self.assertContains(response, 'manually recorded or imported, unverified')
+        self.assertNotContains(response, 'manually recorded, unverified')

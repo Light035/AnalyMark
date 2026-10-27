@@ -3,8 +3,16 @@
 Retrieved on 27 October 2026 for marketplace identification in the AnalyMark
 university MVP. Files are stored in `static/images/marketplaces/` and served by
 Django static files, without runtime requests to the publishers. The original
-downloaded bytes, aspect ratios and colors are preserved. Wide wordmarks use a
-white backing for contrast, not a second brand-colored badge.
+downloaded bytes, aspect ratios and colors are preserved. All five logos share
+bounded containers with `object-fit: contain`: 112 × 40 px on coverage cards,
+104 × 36 px in content, and 96 × 36 px in the sidebar. Light content uses transparent
+containers; the dark sidebar uses the same pale neutral contrast surface for all
+five brands. No logo-specific white rectangles or competing brand-colored badges
+are added. Wide wordmarks naturally occupy less vertical space than square icons.
+
+The Kaspi SVG has a 141 × 33 viewBox, Halyk 720 × 85.04, and Wildberries 30 × 30.
+These SVG backgrounds are transparent. Ozon and Teez are original 400 × 400 WebP
+app icons with alpha transparency; their colored artwork is part of the asset.
 
 ## Provenance
 

@@ -8,7 +8,7 @@
     <h3 id="market-title-{{ market.pk }}">{{ market.name }}</h3>
     <p class="marketplace-card-description">{% if market.name == 'Kaspi.kz' %}{% translate "First target marketplace" %}{% else %}{% translate "Included in the university MVP" %}{% endif %}</p>
     <dl class="marketplace-counts"><div><dt>{% translate "Products" %}</dt><dd>{{ market.product_count }}</dd></div><div><dt>{% translate "Offers" %}</dt><dd>{{ market.offer_count }}</dd></div></dl>
-    <p class="marketplace-data-mix"><span>{{ market.demo_count }} {% translate "demo offers" %}</span><span>{{ market.supplied_count }} {% translate "supplied · unverified" %}</span></p>
+    <p class="marketplace-data-mix"><span>{% blocktranslate count count=market.demo_count %}{{ count }} demo offer{% plural %}{{ count }} demo offers{% endblocktranslate %}</span><span>{{ market.supplied_count }} {% translate "supplied · unverified" %}</span></p>
     <a class="button market-button" href="{% url 'core:product_search' %}?marketplace={{ market.pk }}" aria-label="{% translate 'View products:' %} {{ market.name }}">{% translate "View products" %}<span aria-hidden="true">→</span></a>
 </article>
 {% empty %}<div class="empty-state"><h3>{% translate "No marketplace labels loaded." %}</h3><p>{% translate "Initialize the approved marketplaces using the local setup commands below." %}</p></div>{% endfor %}

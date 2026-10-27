@@ -18,6 +18,23 @@ Previous redesign verification: 254 baseline tests and 262 final tests passed. D
 
 Final logo/polish pass (27–28 October 2026): 262 baseline tests and 265 final tests passed. The five authentic local assets replace generated marketplace symbols throughout navigation, cards, comparisons, Watchlist previews and history identity labels. Source/license uncertainty is documented in `docs/BRAND_ASSETS.md`; no affiliation or live-data claim is added. Browser checks at 1440px and 390px verified EN/RU Data Sources, local logo loading, search/offer rows, product analytics/history and responsive overflow; login/Watchlist add/remove/logout were exercised on a disposable database copy. This pass adds no dependencies, schema changes or catalog writes.
 
+Follow-up consistency polish (28 October 2026): 265 baseline tests and 268 final
+tests passed. Logo containers now have consistent bounds, preserve original
+artwork, and prevent square icons from overflowing their rows. Coverage cards
+use tighter spacing with aligned counts/actions. Russian demo counts use plural
+forms; CSV copy instructions and the dashboard's imported-observation label are
+corrected. Django, migration, dependency, compiled-translation, static discovery,
+collectstatic dry-run and diff whitespace checks passed. Browser checks included
+1440/1280/390 px layouts, EN/RU switching with a retained marketplace filter,
+stored history and login/Watchlist operations on a disposable database copy.
+Running initialization and both demo loaders twice on a separate copy changed
+no table contents: 28 products / 51 offers / 12 observations physically retained;
+21 products / 30 offers / 9 observations across the five active marketplaces.
+These are audit snapshot counts, not hardcoded dashboard values. Original database,
+four reports and five logo files remained byte-identical. No migration or data
+rewrite was needed. Wide history charts/tables scroll internally on phones;
+stored product names and operator-provided text are not automatically translated.
+
 ```powershell
 cd C:\AnalyMark
 .\.venv\Scripts\python.exe manage.py migrate

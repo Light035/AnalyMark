@@ -1419,3 +1419,15 @@ msgstr "Только указанные цены. Доставка и скидк
 
 msgid "Review source coverage, import times and data quality."
 msgstr "Площадки, время импорта и качество данных."
+
+msgid "%(count)s demo offer"
+msgid_plural "%(count)s demo offers"
+msgstr[0] "%(count)s демопредложение"
+msgstr[1] "%(count)s демопредложения"
+msgstr[2] "%(count)s демопредложений"
+
+msgid "to the file"
+msgstr "в файл"
+
+msgid "manually recorded or imported, unverified"
+msgstr "записано вручную или импортировано, не проверено"

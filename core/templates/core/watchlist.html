@@ -1,18 +1,31 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
-<section class="page-heading page-heading-row"><div><p class="eyebrow">Your private workspace</p><h1>Your Watchlist</h1><p class="page-description">Products saved to your account. Saving a product does not verify its identity or refresh its prices.</p></div><a class="button button-secondary" href="{% url 'core:product_search' %}">Browse product offers</a></section>
-<div class="offer-list">
+<section class="page-heading page-heading-row"><div><p class="eyebrow">{% translate "Your private workspace" %}</p><h1>{% translate "Your Watchlist" %}</h1><p class="page-description">{% translate "Products saved to your account. Saving a product does not verify its identity or refresh its prices." %}</p></div><a class="button button-secondary" href="{% url 'core:product_search' %}">{% translate "Browse product offers" %}</a></section>
+<div class="watchlist-grid">
     {% for entry in entries %}
-    <article class="panel">
-        <p class="offer-brand">{% if entry.product.brand %}{{ entry.product.brand }} · {% endif %}{{ entry.product.category }}</p>
+    <article class="panel watchlist-card">
+        <div class="watchlist-meta"><span class="saved-state">{% translate "✓ Saved to your account" %}</span><span>{% translate "Saved" %} <time datetime="{{ entry.saved_at|date:'c' }}">{{ entry.saved_at|date:"Y-m-d" }}</time></span></div>
+        {% if not entry.in_active_catalog %}<p class="pill pill-neutral">{% translate "Archived product · saved entry preserved" %}</p>{% endif %}
+        <span class="feature-icon watchlist-icon" aria-hidden="true">{% include "core/includes/icon.html" with icon="watchlist" %}</span><p class="offer-brand">{% if entry.product.brand %}{{ entry.product.brand }} · {% endif %}{{ entry.product.category }}</p>
         <h2 class="watchlist-product"><a href="{% url 'core:product_detail' entry.product_id %}">{{ entry.product.name }}</a></h2>
+        <p class="comparison-explanation">{% blocktranslate count count=entry.offer_count %}{{ count }} stored offer{% plural %}{{ count }} stored offers{% endblocktranslate %} {% translate "· product identity unverified. Open analytics for source labels, known buyer totals, and actual recorded history." %}</p>
+        {% if entry.product.watchlist_preview %}<div class="watchlist-offers">
+            <p class="small-label">{% translate "Offer preview · up to 3 stored offers" %}</p>
+            {% for offer in entry.product.watchlist_preview %}<div class="watchlist-offer">
+                <div>{% include "core/includes/marketplace_identity.html" with market=offer.marketplace %}<span class="seller-label">{{ offer.seller_name }}</span><span class="match-note{% if offer.match_status == 'rejected' %} match-rejected{% endif %}">{{ offer.get_match_status_display }}</span></div>
+                <div><strong class="money">{{ offer.price|floatformat:"2g" }} <small>KZT</small></strong><span class="price-caption">{% translate "Listed price" %}</span>{% if offer.is_demo %}<span class="pill pill-demo">{% translate "DEMO" %}</span>{% else %}<span class="pill pill-import">{% translate "Supplied data" %}</span>{% endif %}</div>
+            </div>{% endfor %}
+            <p class="section-footnote">{% translate "Listed prices only. Delivery and discounts are shown in product analytics; these offers are not a combined benchmark." %}</p>
+        </div>{% endif %}
         <div class="offer-actions">
-            <a class="button button-secondary" href="{% url 'core:product_detail' entry.product_id %}">Compare this product</a>
-            <form method="post" action="{% url 'core:watchlist_remove' entry.product_id %}">{% csrf_token %}<button class="button button-secondary" type="submit" aria-label="Remove product: {{ entry.product.name }}">Remove product</button></form>
+            <a class="button button-secondary" href="{% url 'core:product_detail' entry.product_id %}">{% translate "Compare this product" %}</a>
+            <form method="post" action="{% url 'core:watchlist_remove' entry.product_id %}">{% csrf_token %}<button class="button button-secondary button-danger" type="submit" aria-label="{% translate 'Remove product:' %} {{ entry.product.name }}">{% translate "Remove product" %}</button></form>
         </div>
     </article>
     {% empty %}
-    <div class="empty-state"><span class="empty-state-mark" aria-hidden="true">☆</span><h2>Your Watchlist is empty</h2><p>Save a product from Product Search to return to its comparison later.</p><a class="button button-primary" href="{% url 'core:product_search' %}">Find products</a></div>
+    <div class="empty-state"><span class="empty-state-mark" aria-hidden="true">☆</span><h2>{% translate "Your Watchlist is empty" %}</h2><p>{% translate "Save a product from Product Search to return to its comparison later." %}</p><a class="button button-primary" href="{% url 'core:product_search' %}">{% translate "Find products" %}</a></div>
     {% endfor %}
 </div>
+{% include "core/includes/pagination.html" %}
 {% endblock %}

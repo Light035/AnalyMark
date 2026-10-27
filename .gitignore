@@ -20,6 +20,7 @@ env/
 staticfiles/
 media/
 *.log
+*.local.csv
 
 # Secrets and machine-specific configuration
 .env

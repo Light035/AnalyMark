@@ -22,9 +22,9 @@ class DemoDataCommandTests(TestCase):
         output = self.load()
         original_ids = list(Offer.objects.order_by("pk").values_list("pk", flat=True))
         self.load()
-        self.assertEqual(Marketplace.objects.count(), 2)
-        self.assertEqual(Product.objects.count(), 14)
-        self.assertEqual(Offer.objects.count(), 30)
+        self.assertEqual(Marketplace.objects.count(), 5)
+        self.assertEqual(Product.objects.count(), 13)
+        self.assertEqual(Offer.objects.count(), 18)
         self.assertEqual(original_ids, list(Offer.objects.order_by("pk").values_list("pk", flat=True)))
         self.assertFalse(Offer.objects.filter(is_demo=False).exists())
         self.assertFalse(PriceObservation.objects.exists())
@@ -47,7 +47,7 @@ class DemoDataCommandTests(TestCase):
         self.assertEqual(Product.objects.values("category").distinct().count(), 4)
         counts = list(Product.objects.annotate(count=Count("offers")).values_list("count", flat=True))
         self.assertIn(1, counts)
-        self.assertIn(4, counts)
+        self.assertIn(3, counts)
 
     def test_rerun_preserves_manual_offers_and_unrelated_records(self):
         self.load()
@@ -62,7 +62,7 @@ class DemoDataCommandTests(TestCase):
         self.assertEqual(manual.price, Decimal("7654.32"))
         self.assertIsNone(manual.delivery_cost)
         self.assertTrue(Product.objects.filter(pk=unrelated.pk).exists())
-        self.assertEqual(Offer.objects.count(), 31)
+        self.assertEqual(Offer.objects.count(), 19)
 
     def illustrative_offer(self):
         return Offer.objects.get(seller_name="Steppe Keys Demo — illustrative history")
@@ -96,15 +96,15 @@ class DemoDataCommandTests(TestCase):
         self.assertEqual(product.category, "My category")
         self.assertEqual(product.description, "My description")
         self.assertFalse(PriceObservation.objects.exists())
-        self.assertEqual(Product.objects.count(), 14)
+        self.assertEqual(Product.objects.count(), 13)
 
     def test_seed_benchmarks_use_current_listed_prices_not_history_or_totals(self):
         self.load(with_illustrative_history=True)
         offer = self.illustrative_offer()
-        response = self.client.get(reverse("core:product_detail", args=[offer.product_id]))
+        response = self.client.get(reverse("core:product_detail", args=[offer.product_id]), {"marketplace": offer.marketplace_id})
         self.assertEqual(response.context["summary"], {
-            "count": 3, "minimum": Decimal("21900.00"), "maximum": Decimal("23000.00"),
-            "average": Decimal("22466.67"), "median": Decimal("22500.00"),
+            "count": 2, "minimum": Decimal("21900.00"), "maximum": Decimal("22500.00"),
+            "average": Decimal("22200.00"), "median": Decimal("22200.00"),
         })
         self.assertEqual(offer.total_buyer_cost, Decimal("22700.00"))
         response = self.client.get(reverse("core:product_search"), {"product": offer.product_id, "marketplace": offer.marketplace_id})
@@ -135,7 +135,7 @@ class DemoDataCommandTests(TestCase):
             self.assertGreaterEqual(observation.observed_at, started)
             self.assertLessEqual(observation.observed_at, finished)
         self.assertEqual(Product.objects.filter(offers__observations__isnull=False).distinct().count(), 1)
-        self.assertEqual(Product.objects.exclude(offers__observations__isnull=False).count(), 13)
+        self.assertEqual(Product.objects.exclude(offers__observations__isnull=False).count(), 12)
 
     def test_illustrative_history_is_optional_repeatable_and_not_reseeded_after_price_edits(self):
         self.load()
@@ -154,9 +154,9 @@ class DemoDataCommandTests(TestCase):
         originals = list(offer.observations.values_list("pk", "observed_at", "price"))
         call_command("record_demo_observations", stdout=StringIO())
         self.assertEqual(list(offer.observations.values_list("pk", "observed_at", "price")), originals)
-        self.assertEqual(PriceObservation.objects.count(), 32)  # 3 illustrative + 29 other offers.
+        self.assertEqual(PriceObservation.objects.count(), 20)  # 3 illustrative + 17 other active offers.
         call_command("record_demo_observations", stdout=StringIO())
-        self.assertEqual(PriceObservation.objects.count(), 32)
+        self.assertEqual(PriceObservation.objects.count(), 20)
 
     def test_same_clock_tick_keeps_three_changes_without_artificial_time_offsets(self):
         frozen = timezone.now()

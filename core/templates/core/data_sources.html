@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block data_notice %}{% endblock %}
+{% block content %}
+<section class="page-heading source-hero">
+    <div><p class="eyebrow">{% translate "Your data, explained" %}</p><h1>{% translate "Data Sources" %}</h1><p class="page-description">{% translate "Review source coverage, import times and data quality." %}</p></div>
+    <aside class="connection-card"><span class="feature-icon feature-icon-amber">{% include "core/includes/icon.html" with icon="sources" %}</span><div><h2>{% translate "No live integrations yet" %}</h2></div></aside>
+</section>
+{% include "core/includes/data_notice.html" %}
+<section class="marketplace-section" aria-labelledby="coverage-title">
+    <div class="section-heading"><div><h2 id="coverage-title">{% translate "Marketplace coverage" %}</h2><p class="comparison-explanation">{% translate "Marketplace labels are not integrations. No LIVE competitor feed is connected. DEMO prices and sellers are fictional; imported or manual records remain unverified." %}</p></div></div>
+    {% include "core/includes/marketplace_cards.html" %}
+    <details class="demo-setup"><summary>{% translate "Load the multi-marketplace demonstration" %}</summary><pre tabindex="0"><code>.\.venv\Scripts\python.exe manage.py init_marketplaces
+.\.venv\Scripts\python.exe manage.py load_demo_data
+.\.venv\Scripts\python.exe manage.py load_marketplace_demo</code></pre><p>{% translate "Additive fictional fixtures only. Existing records are preserved; reruns do not reset prices or create history. Source times record local loading, not marketplace updates. See docs/MARKETPLACE_ACCESS.md for access research." %}</p></details>
+</section>
+<div class="source-explain-grid">
+    <section class="panel workflow-panel"><div class="panel-title"><span class="feature-icon">{% include "core/includes/icon.html" with icon="document" %}</span><h2>{% translate "How data reaches this workspace" %}</h2></div>
+        <ol class="data-path"><li><h3>{% translate "Demonstration catalog" %}</h3><p>{% translate "Fictional examples, clearly labelled. No marketplace prices were fetched." %}</p></li><li><h3>{% translate "Manual CSV" %}</h3><p>{% translate "Supplied records with validation, a preview and actual import times." %} <a href="#import-workflow">{% translate "View import instructions" %} →</a></p></li><li><h3>{% translate "Automated collection · blocked" %}</h3><p>{% translate "Refresh infrastructure exists; competitor acquisition requires a verified, permitted source." %}</p></li></ol>
+    </section>
+    <section class="panel workflow-panel"><div class="panel-title"><span class="feature-icon feature-icon-amber">{% include "core/includes/icon.html" with icon="target" %}</span><h2>{% translate "Automated competitor monitoring is the goal" %}</h2></div><p class="comparison-explanation">{% translate "Kaspi.kz is the first target. Competitor acquisition is currently blocked pending a verified, permitted feed. CSV is a fallback for testing and supplied data, not the main product workflow." %}</p>
+        <div class="next-step"><strong>{% translate "Next: verify access, then connect" %}</strong><p>{% translate "Source authorization and reliable product identities come before automated price collection." %}</p></div>
+        <div class="heading-actions"><a class="button button-secondary" href="{% url 'core:product_search' %}">{% translate "Explore stored offers →" %}</a>{% if user.is_staff %}{% if perms.core.add_datasource %}<a class="button button-primary" href="{% url 'core:source_create' %}">{% translate "Configure automated source" %}</a>{% endif %}{% endif %}</div>
+    </section>
+</div>
+{% include "core/includes/data_sources.html" %}
+{% include "core/includes/pagination.html" %}
+<section id="import-workflow" class="panel import-guide" aria-labelledby="import-title">
+    <div class="section-heading"><div><p class="eyebrow">{% translate "CSV fallback · command line only" %}</p><h2 id="import-title">{% translate "Preview first. Import explicitly." %}</h2></div><span class="pill pill-neutral">{% translate "No file upload endpoint" %}</span></div>
+    <p class="comparison-explanation">{% translate "Prepare a file locally with data you are permitted to use. CSV imports are manually supplied and unverified, not scraping. Kaspi’s seller API is not a verified public competitor-offer feed." %}</p>
+    <ol class="import-steps">
+        <li><h3>{% translate "Prepare your file" %}</h3><p>{% translate "Copy" %} <code>examples/offers_template.csv</code> {% translate "to" %} <code>offers.local.csv</code>{% translate ", then fill in your records. The template contains headers only. Use UTF-8, comma-separated values, KZT amounts and separate stable product/variant and seller-offer IDs. Limit: 2 MiB and 1,000 rows." %}</p></li>
+        <li><h3>{% translate "Preview without saving" %}</h3><pre tabindex="0" aria-label="{% translate 'CSV preview command' %}"><code>.\.venv\Scripts\python.exe manage.py import_offers_csv .\offers.local.csv --source kaspi-manual --marketplace "Kaspi.kz" --dry-run</code></pre><p>{% translate "Run from" %} <code>C:\AnalyMark</code>{% translate ". Read the created/updated/unchanged/rejected/skipped, observation and invalidated-review counts. Correct row errors. Preview rolls back every write, including observations and source status." %}</p></li>
+        <li><h3>{% translate "Apply the reviewed file" %}</h3><pre tabindex="0" aria-label="{% translate 'CSV apply command' %}"><code>.\.venv\Scripts\python.exe manage.py import_offers_csv .\offers.local.csv --source kaspi-manual --marketplace "Kaspi.kz" --apply</code></pre><p>{% translate "Reuse the same source key and marketplace for updates. Use" %} <code>--demo</code> {% translate "on every invocation for fictional input. The marketplace must already exist under its exact name." %}</p></li>
+    </ol>
+    <details class="import-rules"><summary>{% translate "File columns, update rules and limitations" %}</summary>
+        <pre tabindex="0" aria-label="{% translate 'Required CSV headers' %}"><code>product_id,product_name,brand,category,offer_id,seller_name,listed_price,currency,delivery_cost,discount,source_url</code></pre>
+        <ul><li>{% translate "Blank delivery/discount means unknown on create and preserves known values on update. Enter zero only when explicitly known." %}</li><li>{% translate "Nonblank managed values replace previous imported values on apply. Review the file and keep a database backup; manual edits to managed fields can be overwritten." %}</li><li>{% translate "Reference URLs must use http(s), have at most 200 characters, and contain no credentials, query parameters or fragments." %}</li><li>{% translate "Records are matched by source IDs, never by similar names. Existing unrelated records are preserved; absent rows are not deleted." %}</li><li>{% translate "Changed prices on existing imported offers create observations at actual import time. First imports and unchanged prices add no observations. No backdated prices, verified matching or continuous monitoring are established." %}</li></ul>
+        <p>{% translate "See the project README’s “Manual CSV offer import” section for the complete schema and validation rules. Catalog records and source summaries are public; never include credentials, customer data or private seller costs." %}</p>
+    </details>
+    <p class="comparison-explanation">{% translate "Import age is assessed only when staff configure a source-specific interval in administration. Missing rows retain their earlier import times and are not deleted or marked unavailable." %}</p>
+</section>
+{% endblock %}

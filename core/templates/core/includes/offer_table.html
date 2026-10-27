@@ -1,0 +1,8 @@
+{% load i18n %}
+<div class="table-scroll offer-table-scroll" role="region" aria-label="{% translate 'Scrollable offer comparison' %}" tabindex="0">
+    <table class="offer-table" role="table">
+        <caption>{% translate "Current stored offers · KZT. Listed prices exclude delivery and discounts; buyer totals require both. On small screens each row becomes a comparison card." %}</caption>
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">{% if request.resolver_match.url_name == 'product_detail' %}{% translate "Seller / product" %}{% else %}{% translate "Product" %}{% endif %}</th><th scope="col" role="columnheader">{% translate "Marketplace &amp; source" %}</th><th scope="col" role="columnheader">{% translate "Listed price" %}</th><th scope="col" role="columnheader">{% translate "Delivery &amp; discount" %}</th><th scope="col" role="columnheader" class="total-column">{% translate "Buyer total" %}</th><th scope="col" role="columnheader">{% translate "Actions" %}</th></tr></thead>
+        <tbody role="rowgroup">{% for offer in offers %}{% include "core/includes/offer_card.html" %}{% endfor %}</tbody>
+    </table>
+</div>

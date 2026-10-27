@@ -1,0 +1,9 @@
+{% load i18n workspace %}
+<nav class="pagination" aria-label="{% translate 'Result pages' %}">
+    <p>{% blocktranslate with current=page_obj.number pages=page_obj.paginator.num_pages total=page_obj.paginator.count %}Page {{ current }} of {{ pages }} · {{ total }} results{% endblocktranslate %}</p>
+    <div class="pagination-actions">
+        {% if page_obj.has_previous %}<a class="button button-secondary button-small" href="{% page_link page_parameter|default:'page' 1 page_anchor|default:'' %}">{% translate "First" %}</a><a class="button button-secondary button-small" rel="prev" href="{% page_link page_parameter|default:'page' page_obj.previous_page_number page_anchor|default:'' %}">{% translate "Previous" %}</a>{% endif %}
+        <span class="pagination-current" aria-current="true">{{ page_obj.number }}</span>
+        {% if page_obj.has_next %}<a class="button button-secondary button-small" rel="next" href="{% page_link page_parameter|default:'page' page_obj.next_page_number page_anchor|default:'' %}">{% translate "Next" %}</a><a class="button button-secondary button-small" href="{% page_link page_parameter|default:'page' page_obj.paginator.num_pages page_anchor|default:'' %}">{% translate "Last" %}</a>{% endif %}
+    </div>
+</nav>

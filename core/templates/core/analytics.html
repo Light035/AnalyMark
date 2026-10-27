@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
-<section class="page-heading"><p class="eyebrow">One product at a time</p><h1>Product analytics</h1><p class="page-description">Choose a product to review its own offers, listed-price benchmarks, and recorded history. Similar names are kept separate by product ID; associations remain unverified.</p></section>
-{% if products %}<section class="panel catalog-list" aria-label="Products available for analytics">{% include "core/includes/catalog_list.html" %}</section>
-{% else %}<div class="empty-state"><h2>No products to analyze</h2><p>The catalog is empty. Add products or load the demonstration catalog using the README to get started.</p><a class="button button-primary" href="{% url 'core:product_search' %}">Open Product Search</a></div>{% endif %}
+<section class="page-heading page-heading-row"><div><p class="eyebrow">{% translate "One product at a time" %}</p><h1>{% translate "Product analytics" %}</h1><p class="page-description">{% translate "Choose a product to review its own offers, listed-price benchmarks, and recorded history. Similar names are kept separate by product ID; associations remain unverified." %}</p></div><a class="button button-secondary" href="{% url 'core:product_search' %}">{% translate "Search &amp; filter offers →" %}</a></section>
+{% if products %}<section class="panel catalog-list" aria-label="{% translate 'Products available for analytics' %}"><div class="section-heading"><h2>{% translate "Product catalog" %}</h2><span class="results-count">{% blocktranslate count count=page_obj.paginator.count %}{{ count }} product{% plural %}{{ count }} products{% endblocktranslate %}</span></div>{% include "core/includes/catalog_list.html" %}</section>
+{% else %}<div class="empty-state"><h2>{% translate "No products to analyze" %}</h2><p>{% translate "The catalog is empty. Add products or load the demonstration catalog using the README to get started." %}</p><a class="button button-primary" href="{% url 'core:product_search' %}">{% translate "Open Product Search" %}</a></div>{% endif %}
+{% include "core/includes/pagination.html" %}
 {% endblock %}

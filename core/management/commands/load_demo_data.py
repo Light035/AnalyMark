@@ -6,6 +6,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from core.models import Marketplace, Offer, PriceObservation, Product
+from core.marketplaces import initialize_marketplaces
 
 
 class Command(BaseCommand):
@@ -19,11 +20,9 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        initialize_marketplaces()
         kaspi, _ = Marketplace.objects.get_or_create(
             name="Kaspi.kz", defaults={"website_url": "https://kaspi.kz/"}
-        )
-        practice, _ = Marketplace.objects.get_or_create(
-            name="Practice Market (fictional)", defaults={"website_url": "https://market.example/"}
         )
         # Names encode the variant and bundle. Mapping is curated, not automatically matched.
         products = [
@@ -36,7 +35,6 @@ class Command(BaseCommand):
             ("Orbit O3 — mint, lamp + stand bundle (demo)", "DalaGlow", "Desk lighting", "Fictional demonstration product. Mint lamp with an extra stand. Not the single-lamp package."),
             ("Keyra K1 — compact, EN layout (demo)", "QalamLab", "Keyboards", "Fictional demonstration product. Compact keyboard; EN layout. The illustrative-history seller can have three deliberately changed sample prices captured within one command run, not real marketplace history or an elapsed market trend."),
             ("Keyra K1 — compact, RU/EN layout (demo)", "QalamLab", "Keyboards", "Fictional demonstration product. Compact keyboard; RU/EN layout. A separate variant from the EN-only keyboard."),
-            ("Keyra K1 — full-size, RU/EN layout (demo)", "QalamLab", "Keyboards", "Fictional demonstration product. Full-size keyboard; RU/EN layout. One sample offer is not a market-wide benchmark."),
             ("Portiq H4 — four-port hub (demo)", "OrnekPort", "USB hubs", "Fictional demonstration product. Four-port hub; one unit. No verified compatibility or real product specification is claimed."),
             ("Portiq H7 — seven-port hub (demo)", "OrnekPort", "USB hubs", "Fictional demonstration product. Seven-port hub; one unit. A different model from H4; prices are illustrative."),
             ("Portiq H4 — hub + cable bundle (demo)", "OrnekPort", "USB hubs", "Fictional demonstration product. Four-port hub plus an extra cable; not equivalent to the hub-only package."),
@@ -57,33 +55,21 @@ class Command(BaseCommand):
             (0, kaspi, "Cedar Desk Demo", "12000.00", "800.00", "500.00", "https://catalog.example/luma-white"),
             (0, kaspi, "Mosaic Lamp Demo", "12500.00", "0.00", "0.00", ""),
             (0, kaspi, "Tumar Workspace Demo", "11800.00", None, "300.00", ""),
-            (0, practice, "Paper Lantern Demo", "12200.00", "600.00", None, ""),
             (1, kaspi, "Cedar Desk Demo", "12300.00", "900.00", "0.00", ""),
-            (1, practice, "Paper Lantern Demo", "12100.00", "0.00", "100.00", ""),
             (2, kaspi, "Mosaic Lamp Demo", "14000.00", "700.00", "1000.00", "https://catalog.example/luma-bundle"),
             (3, kaspi, "Tumar Workspace Demo", "15600.00", "0.00", "600.00", ""),
-            (3, practice, "Paper Lantern Demo", "14900.00", None, None, ""),
             (4, kaspi, "Tumar Workspace Demo", "15900.00", "800.00", None, ""),
             (5, kaspi, "Cedar Desk Demo", "18900.00", "0.00", "900.00", ""),
-            (5, practice, "Paper Lantern Demo", "18500.00", "1200.00", "0.00", ""),
             (6, kaspi, "Mosaic Lamp Demo", "21300.00", "1000.00", "1300.00", ""),
-            (6, practice, "Paper Lantern Demo", "20500.00", None, "0.00", ""),
             (7, kaspi, "Steppe Keys Demo — illustrative history", "22500.00", "700.00", "500.00", ""),
             (7, kaspi, "Mosaic Keys Demo", "21900.00", "0.00", "0.00", ""),
-            (7, practice, "Paper Keys Demo", "23000.00", None, "1000.00", ""),
             (8, kaspi, "Steppe Keys Demo", "23900.00", "600.00", "900.00", ""),
-            (8, practice, "Paper Keys Demo", "23500.00", "0.00", None, ""),
-            (9, practice, "Paper Keys Demo", "26800.00", "900.00", "0.00", ""),
-            (10, kaspi, "Ornek Cables Demo", "7900.00", "500.00", "400.00", ""),
-            (10, practice, "Paper Ports Demo", "7600.00", "0.00", "0.00", ""),
-            (11, kaspi, "Ornek Cables Demo", "12900.00", "700.00", "1000.00", ""),
-            (11, kaspi, "Tumar Ports Demo", "12500.00", None, None, ""),
-            (11, practice, "Paper Ports Demo", "13200.00", "0.00", "200.00", ""),
-            (12, kaspi, "Ornek Cables Demo", "9600.00", "500.00", "600.00", ""),
-            (12, practice, "Paper Ports Demo", "9200.00", "0.00", None, ""),
-            (13, kaspi, "Jol Workspace Demo", "6500.00", "500.00", "0.00", ""),
-            (13, kaspi, "Tumar Workspace Demo", "6200.00", None, "200.00", ""),
-            (13, practice, "Paper Desk Demo", "6800.00", "0.00", "300.00", ""),
+            (9, kaspi, "Ornek Cables Demo", "7900.00", "500.00", "400.00", ""),
+            (10, kaspi, "Ornek Cables Demo", "12900.00", "700.00", "1000.00", ""),
+            (10, kaspi, "Tumar Ports Demo", "12500.00", None, None, ""),
+            (11, kaspi, "Ornek Cables Demo", "9600.00", "500.00", "600.00", ""),
+            (12, kaspi, "Jol Workspace Demo", "6500.00", "500.00", "0.00", ""),
+            (12, kaspi, "Tumar Workspace Demo", "6200.00", None, "200.00", ""),
         ]
         history_offer = history_values = None
         for index, marketplace, seller, price, delivery, discount, url in rows:
@@ -99,7 +85,7 @@ class Command(BaseCommand):
                 history_offer, history_values = offer, values
 
         self.stdout.write(self.style.SUCCESS(
-            f"Demo catalog scope: 2 marketplaces, {len(products)} fictional products, and {len(rows)} demonstration offers. "
+            f"Kaspi demo scope: 1 marketplace, {len(products)} fictional products, and {len(rows)} demonstration offers. "
             f"Created {created_products} products and {created_offers} offers; existing records were preserved. "
             "Prices are invented, not live Kaspi observations."
         ))

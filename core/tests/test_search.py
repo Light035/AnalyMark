@@ -25,7 +25,7 @@ class ProductSearchTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.kaspi = Marketplace.objects.create(name="Kaspi.kz")
-        cls.practice = Marketplace.objects.create(name="Practice market")
+        cls.practice = Marketplace.objects.create(name="Halyk Market")
         cls.alpha = Product.objects.create(name="Alpha Lamp", brand="NuraLab", category="Lighting")
         cls.beta = Product.objects.create(name="Beta Lamp", brand="OtherBrand", category="Lighting")
         cls.a = Offer.objects.create(product=cls.alpha, marketplace=cls.kaspi, seller_name="One", price=Decimal("100.10"), delivery_cost=Decimal("200"), discount=Decimal("0"), product_url="https://catalog.example/alpha")
@@ -61,7 +61,8 @@ class ProductSearchTests(TestCase):
         response = self.search(product=self.alpha.pk)
         self.assertEqual({offer.product_id for offer in response.context["offers"]}, {self.alpha.pk})
         self.assertEqual(response.context["summary"]["count"], 3)
-        self.assertContains(response, "Comparing this saved product")
+        self.assertContains(response, "Comparing this product")
+        self.assertNotContains(response, "Comparing this saved product")
 
     def test_invalid_saved_product_filter_is_explained(self):
         response = self.search(product=99999)
@@ -87,13 +88,16 @@ class ProductSearchTests(TestCase):
                 self.assertEqual({o.pk for o in offers[2:]}, {self.c.pk, self.d.pk})
 
     def test_summary_uses_listed_prices_not_buyer_totals(self):
-        summary = self.search().context["summary"]
-        self.assertEqual(summary, dict(count=4, minimum=Decimal("100.10"), maximum=Decimal("400.40"), average=Decimal("250.25"), median=Decimal("250.25")))
+        response = self.search()
+        self.assertIsNone(response.context["summary"]["average"])
+        summary = next(g["summary"] for g in response.context["comparison_groups"] if g["marketplace"] == "Kaspi.kz")
+        self.assertEqual(summary, dict(count=2, minimum=Decimal("100.10"), maximum=Decimal("300.30"), average=Decimal("200.20"), median=Decimal("200.20")))
 
     def test_odd_median_and_filtered_benchmarks(self):
-        summary = self.search(q="Alpha").context["summary"]
+        Offer.objects.create(product=self.alpha, marketplace=self.kaspi, seller_name="Middle", price="200.20")
+        summary = self.search(q="Alpha", marketplace=self.kaspi.pk).context["summary"]
         self.assertEqual(summary, dict(count=3, minimum=Decimal("100.10"), maximum=Decimal("300.30"), average=Decimal("200.20"), median=Decimal("200.20")))
-        self.assertEqual(self.search(marketplace=self.kaspi.pk).context["summary"]["count"], 2)
+        self.assertEqual(self.search(marketplace=self.kaspi.pk).context["summary"]["count"], 3)
 
     def test_empty_search_results_do_not_display_zero_benchmarks(self):
         response = self.search(q="No such product")
@@ -117,7 +121,7 @@ class ProductSearchTests(TestCase):
             self.assertContains(response, f'id="id_{name}_error"')
         self.assertContains(response, 'aria-invalid="true"')
         response = self.search(product=99999)
-        self.assertContains(response, "The saved product filter is invalid")
+        self.assertContains(response, "The product filter is invalid")
         self.assertNotContains(response, 'href="#id_product"')
 
     def test_demo_disclosures_and_statistic_scope_are_visible(self):
@@ -128,6 +132,10 @@ class ProductSearchTests(TestCase):
         self.assertContains(response, "Listed-price benchmarks")
         self.assertContains(response, "Delivery and discounts are excluded")
         self.assertContains(response, "automatic product matching is not implemented")
+        self.assertContains(response, "The MVP supports Kaspi.kz, Halyk Market, Ozon, Wildberries and Teez")
+        self.assertNotContains(response, "Practice Market")
+        self.assertContains(response, "marketplace update times remain unknown")
+        self.assertContains(response, "snapshot capture times, not marketplace refresh times")
 
     def test_missing_amounts_and_example_urls_are_explained(self):
         response = self.search()

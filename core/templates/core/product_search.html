@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
 <section class="page-heading">
-    <p class="eyebrow">Discover and compare</p>
-    <h1>Find the product. Understand the price.</h1>
-    <p class="page-description">Explore fictional offers with Kaspi.kz as the first marketplace focus. All sample prices are invented demonstration data, not live or verified marketplace prices.</p>
+    <p class="eyebrow">{% translate "Discover and compare" %}</p>
+    <h1>{% translate "Product Search" %}</h1>
+    <p class="page-description">{% translate "The MVP supports Kaspi.kz, Halyk Market, Ozon, Wildberries and Teez. Compare offers within one selected marketplace. All sample prices are invented demonstration data, not live or verified marketplace prices." %}</p>
 </section>
-{% if form.errors %}<div class="feedback feedback-error" role="alert"><strong>Check your filters.</strong><ul>{% for field in form %}{% if field.errors %}<li>{% if field.is_hidden %}The saved product filter is invalid. <a href="{% url 'core:product_search' %}">Reset filters</a>{% else %}<a href="#{{ field.id_for_label }}">{{ field.label }}: {{ field.errors|striptags }}</a>{% endif %}</li>{% endif %}{% endfor %}</ul></div>{% endif %}
-<form class="panel search-form" method="get" action="{% url 'core:product_search' %}" aria-label="Filter product offers">
+{% if form.errors %}<div class="feedback feedback-error" role="alert"><strong>{% translate "Check your filters." %}</strong><ul>{% for field in form %}{% if field.errors %}<li>{% if field.is_hidden %}{% translate "The product filter is invalid." %} <a href="{% url 'core:product_search' %}">{% translate "Reset filters" %}</a>{% else %}<a href="#{{ field.id_for_label }}">{{ field.label }}: {{ field.errors|striptags }}</a>{% endif %}</li>{% endif %}{% endfor %}</ul></div>{% endif %}
+<form class="panel search-form" method="get" action="{% url 'core:product_search' %}" aria-label="{% translate 'Filter product offers' %}">
     {% for field in form %}
     {% if field.is_hidden %}{{ field }}{% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}{% else %}
     <div class="form-field">
@@ -15,28 +16,28 @@
     </div>
     {% endif %}
     {% endfor %}
-    <button class="button button-primary" type="submit">Apply filters</button>
-    <p class="filter-help">Filters use the page URL, so you can bookmark this view. Unknown buyer totals sort last. <a href="{% url 'core:product_search' %}">Reset filters</a></p>
+    <button class="button button-primary" type="submit">{% translate "Apply filters" %}</button>
+    <p class="filter-help">{% translate "Filters use the page URL, so you can bookmark this view. Unknown buyer totals sort last." %} <a href="{% url 'core:product_search' %}">{% translate "Reset filters" %}</a></p>
 </form>
-{% if selected_product %}<p class="comparison-explanation">Comparing this saved product: <strong>{{ selected_product.name }}</strong>. <a href="{% url 'core:product_search' %}">Show all products</a></p>{% endif %}
+{% if active_filters %}<div class="active-filters" aria-label="{% translate 'Active search filters' %}"><span class="small-label">{% translate "Current view" %}</span>{% if active_filters.query %}<span class="filter-chip">{% translate "Search:" %} {{ active_filters.query }}</span>{% endif %}{% if active_filters.marketplace %}<span class="filter-chip">{{ active_filters.marketplace.name }}</span>{% else %}<span class="filter-chip">{% translate "All marketplaces" %}</span>{% endif %}<span class="filter-chip">{{ active_filters.data_kind }}</span><span class="filter-chip">{{ active_filters.sort }}</span><span class="filter-chip">{{ active_filters.review }}</span>{% if selected_product %}<span class="filter-chip">{% translate "Exact product #" %}{{ selected_product.pk }}</span>{% endif %}</div>{% endif %}
+{% if selected_product %}<p class="comparison-explanation">{% translate "Comparing this product:" %} <strong>{{ selected_product.name }}</strong>. <a href="{% url 'core:product_search' %}">{% translate "Show all products" %}</a></p>{% endif %}
 <section class="comparison-summary" aria-labelledby="summary-title">
-    <div class="section-heading"><h2 id="summary-title">Listed-price benchmarks <span class="pill pill-neutral">KZT</span></h2><span class="results-count">{{ summary.count }} valid offer{{ summary.count|pluralize }}</span></div>
-    <p class="comparison-explanation">These statistics use listed prices from the currently displayed filtered offer set only, not the entire marketplace. Delivery and discounts are excluded. Broad searches may include different models, variants, or bundles; narrow the search before comparing equivalent products.</p>
-    {% include "core/includes/price_summary.html" %}
+    <div class="section-heading"><h2 id="summary-title">{% translate "Listed-price benchmarks" %} <span class="pill pill-neutral">KZT</span></h2><span class="results-count">{% blocktranslate count count=summary.count %}{{ count }} valid offer{% plural %}{{ count }} valid offers{% endblocktranslate %}</span></div>
+    <p class="comparison-explanation">{% translate "These statistics use listed prices from the full filtered offer set across all pages, not the entire marketplace. Delivery and discounts are excluded. Broad searches may include different models, variants, or bundles; narrow the search before comparing equivalent products." %}</p>
+    <p class="comparison-explanation">{% translate "Provisional benchmarks include unreviewed associations. Rejected associations are excluded. Manual confirmation is an association review, not verification of prices or automatic cross-marketplace identity." %}</p>
+    {% include "core/includes/scoped_summaries.html" %}
 </section>
 <section aria-labelledby="offers-title">
-    <div class="section-heading offers-heading"><h2 id="offers-title">Filtered offers</h2><span class="results-count">{{ offers|length }} result{{ offers|length|pluralize }}</span></div>
-    <p class="comparison-explanation">Buyer total = listed price − discount amount + buyer delivery. Blank information is unknown, not zero. Product associations in the demo are curated; automatic product matching is not implemented.</p>
-    <div class="offer-list">
-    {% for offer in offers %}
-        {% include "core/includes/offer_card.html" %}
-    {% empty %}
+    <div class="section-heading offers-heading"><h2 id="offers-title">{% translate "Filtered offers" %}</h2><span class="results-count">{% blocktranslate count count=page_obj.paginator.count %}{{ count }} result{% plural %}{{ count }} results{% endblocktranslate %}</span></div>
+    <p class="comparison-explanation">{% translate "Buyer total = listed price − discount amount + buyer delivery. Blank information is unknown, not zero. Product associations in the demo are curated; automatic product matching is not implemented." %}</p>
+    <p class="comparison-explanation">{% translate "CSV offers show their actual import time; marketplace update times remain unknown. History timestamps are snapshot capture times, not marketplace refresh times." %}</p>
+    {% if offers %}{% include "core/includes/offer_table.html" %}{% else %}
         <div class="empty-state"><span class="empty-state-mark" aria-hidden="true">⌕</span>
-            {% if form.errors %}<h3>Check your filters</h3><p>Correct the highlighted fields to search. No offers are displayed for invalid filters.</p>
-            {% else %}<h3>No matching offers</h3><p>Try another product or brand, or select all marketplaces. If the catalog is empty, load the demonstration data using the setup instructions in the README.</p>{% endif %}
-            <a class="button button-secondary" href="{% url 'core:product_search' %}">Reset filters</a>
+            {% if form.errors %}<h3>{% translate "Check your filters" %}</h3><p>{% translate "Correct the highlighted fields to search. No offers are displayed for invalid filters." %}</p>
+            {% else %}<h3>{% translate "No matching offers" %}</h3><p>{% translate "Try another product or brand, or select all marketplaces. If the catalog is empty, load the demonstration data using the setup instructions in the README." %}</p>{% endif %}
+            <a class="button button-secondary" href="{% url 'core:product_search' %}">{% translate "Reset filters" %}</a>
         </div>
-    {% endfor %}
-    </div>
+    {% endif %}
 </section>
+{% include "core/includes/pagination.html" %}
 {% endblock %}

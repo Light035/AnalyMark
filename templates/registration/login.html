@@ -1,13 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
-<section class="page-heading"><p class="eyebrow">Your private workspace</p><h1>Log in to AnalyMark</h1><p class="page-description">Use your local account to save products. Product Search and recorded price history remain public.</p></section>
+<section class="page-heading"><p class="eyebrow">{% translate "Your private workspace" %}</p><h1>{% translate "Log in to AnalyMark" %}</h1><p class="page-description">{% translate "Use your local account to save products. Product Search and recorded price history remain public." %}</p></section>
+<div class="login-layout">
 <form class="panel login-form" method="post" action="{% url 'core:login' %}">
+    <div><p class="eyebrow">{% translate "Welcome back" %}</p><h2>{% translate "Access your Watchlist" %}</h2></div>
     {% csrf_token %}
     {% if form.non_field_errors %}<div class="feedback feedback-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
     {% for field in form %}<div class="form-field">{{ field.label_tag }}{{ field }}{% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}</div>{% endfor %}
     <input type="hidden" name="next" value="{{ next }}">
-    <button class="button button-primary" type="submit">Log in</button>
-    <p class="comparison-explanation">Accounts are created locally by the project administrator. See the README for setup instructions.</p>
-    <a href="{% url 'core:product_search' %}">Continue to public Product Search <span aria-hidden="true">→</span></a>
+    <button class="button button-primary" type="submit">{% translate "Log in" %}</button>
+    <p class="comparison-explanation">{% translate "Accounts are created locally by the project administrator. See the README for setup instructions." %}</p>
+    <a href="{% url 'core:product_search' %}">{% translate "Continue to public Product Search" %} <span aria-hidden="true">→</span></a>
 </form>
+<aside class="login-note" aria-label="{% translate 'Account information' %}"><p class="eyebrow">{% translate "A workspace for better decisions" %}</p><h2>{% translate "Keep your comparisons close." %}</h2><ul><li>{% translate "Save products to your own private Watchlist." %}</li><li>{% translate "Return to offers, source labels and recorded price history." %}</li><li>{% translate "Review incomplete information before making a pricing decision." %}</li></ul><p>{% translate "Logging in does not connect a marketplace, fetch prices or verify product matches." %}</p></aside>
+</div>
 {% endblock %}

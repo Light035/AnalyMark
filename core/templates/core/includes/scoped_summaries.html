@@ -1,0 +1,6 @@
+{% load i18n %}
+<p class="comparison-explanation">{% translate "Benchmarks are separated by marketplace and provenance. Fictional and supplied prices are never combined. Listed prices exclude delivery and discounts; unreviewed associations remain provisional." %}</p>
+{% for group in comparison_groups %}
+<details class="benchmark-scope"{% if comparison_groups|length == 1 %} open{% endif %}><summary>{% include "core/includes/marketplace_identity.html" with market=group.marketplace %} · {% if group.is_demo %}{% translate "DEMO · fictional prices" %}{% else %}{% translate "Imported / manual · not verified live" %}{% endif %} · {{ group.summary.count }}</summary>
+{% include "core/includes/price_summary.html" with summary=group.summary %}</details>
+{% empty %}{% include "core/includes/price_summary.html" %}{% endfor %}

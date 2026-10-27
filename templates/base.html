@@ -1,54 +1,65 @@
-{% load static %}
+{% load static i18n workspace %}
+{% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="AnalyMark is a pricing decision-support MVP for small marketplace sellers in Kazakhstan.">
-    <title>{{ page_title }} | AnalyMark</title>
-    <link rel="stylesheet" href="{% static 'core/css/app.css' %}?v=2">
+    <meta name="description" content="{% translate 'AnalyMark is a B2B price-analysis MVP for small and medium-sized marketplace sellers in Kazakhstan. Kaspi.kz first; demo and manual data, no live integration.' %}">
+    <title>{{ page_title }} {% translate "| AnalyMark" %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'core/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'core/css/app.css' %}?v=6">
 </head>
 <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
+    <a class="skip-link" href="#main-content">{% translate "Skip to content" %}</a>
     <div class="app-shell">
-        <aside class="sidebar" aria-label="Workspace navigation">
-            <a class="brand" href="{% url 'core:dashboard' %}" aria-label="AnalyMark dashboard">
+        <aside class="sidebar" aria-label="{% translate 'Workspace navigation' %}">
+            <a class="brand" href="{% url 'core:dashboard' %}" aria-label="{% translate 'AnalyMark dashboard' %}">
                 <span class="brand-mark" aria-hidden="true">A<span></span></span>
-                <span>AnalyMark<span class="brand-caption">SELLER WORKSPACE</span></span>
+                <span>AnalyMark<span class="brand-caption">{% translate "SELLER WORKSPACE" %}</span></span>
             </a>
-            <p class="nav-label">Workspace</p>
+            <p class="nav-label">{% translate "Workspace" %}</p>
             {% with current=request.resolver_match.url_name %}
-            <nav class="navigation" aria-label="Main navigation">
-                <a href="{% url 'core:dashboard' %}"{% if current == 'dashboard' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">◫</span>Dashboard</a>
-                <a href="{% url 'core:product_search' %}"{% if current == 'product_search' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">⌕</span>Product Search</a>
-                <a href="{% url 'core:watchlist' %}"{% if current == 'watchlist' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">☆</span>Watchlist</a>
-                <a href="{% url 'core:analytics' %}"{% if current == 'analytics' or current == 'product_detail' or current == 'price_history' %} aria-current="page"{% endif %}><span class="nav-symbol" aria-hidden="true">▥</span>Analytics</a>
+            <nav class="navigation" aria-label="{% translate 'Main navigation' %}">
+                <a href="{% url 'core:dashboard' %}"{% if current == 'dashboard' %} aria-current="page"{% endif %}>{% include "core/includes/icon.html" with icon="dashboard" %}{% translate "Dashboard" %}</a>
+                <a href="{% url 'core:product_search' %}"{% if current == 'product_search' %} aria-current="page"{% endif %}>{% include "core/includes/icon.html" with icon="search" %}{% translate "Product Search" %}</a>
+                <a href="{% url 'core:analytics' %}"{% if current == 'analytics' or current == 'product_detail' or current == 'price_history' %} aria-current="page"{% endif %}>{% include "core/includes/icon.html" with icon="analytics" %}{% translate "Analytics" %}</a>
+                <a href="{% url 'core:watchlist' %}"{% if current == 'watchlist' %} aria-current="page"{% endif %}>{% include "core/includes/icon.html" with icon="watchlist" %}{% translate "Watchlist" %}</a>
+                <a href="{% url 'core:data_sources' %}"{% if current == 'data_sources' or current == 'source_manage' or current == 'source_create' %} aria-current="page"{% endif %}>{% include "core/includes/icon.html" with icon="sources" %}{% translate "Data Sources" %}</a>
             </nav>
             {% endwith %}
+            {% marketplace_navigation %}
             <div class="sidebar-note">
-                <span class="small-label">BUILT FOR SELLERS</span>
-                <p>Pricing clarity.<br>Seller control.</p>
-                <span class="sidebar-meta">Kazakhstan · Kaspi.kz first</span>
+                <span class="small-label">{% translate "BUILT FOR SELLERS" %}</span>
+                <p>{% translate "Pricing clarity." %}<br>{% translate "Seller control." %}</p>
+                <a class="sidebar-source-link" href="{% url 'core:data_sources' %}">{% translate "Review your data sources →" %}</a>
+                <span class="sidebar-meta">{% translate "Kazakhstan · Kaspi.kz first" %}</span>
             </div>
-            <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span>University startup MVP</div>
+            <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span>{% translate "University startup MVP" %}</div>
         </aside>
         <div class="main-shell">
             <header class="topbar">
-                <div class="breadcrumb">Workspace <span aria-hidden="true">/</span> <strong>{{ page_title }}</strong></div>
-                <span class="preview-badge">Demonstration MVP</span>
+                <div class="breadcrumb">{% translate "Workspace" %} <span aria-hidden="true">/</span> <strong>{{ page_title }}</strong></div>
+                <span class="preview-badge">{% translate "Demonstration MVP" %}</span>
+                <form class="workspace-search" method="get" action="{% url 'core:product_search' %}" role="search" aria-label="{% translate 'Workspace product search' %}">
+                    <label class="visually-hidden" for="workspace-query">{% translate "Search products or brands" %}</label>
+                    <input id="workspace-query" name="q" type="search" placeholder="{% translate 'Search products or brands' %}">
+                    <button type="submit" aria-label="{% translate 'Search offers' %}">{% include "core/includes/icon.html" with icon="search" %}</button>
+                </form>
                 <div class="account-controls">
+                    <form class="language-switch" method="post" action="{% url 'set_language' %}" aria-label="{% translate 'Language' %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button type="submit" name="language" value="en" aria-pressed="{% if LANGUAGE_CODE == 'en' %}true{% else %}false{% endif %}">EN</button><button type="submit" name="language" value="ru" aria-pressed="{% if LANGUAGE_CODE == 'ru' %}true{% else %}false{% endif %}">RU</button></form>
                     {% if user.is_authenticated %}
                     <span class="account-name">{{ user.get_username }}</span>
-                    <form method="post" action="{% url 'core:logout' %}">{% csrf_token %}<button class="button button-secondary" type="submit">Log out</button></form>
-                    {% elif request.resolver_match.url_name != 'login' %}<a class="button button-secondary" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">Log in</a>{% endif %}
+                    <form method="post" action="{% url 'core:logout' %}">{% csrf_token %}<button class="button button-secondary" type="submit">{% translate "Log out" %}</button></form>
+                    {% elif request.resolver_match.url_name != 'login' %}<a class="button button-primary" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">{% translate "Log in" %}</a>{% endif %}
                 </div>
             </header>
             <main id="main-content" tabindex="-1">
-                <div class="data-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>No live data connected.</strong> Product Search supports demonstration and manually entered records. No marketplace integration is available.</p></div>
+                {% block data_notice %}{% include "core/includes/data_notice.html" %}{% endblock %}
                 {% if messages %}<div class="feedback-list" aria-live="polite">{% for message in messages %}<p class="feedback feedback-{{ message.tags }}"{% if message.tags == 'error' %} role="alert"{% endif %}>{{ message }}</p>{% endfor %}</div>{% endif %}
                 {% block content %}{% endblock %}
             </main>
-            <footer class="page-footer"><span>AnalyMark · Pricing decision support</span><span>Built for small sellers in Kazakhstan</span></footer>
+            <footer class="page-footer"><span>{% translate "AnalyMark · Pricing decision support" %}</span><span>{% translate "Built for small and medium-sized sellers in Kazakhstan" %}</span></footer>
         </div>
     </div>
 </body>

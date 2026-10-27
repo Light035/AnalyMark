@@ -38,7 +38,7 @@ class ProductAnalyticsTests(TestCase):
         cls.product = Product.objects.create(name="Luma lamp", brand="DemoBrand", category="Lighting")
         cls.similar = Product.objects.create(name="Luma lamp bundle", brand="DemoBrand", category="Lighting")
         cls.market = Marketplace.objects.create(name="Kaspi.kz")
-        cls.practice = Marketplace.objects.create(name="Practice marketplace")
+        cls.practice = Marketplace.objects.create(name="Halyk Market")
         cls.a = Offer.objects.create(product=cls.product, marketplace=cls.market, seller_name="Cedar", price="100.10", delivery_cost="200", discount="0")
         cls.b = Offer.objects.create(product=cls.product, marketplace=cls.practice, seller_name="Mosaic", price="200.20", delivery_cost="0", discount="20.20", is_demo=False)
         cls.c = Offer.objects.create(product=cls.product, marketplace=cls.market, seller_name="Paper", price="300.30", delivery_cost=None, discount="0")
@@ -80,7 +80,7 @@ class ProductAnalyticsTests(TestCase):
 
     def test_dashboard_counts_change_with_database_records(self):
         Product.objects.create(name="New catalog record", category="Other")
-        Marketplace.objects.create(name="A marketplace with no offers")
+        Marketplace.objects.create(name="Teez")
         response = self.client.get(reverse("core:dashboard"))
         self.assertEqual(response.context["metrics"]["products"], 3)
         self.assertEqual(response.context["metrics"]["marketplaces"], 3)
@@ -107,29 +107,36 @@ class ProductAnalyticsTests(TestCase):
 
     def test_product_summary_reuses_listed_prices_not_totals_or_other_products(self):
         response = self.detail()
-        self.assertEqual(response.context["summary"], {
-            "count": 4, "minimum": Decimal("100.10"), "maximum": Decimal("400.40"),
-            "average": Decimal("250.25"), "median": Decimal("250.25"),
+        self.assertIsNone(response.context["summary"]["average"])
+        self.assertEqual(next(g["summary"] for g in response.context["comparison_groups"] if g["marketplace"] == "Kaspi.kz"), {
+            "count": 3, "minimum": Decimal("100.10"), "maximum": Decimal("400.40"),
+            "average": Decimal("266.93"), "median": Decimal("300.30"),
         })
         self.assertTemplateUsed(response, "core/includes/price_summary.html")
         self.assertTemplateUsed(response, "core/includes/offer_card.html")
         self.assertContains(response, "Delivery and discounts are excluded")
+        self.assertContains(response, "Each marketplace and provenance type has its own benchmark")
+        self.assertContains(response, "Fictional and supplied prices are never combined")
 
     def test_product_shows_marketplaces_totals_and_unknown_inputs(self):
         response = self.detail()
         self.assertContains(response, "Kaspi.kz")
-        self.assertContains(response, "Practice marketplace")
+        self.assertContains(response, "Halyk Market")
         self.assertContains(response, "180.00")
         self.assertContains(response, "Total unavailable: delivery information missing.")
         self.assertContains(response, "Total unavailable: discount information missing.")
         self.assertContains(response, "Demonstration data · not live")
         self.assertContains(response, "Manually entered · unverified")
+        self.assertContains(response, "marketplace update times remain unknown")
+        self.assertContains(response, "snapshot capture times, not marketplace refresh times")
 
     def test_product_history_orders_only_its_stored_observations(self):
         response = self.detail()
         expected = [self.oldest.pk, self.middle.pk, self.newest.pk]
         self.assertEqual([o.pk for o in response.context["observations"]], expected)
-        self.assertEqual([p["observation"].pk for p in response.context["chart"]["points"]], expected)
+        self.assertIsNone(response.context["chart"])
+        points = [p["observation"] for group in response.context["charts"] for p in group["chart"]["points"]]
+        self.assertEqual([p.pk for p in sorted(points, key=lambda p: (p.observed_at, p.pk))], expected)
         self.assertContains(response, 'class="observation-point"', count=3)
         self.assertContains(response, "Demonstration observation · not live")
         self.assertContains(response, "Manually recorded · unverified")
@@ -205,7 +212,7 @@ class ProductAnalyticsTests(TestCase):
 
     def test_chart_and_table_have_accessible_responsive_structure(self):
         response = self.detail()
-        for fragment in ('name="viewport"', 'viewBox="0 0 760 290"', 'role="img"', 'aria-labelledby="chart-title chart-description"', '<caption>', 'class="table-scroll"', 'tabindex="0"'):
+        for fragment in ('name="viewport"', 'viewBox="0 0 760 290"', 'role="img"', f'aria-labelledby="chart-title-{self.market.pk}-1 chart-description-{self.market.pk}-1"', '<caption>', 'class="table-scroll"', 'tabindex="0"'):
             with self.subTest(fragment=fragment):
                 self.assertContains(response, fragment)
 

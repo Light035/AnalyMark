@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if markets %}<div class="marketplace-shortcuts">
+    <p class="nav-label">{% translate "Marketplaces" %}</p>
+    <nav class="market-navigation" aria-label="{% translate 'Browse by marketplace' %}">
+    {% for market in markets %}<a href="{% url 'core:product_search' %}?marketplace={{ market.pk }}">{% include "core/includes/marketplace_identity.html" with market=market %}</a>{% endfor %}
+    </nav>
+</div>{% endif %}

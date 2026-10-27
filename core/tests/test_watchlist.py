@@ -13,7 +13,7 @@ class WatchlistTests(TestCase):
         cls.bob = get_user_model().objects.create_user(username="bob")
         cls.lamp = Product.objects.create(name="Shared lamp", brand="DemoBrand", category="Lighting")
         cls.other = Product.objects.create(name="Bob-only saved product", category="Office")
-        marketplace = Marketplace.objects.create(name="Demo market")
+        marketplace = Marketplace.objects.create(name="Kaspi.kz")
         Offer.objects.create(product=cls.lamp, marketplace=marketplace, seller_name="Demo", price="100.00")
 
     def test_anonymous_users_are_redirected_for_private_routes(self):

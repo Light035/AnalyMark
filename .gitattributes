@@ -5,3 +5,4 @@
 *.md text eol=lf
 *.txt text eol=lf
 *.docx binary
+static/images/marketplaces/*.svg -text whitespace=cr-at-eol

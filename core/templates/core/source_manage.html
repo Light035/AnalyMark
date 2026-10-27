@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<p><a href="{% url 'core:data_sources' %}">{% translate "Back to Data Sources" %}</a></p>
+<section class="page-heading"><p class="eyebrow">{% translate "Staff source management" %}</p><h1>{% translate "Configure refresh" %}{% if source %}: {{ source.key }}{% endif %}</h1></section>
+{% if source.provider == 'demo' %}<p class="refresh-blocker">{% translate "DEMO fixtures are loaded locally. They cannot be refreshed from a marketplace." %}</p>{% else %}<div class="refresh-blocker" role="status"><strong>{% translate "Kaspi competitor acquisition is blocked." %}</strong><p>{% translate "No approved competitor feed or documented access has been verified. A seller token does not establish competitor access. This configuration cannot fetch real Kaspi prices yet." %}</p></div>{% endif %}
+<section class="panel import-guide">
+    <form method="post" class="source-config-form">
+        {% csrf_token %}
+        {% if form.errors %}<div role="alert"><strong>{% translate "Correct the errors below." %}</strong>{{ form.non_field_errors }}</div>{% endif %}
+        {% for field in form %}<div class="source-config-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<p id="{{ field.auto_id }}_helptext" class="comparison-explanation">{{ field.help_text }}</p>{% endif %}{{ field.errors }}</div>{% endfor %}
+        <button type="submit" class="button button-primary">{% translate "Save configuration" %}</button>
+    </form>
+</section>
+{% if source %}
+<section class="panel import-guide"><h2>{% translate "Refresh operations" %}</h2>
+    <p>{{ source.get_status_display }} · {{ source.import_age_status }}</p>
+    <dl><dt>{% translate "Last attempted import" %}</dt><dd>{% if source.last_attempt_at %}{{ source.last_attempt_at|date:"Y-m-d H:i:s O" }}{% else %}—{% endif %}</dd><dt>{% translate "Last successful import" %}</dt><dd>{% if source.last_success_at %}{{ source.last_success_at|date:"Y-m-d H:i:s O" }}{% else %}—{% endif %}</dd><dt>{% translate "Next scheduled attempt" %}</dt><dd>{% if source.refresh_enabled and source.next_refresh_at %}{{ source.next_refresh_at|date:"Y-m-d H:i:s O" }}{% else %}{% translate "Periodic refresh disabled" %}{% endif %}</dd></dl>
+    {% if source.provider == 'kaspi' %}<form method="post" action="{% url 'core:source_refresh' source.pk %}">{% csrf_token %}<button class="button button-primary" type="submit">{% translate "Queue refresh attempt" %}</button></form>{% endif %}
+    {% if source.provider == 'kaspi' %}<p class="comparison-explanation">{% translate "Queued does not mean fetched. Run the separate worker command; reload to inspect results. Schedules are best-effort, not continuous monitoring or a freshness guarantee." %}</p>
+    <pre tabindex="0"><code>.\.venv\Scripts\python.exe manage.py refresh_sources</code></pre>{% endif %}
+    {% if runs %}<div class="table-scroll" role="region" aria-label="{% translate 'Refresh operation results' %}" tabindex="0"><table class="history-table"><caption>{% translate "Latest ten operations. Times are local execution times, not marketplace updates." %}</caption><thead><tr><th>{% translate "Queued" %}</th><th>{% translate "Started / finished" %}</th><th>{% translate "Status" %}</th><th>{% translate "Results / error" %}</th></tr></thead><tbody>{% for run in runs %}<tr><td>{{ run.queued_at|date:"Y-m-d H:i:s O" }}</td><td>{{ run.started_at|date:"Y-m-d H:i:s O"|default:"—" }}<br>{{ run.finished_at|date:"Y-m-d H:i:s O"|default:"—" }}</td><td>{{ run.get_status_display }}</td><td>{% if run.error %}{{ run.error }}{% elif run.counts %}<dl>{% for key,value in run.counts.items %}<dt>{{ key }}</dt><dd>{{ value }}</dd>{% endfor %}</dl>{% else %}—{% endif %}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p>{% translate "No refresh operations recorded." %}</p>{% endif %}
+</section>
+{% endif %}
+{% endblock %}

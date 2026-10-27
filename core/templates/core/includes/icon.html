@@ -1,0 +1,11 @@
+<svg class="nav-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{% if icon == "dashboard" %}<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+{% elif icon == "search" %}<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+{% elif icon == "analytics" %}<path d="M4 3v17h17M9 15v-4m5 4V6m5 9v-6"/>
+{% elif icon == "watchlist" %}<path d="M6 4h12v17l-6-4-6 4z"/>
+{% elif icon == "sources" %}<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 4 16 4 16 0V5M4 12v7c0 4 16 4 16 0v-7"/>
+{% elif icon == "box" %}<path d="m12 3 9 5v9l-9 5-9-5V8zM3 8l9 5 9-5M12 13v9M7.5 5.5l9 5"/>
+{% elif icon == "tag" %}<path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="7.5" cy="7.5" r="1"/>
+{% elif icon == "document" %}<path d="M14 3H5v18h14V8zM14 3v5h5M8 12h8M8 16h6"/>
+{% elif icon == "target" %}<circle cx="11" cy="13" r="8"/><circle cx="11" cy="13" r="4"/><path d="m11 13 9-10M16 3h4v4"/>
+{% endif %}</svg>

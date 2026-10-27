@@ -1,28 +1,36 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
 <section class="page-heading page-heading-row"><div>
-    <p class="eyebrow">Your pricing workspace</p>
-    <h1>Your catalog, at a glance.</h1>
-    <p class="page-description">Database records you can explore, with the context to judge them. Counts describe this local workspace, not marketplace coverage.</p>
-</div><div class="heading-actions"><a class="button button-primary" href="{% url 'core:product_search' %}">Search offers <span aria-hidden="true">→</span></a><a class="button button-secondary" href="{% url 'core:analytics' %}">Browse product analytics</a></div></section>
-<section class="status-grid dashboard-metrics" aria-label="Current database metrics">
-    <article class="status-card"><span class="card-kicker">Products</span><h2>{{ metrics.products }}</h2><p>Catalog records · identity unverified</p></article>
-    <article class="status-card"><span class="card-kicker">Offers</span><h2>{{ metrics.offers }}</h2><p>{{ metrics.demo_offers }} demo · {{ metrics.unverified_offers }} manually entered, unverified</p></article>
-    <article class="status-card"><span class="card-kicker">Marketplaces</span><h2>{{ metrics.marketplaces }}</h2><p>Named records · no live integration</p></article>
-    <article class="status-card"><span class="card-kicker">Recorded observations</span><h2>{{ metrics.observations }}</h2><p>{{ metrics.demo_observations }} demo · {{ metrics.unverified_observations }} manually recorded, unverified</p></article>
-    {% if user.is_authenticated %}<article class="status-card"><span class="card-kicker">Your Watchlist</span><h2>{{ metrics.watchlist }}</h2><p><a href="{% url 'core:watchlist' %}">View your saved products</a></p></article>{% endif %}
+    <p class="eyebrow">{% translate "Your pricing workspace" %}</p>
+    <h1>{% translate "Workspace overview" %}</h1>
+    <p class="page-description">{% translate "A B2B pricing workspace for small and medium-sized sellers in Kazakhstan. Kaspi.kz is the initial target. Counts describe this local workspace, not marketplace coverage." %}</p>
+</div><div class="heading-actions"><a class="button button-primary" href="{% url 'core:product_search' %}">{% translate "Search offers" %} <span aria-hidden="true">→</span></a><a class="button button-secondary" href="{% url 'core:analytics' %}">{% translate "Browse product analytics" %}</a></div></section>
+<section class="status-grid dashboard-metrics" aria-label="{% translate 'Current database metrics' %}">
+    <article class="status-card"><div class="metric-heading"><span class="card-kicker">{% translate "Products" %}</span><span class="feature-icon">{% include "core/includes/icon.html" with icon="box" %}</span></div><h2>{{ metrics.products }}</h2><p>{% translate "Catalog records · identity unverified" %}</p></article>
+    <article class="status-card"><div class="metric-heading"><span class="card-kicker">{% translate "Offers" %}</span><span class="feature-icon">{% include "core/includes/icon.html" with icon="tag" %}</span></div><h2>{{ metrics.offers }}</h2><p>{{ metrics.demo_offers }} {% translate "demo ·" %} {{ metrics.unverified_offers }} {% translate "manually entered/imported, unverified" %}</p></article>
+    <article class="status-card"><div class="metric-heading"><span class="card-kicker">{% translate "Marketplaces" %}</span><span class="feature-icon">{% include "core/includes/icon.html" with icon="sources" %}</span></div><h2>{{ metrics.marketplaces }}</h2><p>{% translate "Named records · no live integration" %}</p></article>
+    <article class="status-card"><div class="metric-heading"><span class="card-kicker">{% translate "Recorded observations" %}</span><span class="feature-icon">{% include "core/includes/icon.html" with icon="analytics" %}</span></div><h2>{{ metrics.observations }}</h2><p>{{ metrics.demo_observations }} {% translate "demo ·" %} {{ metrics.unverified_observations }} {% translate "manually recorded, unverified" %}</p></article>
+    {% if user.is_authenticated %}<article class="status-card"><div class="metric-heading"><span class="card-kicker">{% translate "Your Watchlist" %}</span><span class="feature-icon">{% include "core/includes/icon.html" with icon="watchlist" %}</span></div><h2>{{ metrics.watchlist }}</h2><p><a href="{% url 'core:watchlist' %}">{% translate "View your saved products" %}</a></p></article>{% endif %}
 </section>
+<section class="data-mix" aria-label="{% translate 'Offer data composition' %}">
+    <span class="mix-title">{% translate "What’s behind the numbers" %}</span>
+    <span><i class="mix-dot demo-dot" aria-hidden="true"></i><strong>{{ data_mix.demo }}</strong> {% translate "demonstration offers" %}</span>
+    <span><i class="mix-dot import-dot" aria-hidden="true"></i><strong>{{ data_mix.imported }}</strong> {% translate "CSV-imported, unverified" %}</span>
+    <span><i class="mix-dot manual-dot" aria-hidden="true"></i><strong>{{ data_mix.manual }}</strong> {% translate "manually entered, unverified" %}</span>
+</section>
+{% include "core/includes/data_sources.html" with compact=True %}
 <div class="dashboard-bottom">
     <section class="panel" aria-labelledby="catalog-title">
-        <div class="section-heading"><h2 id="catalog-title">Explore your catalog</h2><a href="{% url 'core:analytics' %}">All product analytics →</a></div>
+        <div class="section-heading"><h2 id="catalog-title">{% translate "Explore your catalog" %}</h2><a href="{% url 'core:analytics' %}">{% translate "All product analytics →" %}</a></div>
         {% if products %}<div class="catalog-list">{% include "core/includes/catalog_list.html" %}</div>
-        {% else %}<div class="compact-empty"><h3>No products loaded</h3><p>Add products through local administration or load the demonstration catalog using the README. No prices or history are inferred.</p><a class="button button-secondary" href="{% url 'core:product_search' %}">Open Product Search</a></div>{% endif %}
+        {% else %}<div class="compact-empty"><h3>{% translate "No products loaded" %}</h3><p>{% translate "Add products through local administration or load the demonstration catalog using the README. No prices or history are inferred." %}</p><a class="button button-secondary" href="{% url 'core:product_search' %}">{% translate "Open Product Search" %}</a></div>{% endif %}
     </section>
     <section class="panel principles-panel" aria-labelledby="data-title">
-        <p class="eyebrow">Understand the evidence</p><h2 id="data-title">Transparent data.<br>Your decision.</h2>
-        <p>Demonstration prices are invented examples. Manually entered records are unverified. Neither is verified live marketplace data.</p>
-        <div class="principle-note">{% if latest_observation %}Latest stored observation:<br><time datetime="{{ latest_observation|date:'c' }}">{{ latest_observation|date:"Y-m-d H:i:s O" }}</time><br>This is a recording time, not a marketplace refresh time.{% else %}No price observations recorded. History remains empty until observations are explicitly captured.{% endif %}</div>
-        <div class="offer-actions"><a class="button button-primary" href="{% url 'core:product_search' %}">Search offers</a>{% if user.is_authenticated %}<a href="{% url 'core:watchlist' %}">Your Watchlist</a>{% else %}<a href="{% url 'core:login' %}?next={% url 'core:watchlist' %}">Log in for a private Watchlist</a>{% endif %}</div>
+        <p class="eyebrow">{% translate "Data quality" %}</p><h2 id="data-title">{% translate "Know what you’re comparing" %}</h2>
+        <p>{% translate "Demonstration prices are invented examples. Manually entered/imported records are unverified. Neither is verified live marketplace data." %}</p>
+        <div class="principle-note">{% if latest_observation %}{% translate "Latest stored observation:" %}<br><time datetime="{{ latest_observation|date:'c' }}">{{ latest_observation|date:"Y-m-d H:i:s O" }}</time><br>{% translate "This is a recording time, not a marketplace refresh time." %}{% else %}{% translate "No price observations recorded. History remains empty until observations are explicitly captured." %}{% endif %}</div>
+        <div class="offer-actions"><a class="button button-primary" href="{% url 'core:product_search' %}">{% translate "Search offers" %}</a>{% if user.is_authenticated %}<a href="{% url 'core:watchlist' %}">{% translate "Your Watchlist" %}</a>{% else %}<a href="{% url 'core:login' %}?next={% url 'core:watchlist' %}">{% translate "Log in for a private Watchlist" %}</a>{% endif %}</div>
     </section>
 </div>
 {% endblock %}

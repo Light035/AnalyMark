@@ -1,25 +1,30 @@
-        <article class="panel offer-card">
-            <div class="offer-heading">
-                <div>{% if request.resolver_match.url_name == 'product_detail' %}<p class="offer-brand">{{ offer.marketplace.name }}</p><h3>{{ offer.seller_name }}</h3>{% else %}<p class="offer-brand">{% if offer.product.brand %}{{ offer.product.brand }} · {% endif %}{{ offer.product.category }}</p><h3><a href="{% url 'core:product_detail' offer.product_id %}">{{ offer.product.name }}</a></h3>{% endif %}</div>
-                {% if offer.is_demo %}<span class="pill pill-demo">Demonstration data · not live</span>{% else %}<span class="pill pill-neutral">Manually entered · unverified</span>{% endif %}
-            </div>
-            {% if request.resolver_match.url_name != 'product_detail' %}<p class="offer-source"><strong>{{ offer.marketplace.name }}</strong> <span aria-hidden="true">/</span> Seller: {{ offer.seller_name }}</p>
-            {% if offer.product.description %}<p class="offer-description">{{ offer.product.description }}</p>{% endif %}{% endif %}
-            <dl class="offer-amounts">
-                <div><dt>Listed price</dt><dd>{{ offer.price|floatformat:"2g" }} <small>KZT</small></dd></div>
-                <div><dt>Buyer delivery</dt><dd>{% if offer.delivery_cost != None %}{{ offer.delivery_cost|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">Unknown</span>{% endif %}</dd></div>
-                <div><dt>Discount amount</dt><dd>{% if offer.discount != None %}{{ offer.discount|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">Unknown</span>{% endif %}</dd></div>
-                <div class="buyer-total{% if offer.total_buyer_cost == None %} buyer-total-unknown{% endif %}"><dt>Buyer total</dt><dd>{% if offer.total_buyer_cost != None %}{{ offer.total_buyer_cost|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">Unavailable</span>{% endif %}</dd></div>
-            </dl>
-            <div class="offer-footer">
-                {% if offer.total_buyer_cost == None %}<span class="incomplete-warning">Total unavailable: {% if offer.delivery_cost == None %}delivery{% endif %}{% if offer.delivery_cost == None and offer.discount == None %} and {% endif %}{% if offer.discount == None %}discount{% endif %} information missing.</span>{% else %}<span>Delivery and discount are explicitly known.</span>{% endif %}
-                {% if offer.product_url %}<span><a href="{{ offer.product_url }}" target="_blank" rel="noopener noreferrer">{% if offer.is_demo %}Example product URL{% else %}Product URL{% endif %} ↗</a>{% if offer.is_demo %}<small>Illustrative link; may not resolve.</small>{% endif %}</span>{% else %}<span>Product URL not provided</span>{% endif %}
-            </div>
-            <div class="offer-actions">
-                <div class="offer-links">{% if request.resolver_match.url_name != 'product_detail' %}<a href="{% url 'core:product_detail' offer.product_id %}">Product analytics</a>{% endif %}<a href="{% url 'core:price_history' offer.pk %}">View recorded listed-price history</a></div>
-                {% if user.is_authenticated %}
-                    {% if offer.product_id in saved_product_ids %}<a href="{% url 'core:watchlist' %}">Saved to your Watchlist</a>
-                    {% else %}<form method="post" action="{% url 'core:watchlist_add' offer.product_id %}">{% csrf_token %}<button class="button button-secondary" type="submit" aria-label="Save product: {{ offer.product.name }}">Save product</button></form>{% endif %}
-                {% else %}<a href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">Log in to save product</a>{% endif %}
-            </div>
-        </article>
+{% load i18n %}
+<tr class="offer-card" role="row">
+    <td class="offer-product" role="cell">
+        {% if request.resolver_match.url_name == 'product_detail' %}<h3>{{ offer.seller_name }}</h3>{% else %}<h3><a href="{% url 'core:product_detail' offer.product_id %}">{{ offer.product.name }}</a></h3>{% endif %}
+        <p class="offer-brand">{% if offer.product.brand %}{{ offer.product.brand }} · {% endif %}{{ offer.product.category }}</p>
+        <span class="match-note{% if offer.match_status == 'confirmed' %} match-confirmed{% elif offer.match_status == 'rejected' %} match-rejected{% endif %}">{{ offer.get_match_status_display }}</span>
+        {% if offer.match_status == 'confirmed' %}<p class="source-time">{% translate "Association confirmed manually; price and source remain unverified." %}</p>{% elif offer.match_status == 'rejected' %}<p class="source-time">{% translate "Excluded from benchmarks and product history." %}</p>{% endif %}
+        <details class="offer-details"><summary>{% translate "Details &amp; reference" %}</summary>
+            {% if offer.product.description %}<p>{{ offer.product.description }}</p>{% endif %}
+            <p>{% translate "Review the exact model, variant and bundle. A shared product ID does not verify a marketplace match." %}</p>
+            {% if offer.match_notes %}<p>{{ offer.match_notes }}</p>{% endif %}{% if offer.match_reviewed_at %}<p>{% translate "Reviewed:" %} <time datetime="{{ offer.match_reviewed_at|date:'c' }}">{{ offer.match_reviewed_at|date:"Y-m-d H:i:s O" }}</time></p>{% endif %}
+            {% if offer.product_url %}<a href="{{ offer.product_url }}" target="_blank" rel="noopener noreferrer">{% if offer.is_demo %}{% translate "Example product URL" %}{% else %}{% translate "Product URL" %}{% endif %} ↗</a>{% if offer.is_demo %}<p>{% translate "Illustrative link; may not resolve." %}</p>{% endif %}{% else %}<p>{% translate "Product URL not provided" %}</p>{% endif %}
+        </details>
+    </td>
+    <td class="offer-provenance" role="cell"><span class="mobile-cell-label" aria-hidden="true">{% translate "Marketplace / source" %}</span>
+        <strong>{% include "core/includes/marketplace_identity.html" with market=offer.marketplace %}</strong>{% if request.resolver_match.url_name != 'product_detail' %}<span class="seller-label">{% translate "Seller:" %} {{ offer.seller_name }}</span>{% endif %}
+        {% if offer.is_demo %}<span class="pill pill-demo">{% translate "Demonstration data · not live" %}</span>{% elif offer.import_record and offer.import_record.source.provider != "csv" %}<span class="pill pill-import">{% translate "Provider refresh · unverified" %}</span>{% elif offer.import_record %}<span class="pill pill-import">{% translate "CSV import · unverified · not live" %}</span>{% else %}<span class="pill pill-neutral">{% translate "Manually entered · unverified" %}</span>{% endif %}
+        {% if offer.import_record %}<p class="source-time">{% translate "Source:" %} {{ offer.import_record.source.key }} {% if offer.import_record.source.provider == "csv" %}{% translate "· Manual CSV" %}{% else %} · {{ offer.import_record.source.get_provider_display }}{% endif %}{% if offer.is_demo %} {% translate "· illustrative input" %}{% endif %}<br>{% translate "Last imported:" %} <time datetime="{{ offer.import_record.imported_at|date:'c' }}">{{ offer.import_record.imported_at|date:"Y-m-d H:i:s O" }}</time><br>{% translate "Import time is not a marketplace update time." %}</p>{% else %}<p class="source-time">{% translate "Current offer update time unknown. No recorded import provenance." %}</p>{% endif %}
+    </td>
+    <td class="listed-price" role="cell"><span class="mobile-cell-label" aria-hidden="true">{% translate "Listed price" %}</span><strong class="money">{{ offer.price|floatformat:"2g" }} <small>KZT</small></strong><span class="price-caption">{% translate "Before separate discount" %}</span></td>
+    <td class="offer-charges" role="cell"><dl><div><dt>{% translate "Buyer delivery" %}</dt><dd>{% if offer.delivery_cost != None %}{{ offer.delivery_cost|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">{% translate "Unknown" %}</span>{% endif %}</dd></div><div><dt>{% translate "Discount amount" %}</dt><dd>{% if offer.discount != None %}{{ offer.discount|floatformat:"2g" }} <small>KZT</small>{% else %}<span class="unknown-value">{% translate "Unknown" %}</span>{% endif %}</dd></div></dl></td>
+    <td class="buyer-total{% if offer.total_buyer_cost == None %} buyer-total-unknown{% endif %}" role="cell"><span class="mobile-cell-label" aria-hidden="true">{% translate "Buyer total" %}</span>
+        {% if offer.total_buyer_cost != None %}<strong class="money">{{ offer.total_buyer_cost|floatformat:"2g" }} <small>KZT</small></strong><span class="price-caption">{% translate "Delivery and discount are explicitly known." %}</span>{% else %}<strong class="unknown-value">{% translate "Unavailable" %}</strong><span class="incomplete-warning">{% translate "Total unavailable:" %} {% if offer.delivery_cost == None %}{% translate "delivery" %}{% endif %}{% if offer.delivery_cost == None and offer.discount == None %} {% translate "and" %} {% endif %}{% if offer.discount == None %}{% translate "discount" %}{% endif %} {% translate "information missing." %}</span>{% endif %}
+    </td>
+    <td class="offer-actions-cell" role="cell"><div class="row-actions">
+        {% if request.resolver_match.url_name != 'product_detail' %}<a class="row-link" href="{% url 'core:product_detail' offer.product_id %}?marketplace={{ offer.marketplace_id }}&amp;data_kind={% if offer.is_demo %}demo{% else %}non_demo{% endif %}">{% translate "Product analytics →" %}</a>{% endif %}
+        <a class="row-link" href="{% url 'core:price_history' offer.pk %}">{% translate "View recorded listed-price history" %}</a>
+        {% if user.is_authenticated %}{% if offer.product_id in saved_product_ids %}<a class="saved-state" href="{% url 'core:watchlist' %}">{% translate "✓ Saved to your Watchlist" %}</a>{% else %}<form method="post" action="{% url 'core:watchlist_add' offer.product_id %}">{% csrf_token %}<button class="button button-secondary button-small" type="submit" aria-label="{% translate 'Save product:' %} {{ offer.product.name }}">{% translate "Save product" %}</button></form>{% endif %}{% else %}<a class="button button-secondary button-small" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">{% translate "Log in to save product" %}</a>{% endif %}
+    </div></td>
+</tr>

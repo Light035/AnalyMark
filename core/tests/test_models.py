@@ -10,7 +10,7 @@ from core.models import Marketplace, Offer, Product
 class CatalogModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.marketplace = Marketplace.objects.create(name="Test marketplace")
+        cls.marketplace = Marketplace.objects.create(name="Kaspi.kz")
         cls.product = Product.objects.create(name="Test lamp", category="Lighting")
 
     def offer(self, **overrides):
@@ -28,7 +28,7 @@ class CatalogModelTests(TestCase):
         offer.full_clean()
         self.assertTrue(offer.is_demo)
         self.assertEqual(str(self.product), "Test lamp")
-        self.assertEqual(str(self.marketplace), "Test marketplace")
+        self.assertEqual(str(self.marketplace), "Kaspi.kz")
         self.assertIn("Test seller", str(offer))
 
     def test_required_names_and_category_reject_whitespace(self):

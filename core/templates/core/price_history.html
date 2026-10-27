@@ -1,19 +1,24 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load tz %}
 {% block content %}
 {% get_current_timezone as display_timezone %}
-<section class="page-heading"><p class="eyebrow">Stored observations</p><h1>Recorded listed-price history</h1><p class="page-description">{{ offer.product.name }} · {{ offer.marketplace.name }} · {{ offer.seller_name }}</p></section>
-<p class="comparison-explanation">These are actual stored snapshots, not reconstructed past prices. Demonstration observations record invented demo prices at command execution time; they do not represent real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend or continuous monitoring. Delivery and discounts are excluded. Product associations are unverified.</p>
-<p><a class="button button-secondary" href="{% url 'core:product_detail' offer.product_id %}"><span aria-hidden="true">←</span> Back to this product’s analytics</a></p>
+<p class="comparison-explanation"><a href="{% url 'core:analytics' %}">{% translate "Product analytics" %}</a> <span aria-hidden="true">/</span> <a href="{% url 'core:product_detail' offer.product_id %}">{{ offer.product.name }}</a> <span aria-hidden="true">/</span> {% translate "Offer history" %}</p>
+<section class="page-heading"><p class="eyebrow">{% translate "Stored observations" %}</p><h1>{% translate "Recorded listed-price history" %}</h1><p class="page-description">{{ offer.product.name }} · {% include "core/includes/marketplace_identity.html" with market=offer.marketplace %} · {{ offer.seller_name }}</p></section>
+{% if not offer.marketplace.is_supported %}<div class="feedback" role="status">{% translate "Archived marketplace: this history is retained for reference and excluded from active comparisons." %}</div>{% endif %}
+<p class="comparison-explanation">{% translate "These are actual stored snapshots, not reconstructed past prices. Demonstration observations record invented demo prices at command execution time; they do not represent real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend or continuous monitoring. Delivery and discounts are excluded. Product associations are unverified." %}</p>
+<p><a class="button button-secondary" href="{% url 'core:product_detail' offer.product_id %}"><span aria-hidden="true">←</span> {% translate "Back to this product’s analytics" %}</a></p>
+<p class="comparison-explanation">{{ offer.get_match_status_display }}{% translate ". Stored observations are factual application records, not proof that this offer matches the catalog product." %}</p>
 {% if observations %}
-<div class="panel history-panel"><div class="table-scroll" role="region" aria-label="Scrollable offer observation table" tabindex="0"><table class="history-table">
-    <caption>Listed-price observations for this offer, newest first. Times shown in {{ display_timezone }} with UTC offsets.</caption>
-    <thead><tr><th scope="col">Recorded at</th><th scope="col">Listed price (KZT)</th><th scope="col">Data source</th></tr></thead>
+<div class="panel history-panel"><div class="table-scroll" role="region" aria-label="{% translate 'Scrollable offer observation table' %}" tabindex="0"><table class="history-table">
+    <caption>{% translate "Listed-price observations for this offer, newest first. Times shown in" %} {{ display_timezone }} {% translate "with UTC offsets." %}</caption>
+    <thead><tr><th scope="col">{% translate "Recorded at" %}</th><th scope="col">{% translate "Listed price (KZT)" %}</th><th scope="col">{% translate "Data source" %}</th></tr></thead>
     <tbody>{% for observation in observations %}<tr>
         <td><time datetime="{{ observation.observed_at|date:'c' }}">{{ observation.observed_at|date:"Y-m-d H:i:s O" }}</time></td>
         <td>{{ observation.price|floatformat:"2g" }} KZT</td>
-        <td>{% if observation.is_demo %}<span class="pill pill-demo">Demonstration observation · not live</span>{% else %}<span class="pill pill-neutral">Manually recorded · unverified</span>{% endif %}</td>
+        <td>{% include "core/includes/observation_source.html" %}</td>
     </tr>{% endfor %}</tbody>
 </table></div></div>
-{% else %}<div class="empty-state"><h2>No observations recorded</h2><p>There is no stored price history for this offer. No historical prices have been generated or inferred.</p></div>{% endif %}
+{% else %}<div class="empty-state"><h2>{% translate "No observations recorded" %}</h2><p>{% translate "There is no stored price history for this offer. No historical prices have been generated or inferred." %}</p></div>{% endif %}
+{% include "core/includes/pagination.html" %}
 {% endblock %}

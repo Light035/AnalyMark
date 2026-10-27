@@ -1,0 +1,1421 @@
+# Russian interface translations. Stored product/source content is not translated.
+msgid ""
+msgstr "Project-Id-Version: AnalyMark\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+msgid ", then fill in your records. The template contains headers only. Use UTF-8, comma-separated values, KZT amounts and separate stable product/variant and seller-offer IDs. Limit: 2 MiB and 1,000 rows."
+msgstr ", затем заполните файл своими записями. Шаблон содержит только заголовки. Формат: UTF-8, разделитель — запятая, суммы в KZT, отдельные устойчивые ID товара/варианта и предложения продавца. Ограничения: 2 МиБ и 1 000 строк."
+
+msgid ". Read the created/updated/unchanged counts and correct any reported row errors. Preview rolls back every write, including source status."
+msgstr ". Проверьте количество создаваемых, обновляемых и неизменённых записей, исправьте ошибки строк. Предпросмотр отменяет все изменения, включая статус источника."
+
+msgid ". Stored observations are factual application records, not proof that this offer matches the catalog product."
+msgstr ". Сохранённые наблюдения отражают записи приложения и не доказывают соответствие предложения товару."
+
+msgid "A B2B pricing workspace for small and medium-sized sellers in Kazakhstan. Kaspi.kz is the initial target. Counts describe this local workspace, not marketplace coverage."
+msgstr "B2B-инструмент анализа цен для малого и среднего бизнеса Казахстана. Первый целевой маркетплейс — Kaspi.kz. Числа относятся к локальной базе, а не к охвату маркетплейса."
+
+msgid "A manual review of this offer's link to its catalog product, not verification of its price or cross-marketplace identity."
+msgstr "Ручная проверка связи предложения с товаром каталога, а не достоверности цены или идентичности между маркетплейсами."
+
+msgid "A workspace for better decisions"
+msgstr "Рабочее пространство для обоснованных решений"
+
+msgid "Access your Watchlist"
+msgstr "Откройте свой список наблюдения"
+
+msgid "Account information"
+msgstr "Об учётной записи"
+
+msgid "Accounts are created locally by the project administrator. See the README for setup instructions."
+msgstr "Учётные записи создаёт администратор проекта локально. Инструкции приведены в README."
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Active search filters"
+msgstr "Активные фильтры поиска"
+
+msgid "Actual import times shown below"
+msgstr "Ниже указано фактическое время импорта"
+
+msgid "Add products through local administration or load the demonstration catalog using the README. No prices or history are inferred."
+msgstr "Добавьте товары через локальную панель администратора или загрузите демонстрационный каталог по README. Цены и история не достраиваются."
+
+msgid "All associations"
+msgstr "Все связи"
+
+msgid "All marketplaces"
+msgstr "Все маркетплейсы"
+
+msgid "All product analytics"
+msgstr "Аналитика всех товаров"
+
+msgid "All product analytics →"
+msgstr "Аналитика всех товаров →"
+
+msgid "AnalyMark dashboard"
+msgstr "Обзор AnalyMark"
+
+msgid "AnalyMark · Pricing decision support"
+msgstr "AnalyMark · Поддержка ценовых решений"
+
+msgid "Analytics"
+msgstr "Аналитика"
+
+msgid "Apply filters"
+msgstr "Применить фильтры"
+
+msgid "Apply the reviewed file"
+msgstr "Примените проверенный файл"
+
+msgid "Association confirmed manually; price and source remain unverified."
+msgstr "Связь подтверждена вручную; цена и источник остаются непроверенными."
+
+msgid "Association review counts"
+msgstr "Количество связей по статусам проверки"
+
+msgid "Available offers"
+msgstr "Доступные предложения"
+
+msgid "Available through a local command"
+msgstr "Доступен через локальную команду"
+
+msgid "Average"
+msgstr "Средняя"
+
+msgid "BUILT FOR SELLERS"
+msgstr "ДЛЯ ПРОДАВЦОВ"
+
+msgid "Back to Dashboard"
+msgstr "Вернуться к обзору"
+
+msgid "Back to this product’s analytics"
+msgstr "Вернуться к аналитике товара"
+
+msgid "Before separate discount"
+msgstr "До отдельной скидки"
+
+msgid "Blank delivery/discount means unknown on create and preserves known values on update. Enter zero only when explicitly known."
+msgstr "Пустая доставка/скидка означает неизвестное значение при создании и сохраняет известное при обновлении. Указывайте ноль только при достоверном отсутствии расходов/скидки."
+
+msgid "Browse product analytics"
+msgstr "Открыть аналитику товаров"
+
+msgid "Browse product offers"
+msgstr "Посмотреть предложения"
+
+msgid "Built for small and medium-sized sellers in Kazakhstan"
+msgstr "Для малого и среднего бизнеса Казахстана"
+
+msgid "Buyer delivery"
+msgstr "Доставка покупателю"
+
+msgid "Buyer total"
+msgstr "Итого для покупателя"
+
+msgid "Buyer total = listed price − discount amount + buyer delivery. Blank information is unknown, not zero. Product associations in the demo are curated; automatic product matching is not implemented."
+msgstr "Итого = указанная цена − сумма скидки + доставка покупателю. Пропуск означает неизвестное значение, а не ноль. Демонстрационные связи заданы вручную; автоматическое сопоставление товаров не реализовано."
+
+msgid "Buyer total: high to low"
+msgstr "Итого: по убыванию"
+
+msgid "Buyer total: low to high"
+msgstr "Итого: по возрастанию"
+
+msgid "CSV apply command"
+msgstr "Команда применения CSV"
+
+msgid "CSV import · unverified · not live"
+msgstr "Импорт CSV · не проверено · не онлайн"
+
+msgid "CSV offers show their actual import time; marketplace update times remain unknown. History timestamps are snapshot capture times, not marketplace refresh times."
+msgstr "Для CSV указано фактическое время импорта; время обновления маркетплейса неизвестно. Время в истории — это момент записи снимка, а не обновления маркетплейса."
+
+msgid "CSV preview command"
+msgstr "Команда предпросмотра CSV"
+
+msgid "CSV-imported, unverified"
+msgstr "импортировано из CSV, не проверено"
+
+msgid "Catalog records · identity unverified"
+msgstr "Записи каталога · идентичность не проверена"
+
+msgid "Changing the catalog product requires a confirmed manual review and explanation."
+msgstr "Чтобы изменить товар каталога, подтвердите соответствие вручную и укажите обоснование."
+
+msgid "Check your filters"
+msgstr "Проверьте фильтры"
+
+msgid "Check your filters."
+msgstr "Проверьте фильтры."
+
+msgid "Choose a product to review its own offers, listed-price benchmarks, and recorded history. Similar names are kept separate by product ID; associations remain unverified."
+msgstr "Выберите товар, чтобы изучить его предложения, ценовые показатели и сохранённую историю. Похожие названия не объединяются: используются ID товаров. Связи требуют проверки."
+
+msgid "Compare offers"
+msgstr "Сравнить предложения"
+
+msgid "Compare this product"
+msgstr "Сравнить этот товар"
+
+msgid "Comparing this product:"
+msgstr "Сравнение товара:"
+
+msgid "Continue to public Product Search"
+msgstr "Перейти к общедоступному поиску товаров"
+
+msgid "Copy"
+msgstr "Скопируйте"
+
+msgid "Correct the highlighted fields to search. No offers are displayed for invalid filters."
+msgstr "Исправьте выделенные поля. При некорректных фильтрах предложения не отображаются."
+
+msgid "Current database metrics"
+msgstr "Текущие показатели базы данных"
+
+msgid "Current offer update time unknown. No recorded import provenance."
+msgstr "Время обновления предложения неизвестно. Данные об импорте не записаны."
+
+msgid "Current stored offers · KZT. Listed prices exclude delivery and discounts; buyer totals require both. On small screens each row becomes a comparison card."
+msgstr "Сохранённые предложения · KZT. Указанная цена не включает доставку и скидку; для итоговой стоимости нужны оба значения. На небольших экранах строки становятся карточками."
+
+msgid "Current view"
+msgstr "Текущий набор"
+
+msgid "Dashboard"
+msgstr "Обзор"
+
+msgid "Data Sources"
+msgstr "Источники данных"
+
+msgid "Data quality"
+msgstr "Качество данных"
+
+msgid "Data source"
+msgstr "Источник данных"
+
+msgid "Data sources"
+msgstr "Источники данных"
+
+msgid "Delivery &amp; discount"
+msgstr "Доставка и скидка"
+
+msgid "Delivery and discount are explicitly known."
+msgstr "Доставка и скидка явно известны."
+
+msgid "Demonstration CSV · not live"
+msgstr "Демонстрационный CSV · не онлайн"
+
+msgid "Demonstration MVP"
+msgstr "Демонстрационный MVP"
+
+msgid "Demonstration catalog"
+msgstr "Демонстрационный каталог"
+
+msgid "Demonstration data · not live"
+msgstr "Демонстрационные данные · не онлайн"
+
+msgid "Demonstration observation · not live"
+msgstr "Демонстрационное наблюдение · не онлайн"
+
+msgid "Demonstration prices are invented examples. Manually entered/imported records are unverified. Neither is verified live marketplace data."
+msgstr "Демонстрационные цены придуманы. Внесённые вручную и импортированные записи не проверены. Ни один из этих типов не является проверенными онлайн-данными маркетплейса."
+
+msgid "Details &amp; reference"
+msgstr "Подробности и ссылка"
+
+msgid "Discount amount"
+msgstr "Сумма скидки"
+
+msgid "Discover and compare"
+msgstr "Поиск и сравнение"
+
+msgid "Each offer identifies its marketplace and seller. Buyer total = listed price − discount amount + buyer delivery. Unknown inputs remain unknown."
+msgstr "У каждого предложения указан маркетплейс и продавец. Итого для покупателя = цена − сумма скидки + доставка. Неизвестные значения остаются неизвестными."
+
+msgid "Each point is one stored observation. Colors identify offers. Filled points are demonstration data; open points are manually recorded, unverified data. The following table contains every date, price, seller, and source label. No lines join observations."
+msgstr "Каждая точка — одно сохранённое наблюдение. Цвет обозначает предложение. Заполненные точки — демоданные, незаполненные — ручные непроверенные записи. Таблица ниже содержит все даты, цены, продавцов и источники. Точки не соединяются линиями."
+
+msgid "Every stored observation for this product’s offers, in timestamp order. Prices exclude discounts and buyer delivery."
+msgstr "Все наблюдения предложений этого товара на данной странице по времени записи. Цены не включают скидку и доставку."
+
+msgid "Exact product #"
+msgstr "Точный товар №"
+
+msgid "Example product URL"
+msgstr "Демонстрационная ссылка на товар"
+
+msgid "Excluded from benchmarks and product history."
+msgstr "Исключено из ценовых показателей и истории товара."
+
+msgid "Explain why this association is confirmed or rejected."
+msgstr "Объясните, почему связь подтверждена или отклонена."
+
+msgid "Explore stored offers →"
+msgstr "Изучить сохранённые предложения →"
+
+msgid "Explore your catalog"
+msgstr "Ваш каталог"
+
+msgid "File columns, update rules and limitations"
+msgstr "Столбцы файла, правила обновления и ограничения"
+
+msgid "Filter product offers"
+msgstr "Фильтры предложений товаров"
+
+msgid "Filtered offers"
+msgstr "Отфильтрованные предложения"
+
+msgid "Filters use the page URL, so you can bookmark this view. Unknown buyer totals sort last."
+msgstr "Фильтры сохраняются в адресе страницы — его можно добавить в закладки. Неизвестная итоговая стоимость всегда в конце сортировки."
+
+msgid "Find products"
+msgstr "Найти товары"
+
+msgid "First"
+msgstr "Первая"
+
+msgid "How to import a CSV →"
+msgstr "Как импортировать CSV →"
+
+msgid "Illustrative link; may not resolve."
+msgstr "Пример ссылки; может не открываться."
+
+msgid "Import source status table"
+msgstr "Таблица состояния источников импорта"
+
+msgid "Import time is not a marketplace update time."
+msgstr "Время импорта не является временем обновления маркетплейса."
+
+msgid "Imports do not create historical prices. No verified matching, marketplace update timestamp, live availability or continuous monitoring is established."
+msgstr "Импорт не создаёт исторических цен. Он не подтверждает соответствия товаров, время обновления маркетплейса, актуальную доступность или непрерывное наблюдение."
+
+msgid "KZT ·"
+msgstr "KZT ·"
+
+msgid "Kaspi.kz is the first target"
+msgstr "Первый целевой маркетплейс — Kaspi.kz"
+
+msgid "Kazakhstan · Kaspi.kz first"
+msgstr "Казахстан · сначала Kaspi.kz"
+
+msgid "Keep your comparisons close."
+msgstr "Сохраняйте нужные сравнения."
+
+msgid "Know what you’re comparing"
+msgstr "Понимайте, что сравниваете"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Last"
+msgstr "Последняя"
+
+msgid "Last import failed"
+msgstr "Последний импорт завершился ошибкой"
+
+msgid "Last import succeeded"
+msgstr "Последний импорт успешен"
+
+msgid "Last imported:"
+msgstr "Последний импорт:"
+
+msgid "Last successful import"
+msgstr "Последний успешный импорт"
+
+msgid "Latest operation"
+msgstr "Последняя операция"
+
+msgid "Latest stored observation:"
+msgstr "Последнее сохранённое наблюдение:"
+
+msgid "Listed price"
+msgstr "Указанная цена"
+
+msgid "Listed price (KZT)"
+msgstr "Указанная цена (KZT)"
+
+msgid "Listed price · KZT"
+msgstr "Указанная цена · KZT"
+
+msgid "Listed price: high to low"
+msgstr "Указанная цена: по убыванию"
+
+msgid "Listed price: low to high"
+msgstr "Указанная цена: по возрастанию"
+
+msgid "Listed-price benchmarks"
+msgstr "Ценовые показатели"
+
+msgid "Listed-price observations for this offer, newest first. Times shown in"
+msgstr "Наблюдения указанной цены этого предложения, сначала новые. Часовой пояс:"
+
+msgid "Load time not recorded"
+msgstr "Время загрузки не записано"
+
+msgid "Log in"
+msgstr "Войти"
+
+msgid "Log in for a private Watchlist"
+msgstr "Войти для личного списка наблюдения"
+
+msgid "Log in to AnalyMark"
+msgstr "Вход в AnalyMark"
+
+msgid "Log in to save product"
+msgstr "Войти, чтобы сохранить товар"
+
+msgid "Log in, then retry removing the product from your Watchlist."
+msgstr "Войдите и повторите удаление товара из списка наблюдения."
+
+msgid "Log in, then save the product again."
+msgstr "Войдите и повторите сохранение товара."
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Logging in does not connect a marketplace, fetch prices or verify product matches."
+msgstr "Вход не подключает маркетплейс, не загружает цены и не подтверждает соответствие товаров."
+
+msgid "MVP DIRECTION"
+msgstr "НАПРАВЛЕНИЕ MVP"
+
+msgid "Main navigation"
+msgstr "Основная навигация"
+
+msgid "Manual CSV"
+msgstr "Ручной CSV"
+
+msgid "Manual CSV · unverified · not live"
+msgstr "Ручной CSV · не проверено · не онлайн"
+
+msgid "Manually confirmed match"
+msgstr "Соответствие подтверждено вручную"
+
+msgid "Manually entered or demonstration record; no source IDs recorded."
+msgstr "Ручная или демонстрационная запись; ID источника не записаны."
+
+msgid "Manually entered · unverified"
+msgstr "Введено вручную · не проверено"
+
+msgid "Manually recorded · unverified"
+msgstr "Записано вручную · не проверено"
+
+msgid "Marketplace"
+msgstr "Маркетплейс"
+
+msgid "Marketplace &amp; source"
+msgstr "Маркетплейс и источник"
+
+msgid "Marketplace / seller"
+msgstr "Маркетплейс / продавец"
+
+msgid "Marketplace / source"
+msgstr "Маркетплейс / источник"
+
+msgid "Marketplaces"
+msgstr "Маркетплейсы"
+
+msgid "Match review"
+msgstr "Проверка соответствия"
+
+msgid "Maximum"
+msgstr "Максимальная"
+
+msgid "Median"
+msgstr "Медиана"
+
+msgid "Minimum"
+msgstr "Минимальная"
+
+msgid "Mode / status"
+msgstr "Режим / статус"
+
+msgid "Named records · no live integration"
+msgstr "Названия в базе · без онлайн-интеграции"
+
+msgid "Next"
+msgstr "Далее"
+
+msgid "No CSV imports recorded."
+msgstr "Импортов CSV пока нет."
+
+msgid "No current prices are available. Benchmarks are unavailable rather than zero."
+msgstr "Текущие цены отсутствуют. Показатели недоступны, а не равны нулю."
+
+msgid "No file upload endpoint"
+msgstr "Загрузка файлов через сайт отсутствует"
+
+msgid "No live data connected."
+msgstr "Онлайн-данные не подключены."
+
+msgid "No live source connected"
+msgstr "Онлайн-источник не подключён"
+
+msgid "No matching offers"
+msgstr "Подходящих предложений нет"
+
+msgid "No observations recorded"
+msgstr "Наблюдений пока нет"
+
+msgid "No offers for this product"
+msgstr "Предложений для этого товара нет"
+
+msgid "No price observations recorded. History remains empty until observations are explicitly captured."
+msgstr "Наблюдения цен пока не записаны. История остаётся пустой до явного сохранения наблюдений."
+
+msgid "No products loaded"
+msgstr "Товары не загружены"
+
+msgid "No products to analyze"
+msgstr "Нет товаров для анализа"
+
+msgid "No recorded error"
+msgstr "Ошибок не записано"
+
+msgid "No stored history exists for this product’s offers. Visiting this page does not generate observations."
+msgstr "Для предложений этого товара нет сохранённой истории. Просмотр страницы не создаёт наблюдения."
+
+msgid "No successful import"
+msgstr "Успешных импортов нет"
+
+msgid "Nonblank managed values replace previous imported values on apply. Review the file and keep a database backup; manual edits to managed fields can be overwritten."
+msgstr "Непустые управляемые значения заменяют предыдущие при применении. Проверьте файл и сохраните резервную копию базы: ручные изменения импортированных полей могут быть перезаписаны."
+
+msgid "Not implemented yet"
+msgstr "Пока не реализовано"
+
+msgid "Not imported"
+msgstr "Не импортировано"
+
+msgid "Offer colors"
+msgstr "Цвета предложений"
+
+msgid "Offer data composition"
+msgstr "Состав предложений по типу данных"
+
+msgid "Offer history"
+msgstr "История предложения"
+
+msgid "Offers"
+msgstr "Предложения"
+
+msgid "One point per stored snapshot; no connecting lines or inferred trends. Filled = demo; open = manually recorded, unverified. Points can overlap; the table lists every record. On small screens, scroll the chart sideways."
+msgstr "Одна точка — один сохранённый снимок; без соединяющих линий и предполагаемых трендов. Заполненные точки — демо, незаполненные — ручные непроверенные записи. Точки могут накладываться; таблица содержит все записи страницы. На небольшом экране график прокручивается по горизонтали."
+
+msgid "One product at a time"
+msgstr "Анализ отдельного товара"
+
+msgid "Only actual stored observations are shown, oldest first. Demo observations are invented application snapshots, not real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend. Observations are discrete, not continuous or live monitoring. No synthetic points or interpolated prices are added. Times use"
+msgstr "Показаны только сохранённые наблюдения, сначала старые. Демонаблюдения — снимки вымышленных цен приложения, а не реальная история маркетплейса. Иллюстративные изменения могут записываться за один запуск команды и не отражают рыночный тренд. Наблюдения дискретны: это не непрерывный онлайн-мониторинг. Синтетических точек и интерполяции нет. Часовой пояс:"
+
+msgid "Open Product Search"
+msgstr "Открыть поиск товаров"
+
+msgid "Operator workflow · command line only"
+msgstr "Действия оператора · только командная строка"
+
+msgid "Operator-configured CSV sources. Counts are current imported records, not marketplace coverage. Times are local import times, not marketplace refresh times."
+msgstr "Настроенные оператором CSV-источники. Количества относятся к импортированным записям, а не к охвату маркетплейса. Указано время локального импорта, а не обновления маркетплейса."
+
+msgid "Page %(current)s of %(pages)s · %(total)s results"
+msgstr "Страница %(current)s из %(pages)s · Результатов: %(total)s"
+
+msgid "Prepare a file locally with data you are permitted to use. CSV imports are manually supplied and unverified, not scraping. Kaspi’s seller API is not a verified public competitor-offer feed."
+msgstr "Подготовьте локальный файл с данными, которые вы вправе использовать. CSV загружается оператором и не проверяется: это не скрейпинг. API продавца Kaspi не подтверждён как публичный источник предложений конкурентов."
+
+msgid "Prepare your file"
+msgstr "Подготовьте файл"
+
+msgid "Preview a file before applying it; an empty source list does not imply a failed connection."
+msgstr "Проверьте файл перед применением; пустой список источников не означает ошибку подключения."
+
+msgid "Preview first. Import explicitly."
+msgstr "Сначала проверка. Затем явный импорт."
+
+msgid "Preview without saving"
+msgstr "Проверьте без сохранения"
+
+msgid "Previous"
+msgstr "Назад"
+
+msgid "Price History"
+msgstr "История цен"
+
+msgid "Pricing clarity."
+msgstr "Прозрачные цены."
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Product Search"
+msgstr "Поиск товаров"
+
+msgid "Product Search supports demonstration, manually entered, and CSV-imported records. No marketplace integration is available."
+msgstr "Поиск использует демонстрационные, вручную внесённые и импортированные CSV-записи. Интеграции с маркетплейсами нет."
+
+msgid "Product URL"
+msgstr "Ссылка на товар"
+
+msgid "Product URL not provided"
+msgstr "Ссылка на товар не указана"
+
+msgid "Product analytics"
+msgstr "Аналитика товара"
+
+msgid "Product analytics · catalog #"
+msgstr "Аналитика товара · запись №"
+
+msgid "Product analytics →"
+msgstr "Аналитика товара →"
+
+msgid "Product associations are unverified until individually reviewed. These offers are linked to this catalog product ID; that does not automatically verify a marketplace match. Review model, variant, and bundle details."
+msgstr "Связи предложений с товарами не проверены до индивидуальной проверки. Предложения привязаны к ID каталога; это не подтверждает соответствие автоматически. Сверяйте модель, вариант и комплектацию."
+
+msgid "Product catalog"
+msgstr "Каталог товаров"
+
+msgid "Product identity unverified"
+msgstr "Идентичность товара не проверена"
+
+msgid "Product name: A–Z"
+msgstr "Название: А–Я"
+
+msgid "Product name: Z–A"
+msgstr "Название: Я–А"
+
+msgid "Product or brand"
+msgstr "Товар или бренд"
+
+msgid "Product removed from your Watchlist."
+msgstr "Товар убран из списка наблюдения."
+
+msgid "Product sections"
+msgstr "Разделы товара"
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "Products / offers"
+msgstr "Товары / предложения"
+
+msgid "Products available for analytics"
+msgstr "Товары, доступные для анализа"
+
+msgid "Products saved to your account. Saving a product does not verify its identity or refresh its prices."
+msgstr "Товары, сохранённые в вашей учётной записи. Сохранение не подтверждает идентичность и не обновляет цены."
+
+msgid "Provenance &amp; availability"
+msgstr "Происхождение и доступность"
+
+msgid "Provisional benchmarks include unreviewed associations. Rejected associations are excluded. Manual confirmation is an association review, not verification of prices or automatic cross-marketplace identity."
+msgstr "Предварительные показатели включают непроверенные связи. Отклонённые связи исключены. Ручное подтверждение касается связи предложения с товаром, а не достоверности цены или автоматической идентичности между маркетплейсами."
+
+msgid "Read the CSV import steps →"
+msgstr "Инструкция по импорту CSV →"
+
+msgid "Recent error details are visible to signed-in staff only. Imports do not create price observations or continuously monitor prices. A CSV import time is not a marketplace update time. Reference URLs are never fetched."
+msgstr "Подробности последних ошибок видны только сотрудникам с доступом staff. Импорт не создаёт наблюдения цен и не запускает непрерывное отслеживание. Время импорта CSV не является временем обновления маркетплейса. Запросы по ссылкам не выполняются."
+
+msgid "Recorded"
+msgstr "Записано"
+
+msgid "Recorded at"
+msgstr "Время записи"
+
+msgid "Recorded history"
+msgstr "Сохранённая история"
+
+msgid "Recorded listed-price history"
+msgstr "История указанной цены"
+
+msgid "Recorded listed-price observations"
+msgstr "Сохранённые наблюдения цен"
+
+msgid "Recorded observations"
+msgstr "Наблюдения цен"
+
+msgid "Records are matched by source IDs, never by similar names. Existing unrelated records are preserved; absent rows are not deleted."
+msgstr "Записи сопоставляются по ID источника, а не по похожим названиям. Посторонние записи сохраняются; отсутствующие строки не удаляются."
+
+msgid "Reference URLs must use http(s), have at most 200 characters, and contain no credentials, query parameters or fragments."
+msgstr "Ссылки должны использовать http(s), содержать не более 200 символов, не иметь учётных данных, параметров запроса и фрагментов."
+
+msgid "Rejected association"
+msgstr "Связь отклонена"
+
+msgid "Remove from your Watchlist"
+msgstr "Убрать из списка наблюдения"
+
+msgid "Remove product"
+msgstr "Убрать товар"
+
+msgid "Remove product:"
+msgstr "Убрать товар:"
+
+msgid "Required CSV headers"
+msgstr "Обязательные заголовки CSV"
+
+msgid "Required when confirming or rejecting. Check model, variant and bundle using the source evidence."
+msgstr "Обязательно при подтверждении или отклонении. Сверьте модель, вариант и комплектацию по данным источника."
+
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
+
+msgid "Result pages"
+msgstr "Страницы результатов"
+
+msgid "Return to offers, source labels and recorded price history."
+msgstr "Возвращайтесь к предложениям, источникам и сохранённой истории цен."
+
+msgid "Reuse the same source key and marketplace for updates. Use"
+msgstr "Для обновлений используйте тот же ключ источника и маркетплейс. Добавляйте"
+
+msgid "Review explanation"
+msgstr "Обоснование проверки"
+
+msgid "Review incomplete information before making a pricing decision."
+msgstr "Проверяйте неполные данные перед решением о цене."
+
+msgid "Review the exact model, variant and bundle. A shared product ID does not verify a marketplace match."
+msgstr "Сверяйте точную модель, вариант и комплектацию. Общий ID товара не доказывает соответствие на маркетплейсе."
+
+msgid "Review where offers come from and when files were imported. No marketplace is connected for live collection."
+msgstr "Проверяйте происхождение предложений и время импорта файлов. Онлайн-сбор данных ни с одного маркетплейса не подключён."
+
+msgid "Review your data sources →"
+msgstr "Проверить источники данных →"
+
+msgid "Reviewed:"
+msgstr "Проверено:"
+
+msgid "Run from"
+msgstr "Запускайте из"
+
+msgid "SELLER WORKSPACE"
+msgstr "РАБОЧЕЕ МЕСТО ПРОДАВЦА"
+
+msgid "Save a product from Product Search to return to its comparison later."
+msgstr "Сохраните товар из поиска, чтобы позже вернуться к сравнению."
+
+msgid "Save product"
+msgstr "Сохранить товар"
+
+msgid "Save product:"
+msgstr "Сохранить товар:"
+
+msgid "Save products to your own private Watchlist."
+msgstr "Сохраняйте товары в личный список наблюдения."
+
+msgid "Save to your Watchlist"
+msgstr "Добавить в список наблюдения"
+
+msgid "Saved"
+msgstr "Сохранено"
+
+msgid "Saved %(product)s to your Watchlist."
+msgstr "Товар «%(product)s» добавлен в список наблюдения."
+
+msgid "Scrollable offer comparison"
+msgstr "Прокручиваемая таблица сравнения предложений"
+
+msgid "Scrollable offer observation table"
+msgstr "Прокручиваемая таблица наблюдений предложения"
+
+msgid "Scrollable product observation table"
+msgstr "Прокручиваемая таблица наблюдений товара"
+
+msgid "Scrollable stored price chart"
+msgstr "Прокручиваемый график сохранённых цен"
+
+msgid "Search &amp; filter offers →"
+msgstr "Поиск и фильтры предложений →"
+
+msgid "Search offers"
+msgstr "Найти предложения"
+
+msgid "Search this product’s offers"
+msgstr "Найти предложения этого товара"
+
+msgid "Search:"
+msgstr "Поиск:"
+
+msgid "See the project README’s “Manual CSV offer import” section for the complete schema and validation rules. Catalog records and source summaries are public; never include credentials, customer data or private seller costs."
+msgstr "Полная схема и правила валидации описаны в README, раздел «Manual CSV offer import». Каталог и сводка источников общедоступны; не включайте учётные данные, сведения о клиентах и частные затраты продавца."
+
+msgid "Seller / product"
+msgstr "Продавец / товар"
+
+msgid "Seller API and competitor feed not connected"
+msgstr "API продавца и лента конкурентов не подключены"
+
+msgid "Seller control."
+msgstr "Решение за продавцом."
+
+msgid "Seller:"
+msgstr "Продавец:"
+
+msgid "Show all products"
+msgstr "Показать все товары"
+
+msgid "Skip to content"
+msgstr "Перейти к содержимому"
+
+msgid "Sort by"
+msgstr "Сортировка"
+
+msgid "Source / marketplace"
+msgstr "Источник / маркетплейс"
+
+msgid "Source identity / evidence"
+msgstr "Идентификаторы источника / основание проверки"
+
+msgid "Source:"
+msgstr "Источник:"
+
+msgid "Stored listed-price observations for"
+msgstr "Сохранённые наблюдения цен товара"
+
+msgid "Stored observations"
+msgstr "Сохранённые наблюдения"
+
+msgid "That product is not in your Watchlist."
+msgstr "Этого товара нет в вашем списке наблюдения."
+
+msgid "The catalog is empty. Add products or load the demonstration catalog using the README to get started."
+msgstr "Каталог пуст. Добавьте товары или загрузите демонстрационный каталог по README."
+
+msgid "The chart and table show this history page only, in timestamp order. Rejected associations are excluded; all original observations remain available in their individual offer histories."
+msgstr "График и таблица показывают только текущую страницу истории в порядке времени. Отклонённые связи исключены; все исходные наблюдения остаются в историях отдельных предложений."
+
+msgid "The product filter is invalid."
+msgstr "Фильтр товара некорректен."
+
+msgid "There is no stored price history for this offer. No historical prices have been generated or inferred."
+msgstr "Для этого предложения нет сохранённой истории. Исторические цены не создавались и не достраивались."
+
+msgid "These are actual stored snapshots, not reconstructed past prices. Demonstration observations record invented demo prices at command execution time; they do not represent real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend or continuous monitoring. Delivery and discounts are excluded. Product associations are unverified."
+msgstr "Это сохранённые снимки, а не восстановленные прошлые цены. Демонаблюдения фиксируют вымышленные цены в момент запуска команды и не являются реальной историей маркетплейса. Иллюстративные изменения могут записываться за один запуск: это не длительный рыночный тренд и не непрерывный мониторинг. Доставка и скидки не учитываются. Соответствия товаров требуют проверки."
+
+msgid "These statistics use listed prices from the full filtered offer set across all pages, not the entire marketplace. Delivery and discounts are excluded. Broad searches may include different models, variants, or bundles; narrow the search before comparing equivalent products."
+msgstr "Показатели используют указанные цены всего отфильтрованного набора на всех страницах, а не всего маркетплейса. Доставка и скидки не включены. Широкий поиск может содержать разные модели, варианты и комплектации: сузьте поиск перед сравнением эквивалентных товаров."
+
+msgid "These statistics use valid listed prices for this product ID only, not the entire marketplace. Delivery and discounts are excluded. Demo and unverified records can appear together; no verified live benchmark is implied. All marketplace labels for this product are included. Use the marketplace filter in"
+msgstr "Показатели используют допустимые указанные цены только для этого ID товара, а не всего маркетплейса. Доставка и скидки не включены. Демо и непроверенные записи могут отображаться вместе: это не проверенные онлайн-показатели. Включены все маркетплейсы этого товара. Для ограничения используйте фильтр в разделе"
+
+msgid "This is a recording time, not a marketplace refresh time."
+msgstr "Это время записи, а не обновления маркетплейса."
+
+msgid "This product is already in your Watchlist."
+msgstr "Этот товар уже в вашем списке наблюдения."
+
+msgid "Total unavailable:"
+msgstr "Итого недоступно:"
+
+msgid "Try Luma, white, bundle, or AspanLab"
+msgstr "Название, модель или бренд: например, Luma или AspanLab"
+
+msgid "Try another product or brand, or select all marketplaces. If the catalog is empty, load the demonstration data using the setup instructions in the README."
+msgstr "Попробуйте другой товар, бренд или все маркетплейсы. Если каталог пуст, загрузите демонстрационные данные по README."
+
+msgid "Unavailable"
+msgstr "Недоступно"
+
+msgid "University startup MVP"
+msgstr "Университетский стартап · MVP"
+
+msgid "Unknown"
+msgstr "Неизвестно"
+
+msgid "Use your local account to save products. Product Search and recorded price history remain public."
+msgstr "Используйте локальную учётную запись для сохранения товаров. Поиск и история цен остаются общедоступными."
+
+msgid "View analytics"
+msgstr "Открыть аналитику"
+
+msgid "View analytics:"
+msgstr "Открыть аналитику:"
+
+msgid "View recorded listed-price history"
+msgstr "История указанной цены"
+
+msgid "View sources &amp; import guide →"
+msgstr "Источники и инструкция по импорту →"
+
+msgid "View your saved products"
+msgstr "Открыть сохранённые товары"
+
+msgid "Watchlist"
+msgstr "Список наблюдения"
+
+msgid "Welcome back"
+msgstr "С возвращением"
+
+msgid "What’s behind the numbers"
+msgstr "Из чего состоят показатели"
+
+msgid "What’s planned for this area"
+msgstr "Что планируется в этом разделе"
+
+msgid "Workspace"
+msgstr "Рабочее пространство"
+
+msgid "Workspace navigation"
+msgstr "Навигация рабочего пространства"
+
+msgid "Workspace overview"
+msgstr "Обзор рабочего пространства"
+
+msgid "Your Watchlist"
+msgstr "Ваш список наблюдения"
+
+msgid "Your Watchlist is empty"
+msgstr "Список наблюдения пуст"
+
+msgid "Your data, explained"
+msgstr "Происхождение ваших данных"
+
+msgid "Your pricing workspace"
+msgstr "Ваше рабочее пространство"
+
+msgid "Your private workspace"
+msgstr "Личное рабочее пространство"
+
+msgid "and"
+msgstr "и"
+
+msgid "at"
+msgstr "в"
+
+msgid "delivery"
+msgstr "данные доставки"
+
+msgid "demo ·"
+msgstr "демо ·"
+
+msgid "demo · product identity unverified"
+msgstr "демо · идентичность товара не проверена"
+
+msgid "demonstration offers"
+msgstr "демонстрационных предложений"
+
+msgid "demonstration offers · not live"
+msgstr "демонстрационных предложений · не онлайн"
+
+msgid "discount"
+msgstr "данные скидки"
+
+msgid "for a single-marketplace benchmark."
+msgstr "для сравнения внутри одного маркетплейса."
+
+msgid "from"
+msgstr "с"
+
+msgid "information missing."
+msgstr "отсутствуют."
+
+msgid "manually confirmed"
+msgstr "подтверждено вручную"
+
+msgid "manually entered, unverified"
+msgstr "введено вручную, не проверено"
+
+msgid "manually entered/imported, unverified"
+msgstr "введено/импортировано вручную, не проверено"
+
+msgid "manually recorded, unverified"
+msgstr "записано вручную, не проверено"
+
+msgid "on every invocation for fictional input. The marketplace must already exist under its exact name."
+msgstr "при каждом запуске с вымышленными данными. Маркетплейс должен уже существовать под точным названием."
+
+msgid "rejected"
+msgstr "отклонено"
+
+msgid "to"
+msgstr "по"
+
+msgid "unreviewed"
+msgstr "без проверки"
+
+msgid "with UTC offsets."
+msgstr "со смещением UTC."
+
+msgid "with a failed latest import"
+msgstr "с неудачным последним импортом"
+
+msgid "with no successful import"
+msgstr "без успешных импортов"
+
+msgid "| AnalyMark"
+msgstr "| AnalyMark"
+
+msgid "· Manual CSV"
+msgstr "· ручной CSV"
+
+msgid "· illustrative input"
+msgstr "· иллюстративные данные"
+
+msgid "· product identity unverified. Open analytics for source labels, known buyer totals, and actual recorded history."
+msgstr "· идентичность товара не проверена. Откройте аналитику для источников, известных итоговых цен и сохранённой истории."
+
+msgid "✓ Saved to your Watchlist"
+msgstr "✓ В вашем списке наблюдения"
+
+msgid "✓ Saved to your account"
+msgstr "✓ Сохранено в вашей учётной записи"
+
+msgid "%(count)s product"
+msgid_plural "%(count)s products"
+msgstr[0] "%(count)s товар"
+msgstr[1] "%(count)s товара"
+msgstr[2] "%(count)s товаров"
+
+msgid "%(count)s valid offer"
+msgid_plural "%(count)s valid offers"
+msgstr[0] "%(count)s предложение в расчёте"
+msgstr[1] "%(count)s предложения в расчёте"
+msgstr[2] "%(count)s предложений в расчёте"
+
+msgid "%(count)s offer"
+msgid_plural "%(count)s offers"
+msgstr[0] "%(count)s предложение"
+msgstr[1] "%(count)s предложения"
+msgstr[2] "%(count)s предложений"
+
+msgid "%(count)s stored record"
+msgid_plural "%(count)s stored records"
+msgstr[0] "%(count)s сохранённая запись"
+msgstr[1] "%(count)s сохранённые записи"
+msgstr[2] "%(count)s сохранённых записей"
+
+msgid "%(count)s result"
+msgid_plural "%(count)s results"
+msgstr[0] "%(count)s результат"
+msgstr[1] "%(count)s результата"
+msgstr[2] "%(count)s результатов"
+
+msgid "%(count)s stored offer"
+msgid_plural "%(count)s stored offers"
+msgstr[0] "%(count)s сохранённое предложение"
+msgstr[1] "%(count)s сохранённых предложения"
+msgstr[2] "%(count)s сохранённых предложений"
+
+msgid "%(count)s source"
+msgid_plural "%(count)s sources"
+msgstr[0] "%(count)s источник"
+msgstr[1] "%(count)s источника"
+msgstr[2] "%(count)s источников"
+
+msgid "Unreviewed association"
+msgstr "Связь не проверена"
+
+msgid "Showing the first five configured sources. Open Data Sources for the complete list."
+msgstr "Показаны первые пять настроенных источников. Полный список — на странице «Источники данных»."
+
+msgid "No eligible observations"
+msgstr "Нет подходящих наблюдений"
+
+msgid "Rejected associations are excluded here. Open an individual offer history to inspect its stored observations."
+msgstr "Отклонённые связи здесь исключены. Сохранённые наблюдения доступны в истории отдельного предложения."
+
+
+msgid "Review time"
+msgstr "Время проверки"
+
+msgid "Reviewed by"
+msgstr "Проверил(а)"
+
+msgid "AnalyMark is a B2B price-analysis MVP for small and medium-sized marketplace sellers in Kazakhstan. Kaspi.kz first; demo and manual data, no live integration."
+msgstr "AnalyMark — B2B-анализ цен для малого и среднего бизнеса Казахстана. Сначала Kaspi.kz; демонстрационные и ручные данные, без онлайн-интеграции."
+
+msgid "Every stored observation on this history page, in timestamp order. Prices exclude discounts and buyer delivery."
+msgstr "Все наблюдения на текущей странице истории по времени записи. Цены не включают скидку и доставку покупателю."
+
+msgid ". Read the created/updated/unchanged/rejected/skipped, observation and invalidated-review counts. Correct row errors. Preview rolls back every write, including observations and source status."
+msgstr ". Проверьте число новых, обновлённых, неизменённых, отклонённых и пропущенных записей, наблюдений и сброшенных проверок. Исправьте ошибки строк. Предпросмотр отменяет все записи, включая наблюдения и статусы источников."
+
+msgid "CSV price change · unverified · not live"
+msgstr "Изменение цены из CSV · не проверено · не онлайн"
+
+msgid "Changed prices on existing imported offers create observations at actual import time. First imports and unchanged prices add no observations. No backdated prices, verified matching or continuous monitoring are established."
+msgstr "Изменение цены ранее импортированного предложения создаёт наблюдение с фактическим временем импорта. Первая загрузка и неизменённые цены не добавляют наблюдений. Записей задним числом, подтверждения совпадений и непрерывного мониторинга нет."
+
+msgid "Configured import interval exceeded"
+msgstr "Превышен настроенный интервал импорта"
+
+msgid "Each point is one stored observation. Colors identify offers. Filled points are demonstration data; open points are manually recorded or imported, unverified data. The following table contains every date, price, seller, and source label. No lines join observations."
+msgstr "Каждая точка — сохранённое наблюдение. Цвет обозначает предложение. Закрашенные точки — демонстрационные данные; пустые — вручную записанные или импортированные непроверенные данные. В таблице указаны все даты, цены, продавцы и источники. Точки не соединены линиями."
+
+msgid "Import age is assessed only when staff configure a source-specific interval in administration. Missing rows retain their earlier import times and are not deleted or marked unavailable."
+msgstr "Давность импорта оценивается, только если сотрудник настроил интервал для источника в панели администратора. Отсутствующие в файле строки сохраняют прежнее время импорта: они не удаляются и не помечаются как недоступные."
+
+msgid "Import age threshold (hours)"
+msgstr "Порог давности импорта (часы)"
+
+msgid "Import times / age"
+msgstr "Время и давность импорта"
+
+msgid "Import timestamp is in the future; check the clock"
+msgstr "Время импорта находится в будущем; проверьте часы"
+
+msgid "Last attempted import"
+msgstr "Последняя попытка импорта"
+
+msgid "Marketplace update time: not supplied. Source age does not establish every offer’s freshness."
+msgstr "Время обновления на маркетплейсе не предоставлено. Давность источника не подтверждает актуальность каждого предложения."
+
+msgid "No import age threshold configured"
+msgstr "Порог давности импорта не настроен"
+
+msgid "No import attempt recorded"
+msgstr "Попыток импорта не записано"
+
+msgid "No successful import; age cannot be assessed"
+msgstr "Успешного импорта нет; давность определить нельзя"
+
+msgid "One point per stored snapshot; no connecting lines or inferred trends. Filled = demo; open = manually recorded or imported, unverified. Points can overlap; the table lists every record. On small screens, scroll the chart sideways."
+msgstr "Одна точка — одно сохранённое наблюдение; без соединительных линий и предполагаемых трендов. Закрашенная — демоданные; пустая — вручную записанные или импортированные непроверенные данные. Точки могут перекрываться; все записи есть в таблице. На узком экране график прокручивается вбок."
+
+msgid "Optional source-specific interval. Blank means no age assessment; it does not establish price freshness."
+msgstr "Необязательный интервал для этого источника. Пустое поле отключает оценку давности; настройка не подтверждает актуальность цен."
+
+msgid "Recorded at import time, not marketplace update time."
+msgstr "Записано во время импорта, а не обновления на маркетплейсе."
+
+msgid "Recorded by CSV import"
+msgstr "Записано при импорте CSV"
+
+msgid "Within configured import interval; prices remain unverified"
+msgstr "В пределах настроенного интервала; цены остаются непроверенными"
+
+msgid "hours"
+msgstr "ч."
+
+msgid "Legacy demo load times may be unknown; CSV import times are listed below."
+msgstr "Время загрузки старых демоданных может быть неизвестно; время импорта CSV указано ниже."
+
+msgid "Recent error details are visible to signed-in staff only. Changed imported prices create observations; there is no continuous monitoring. CSV import time is not marketplace update time. Reference URLs are never fetched."
+msgstr "Подробности последних ошибок видны только сотрудникам с доступом staff. Изменение импортированной цены создаёт наблюдение; непрерывного мониторинга нет. Время импорта CSV не является временем обновления маркетплейса. Запросы по ссылкам не выполняются."
+
+msgid "A refresh is already queued or running for this source."
+msgstr "Для этого источника обновление уже ожидает выполнения или выполняется."
+
+msgid "Automated competitor monitoring is the goal"
+msgstr "Цель — автоматический мониторинг цен конкурентов"
+
+msgid "Back to Data Sources"
+msgstr "К источникам данных"
+
+msgid "Blocked — provider access required"
+msgstr "Заблокировано — нужен доступ к источнику"
+
+msgid "CSV fallback · command line only"
+msgstr "Резервный импорт CSV · через командную строку"
+
+msgid "CSV is a fallback; it cannot be scheduled as a competitor feed."
+msgstr "CSV — резервный импорт; его нельзя запланировать как поток предложений конкурентов."
+
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgid "Competitor feed blocked pending approved access"
+msgstr "Источник конкурентов заблокирован до подтверждения доступа"
+
+msgid "Configure automated source"
+msgstr "Настроить автоматический источник"
+
+msgid "Configure refresh"
+msgstr "Настроить обновление"
+
+msgid "Configured sources. Counts are stored records, not marketplace coverage. Times are local import/refresh times, not marketplace update times."
+msgstr "Настроенные источники. Количества относятся к сохранённым записям, а не к охвату маркетплейса. Указано время локального импорта/запуска, а не обновления на маркетплейсе."
+
+msgid "Correct the errors below."
+msgstr "Исправьте ошибки ниже."
+
+msgid "Failed"
+msgstr "Ошибка"
+
+msgid "Kaspi competitor acquisition is blocked."
+msgstr "Получение предложений конкурентов Kaspi заблокировано."
+
+msgid "Kaspi competitor feed · access not verified"
+msgstr "Предложения конкурентов Kaspi · доступ не подтверждён"
+
+msgid "Kaspi competitor offers — access required"
+msgstr "Предложения конкурентов Kaspi — требуется доступ"
+
+msgid "Kaspi.kz is the first target. Competitor acquisition is currently blocked pending a verified, permitted feed. CSV is a fallback for testing and supplied data, not the main product workflow."
+msgstr "Первый целевой маркетплейс — Kaspi.kz. Получение предложений конкурентов заблокировано до подтверждения разрешённого источника. CSV остаётся резервным путём для тестирования и предоставленных данных, а не основным сценарием продукта."
+
+msgid "Latest ten operations. Times are local execution times, not marketplace updates."
+msgstr "Последние десять операций. Указано время выполнения в приложении, а не обновления на маркетплейсе."
+
+msgid "Next scheduled attempt"
+msgstr "Следующая запланированная попытка"
+
+msgid "No approved competitor feed or documented access has been verified. A seller token does not establish competitor access. This configuration cannot fetch real Kaspi prices yet."
+msgstr "Разрешённый источник предложений конкурентов или документированный доступ пока не подтверждены. Токен продавца не подтверждает доступ к данным конкурентов. Эта настройка пока не позволяет получать реальные цены Kaspi."
+
+msgid "No refresh operations recorded."
+msgstr "Операций обновления пока нет."
+
+msgid "Periodic refresh disabled"
+msgstr "Периодическое обновление отключено"
+
+msgid "Periodic refresh enabled"
+msgstr "Периодическое обновление включено"
+
+msgid "Provider"
+msgstr "Провайдер"
+
+msgid "Provider refresh · unverified"
+msgstr "Обновление провайдером · не проверено"
+
+msgid "Queue refresh attempt"
+msgstr "Поставить попытку обновления в очередь"
+
+msgid "Queued"
+msgstr "Поставлено в очередь"
+
+msgid "Queued does not mean fetched. Run the separate worker command; reload to inspect results. Schedules are best-effort, not continuous monitoring or a freshness guarantee."
+msgstr "Очередь не означает, что данные получены. Запустите отдельный обработчик и перезагрузите страницу для просмотра результата. Расписание выполняется по возможности и не гарантирует непрерывный мониторинг или актуальность цен."
+
+msgid "Queued — waiting for worker"
+msgstr "В очереди — ожидает обработчика"
+
+msgid "Refresh blocked: access not verified"
+msgstr "Обновление заблокировано: доступ не подтверждён"
+
+msgid "Refresh interval (minutes)"
+msgstr "Интервал обновления (минуты)"
+
+msgid "Refresh operation results"
+msgstr "Результаты операций обновления"
+
+msgid "Refresh operations"
+msgstr "Операции обновления"
+
+msgid "Refresh queued. A running worker is required; reload this page to see the actual outcome."
+msgstr "Обновление поставлено в очередь. Нужен запущенный обработчик; перезагрузите страницу для просмотра фактического результата."
+
+msgid "Results / error"
+msgstr "Результаты / ошибка"
+
+msgid "Running"
+msgstr "Выполняется"
+
+msgid "Save configuration"
+msgstr "Сохранить настройки"
+
+msgid "Source configuration saved. Kaspi acquisition remains blocked until approved access is implemented."
+msgstr "Настройки источника сохранены. Получение данных Kaspi остаётся заблокированным до подключения разрешённого доступа."
+
+msgid "Stable source key"
+msgstr "Постоянный ключ источника"
+
+msgid "Staff source management"
+msgstr "Управление источниками для сотрудников"
+
+msgid "Started / finished"
+msgstr "Начало / завершение"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Succeeded"
+msgstr "Успешно"
+
+msgid "The pending Kaspi source requires the Kaspi.kz marketplace and non-demo mode. It does not supply data yet."
+msgstr "Ожидающий подключения источник Kaspi требует маркетплейс Kaspi.kz и режим без демоданных. Он пока не предоставляет данные."
+
+msgid "This source cannot be refreshed automatically. CSV is a fallback command."
+msgstr "Этот источник нельзя обновлять автоматически. Для CSV используйте резервную команду импорта."
+
+msgid "Use 1–80 lowercase letters, digits, underscores or hyphens. Source identity cannot be changed later."
+msgstr "Используйте 1–80 строчных латинских букв, цифр, подчёркиваний или дефисов. Идентичность источника впоследствии изменить нельзя."
+
+msgid "Use a lowercase stable source key without spaces."
+msgstr "Используйте постоянный ключ из строчных латинских букв без пробелов."
+
+msgid "View sources &amp; refresh setup →"
+msgstr "Источники и настройка обновлений →"
+
+msgid "with refresh access blocked"
+msgstr "источников с заблокированным доступом к обновлению"
+
+msgid "No sources configured."
+msgstr "Источники пока не настроены."
+
+msgid "Fictional demonstration fixtures"
+msgstr "Вымышленные демонстрационные данные"
+
+msgid "Demonstration fixtures must remain demonstration data."
+msgstr "Демонстрационные данные должны оставаться помеченными как демонстрационные."
+
+msgid "CSV and demo fixtures cannot be scheduled as competitor feeds."
+msgstr "CSV и демонстрационные данные нельзя обновлять по расписанию как предложения конкурентов."
+
+msgid "Data provenance"
+msgstr "Происхождение данных"
+
+msgid "All provenance types (separate benchmarks)"
+msgstr "Все типы данных (отдельные ориентиры)"
+
+msgid "Demonstration only"
+msgstr "Только демонстрационные"
+
+msgid "Imported / manual only — not verified live"
+msgstr "Только импорт / ручной ввод — не проверенные онлайн-данные"
+
+msgid "Imported / manual · not verified live"
+msgstr "Импорт / ручной ввод · не проверенные онлайн-данные"
+
+msgid "DEMO · fictional prices"
+msgstr "ДЕМО · вымышленные цены"
+
+msgid "DEMO · local fictional fixtures"
+msgstr "ДЕМО · локальные вымышленные данные"
+
+msgid "DEMO fixtures are loaded locally. They cannot be refreshed from a marketplace."
+msgstr "ДЕМО-данные загружаются локально. Их нельзя обновить с маркетплейса."
+
+msgid "Benchmarks are separated by marketplace and provenance. Fictional and supplied prices are never combined. Listed prices exclude delivery and discounts; unreviewed associations remain provisional."
+msgstr "Ценовые ориентиры разделены по площадкам и происхождению данных. Вымышленные и предоставленные цены не объединяются. Цены товара не включают доставку и скидки; непроверенные соответствия остаются предварительными."
+
+msgid "These statistics use valid listed prices for this product ID only, not the entire marketplace. Delivery and discounts are excluded. Each marketplace and provenance type has its own benchmark. Filters also apply to recorded history. Open"
+msgstr "Статистика использует корректные цены только этого товара, а не всего маркетплейса. Доставка и скидки исключены. Для каждой площадки и типа данных рассчитан отдельный ориентир. Фильтры также применяются к истории. Откройте"
+
+msgid "to search other products."
+msgstr "для поиска других товаров."
+
+msgid "Legacy demo load times may be unknown. Local demo load and file import times are listed below; neither is a marketplace update time."
+msgstr "Время загрузки старых демоданных может быть неизвестно. Ниже указано время локальной загрузки демоданных и импорта файлов, а не обновления маркетплейса."
+
+msgid "Marketplace coverage"
+msgstr "Данные по площадкам"
+
+msgid "Marketplace labels are not integrations. No LIVE competitor feed is connected. DEMO prices and sellers are fictional; imported or manual records remain unverified."
+msgstr "Названия площадок не означают интеграцию. Поток реальных онлайн-предложений конкурентов не подключён. ДЕМО-цены и продавцы вымышлены; импортированные и введённые вручную записи не проверены."
+
+msgid "No marketplace labels loaded."
+msgstr "Названия площадок ещё не загружены."
+
+msgid "Load the multi-marketplace demonstration"
+msgstr "Загрузить демонстрацию нескольких площадок"
+
+msgid "Additive fictional fixtures only. Existing records are preserved; reruns do not reset prices or create history. Source times record local loading, not marketplace updates. See docs/MARKETPLACE_ACCESS.md for access research."
+msgstr "Добавляются только вымышленные данные. Существующие записи сохраняются; повторный запуск не сбрасывает цены и не создаёт историю. Время источника означает локальную загрузку, а не обновление площадки. Исследование доступа: docs/MARKETPLACE_ACCESS.md."
+
+msgid "This source cannot be refreshed automatically. CSV and demo loading use explicit local commands."
+msgstr "Этот источник нельзя обновить автоматически. Для CSV и демоданных используются отдельные локальные команды."
+
+msgid "for additional search and sorting controls."
+msgstr "для дополнительных параметров поиска и сортировки."
+
+msgid "Active in MVP"
+msgstr "Активна в MVP"
+
+msgid "The MVP supports Kaspi.kz, Halyk Market, Ozon, Wildberries and Teez. Compare offers within one selected marketplace. All sample prices are invented demonstration data, not live or verified marketplace prices."
+msgstr "MVP поддерживает Kaspi.kz, Halyk Market, Ozon, Wildberries и Teez. Сравнивайте предложения внутри выбранной площадки. Все примерные цены вымышлены и не являются актуальными или проверенными ценами маркетплейсов."
+
+msgid "Archived catalog record: outside the active MVP scope. Existing records and history are preserved."
+msgstr "Архивная запись каталога вне активного охвата MVP. Существующие записи и история сохранены."
+
+msgid "No observations exist for the active offers in this selection. Archived records are retained. Visiting this page does not generate observations."
+msgstr "Для активных предложений в этой выборке наблюдений нет. Архивные записи сохранены. Просмотр страницы не создаёт наблюдения."
+
+msgid "Archived marketplace: this history is retained for reference and excluded from active comparisons."
+msgstr "Архивная площадка: история сохранена для справки и исключена из активных сравнений."
+
+msgid "Archived product · saved entry preserved"
+msgstr "Архивный товар · сохранённая запись оставлена"
+
+msgid "Active MVP scope: Kaspi.kz, Halyk Market, Ozon, Wildberries and Teez. Archived marketplaces are excluded from these counts and options; their records are preserved."
+msgstr "Активный охват MVP: Kaspi.kz, Halyk Market, Ozon, Wildberries и Teez. Архивные площадки исключены из показателей и вариантов выбора; их записи сохранены."
+
+msgid "%(marketplace)s · archived"
+msgstr "%(marketplace)s · архив"
+
+
+msgid "Automated collection · blocked"
+msgstr "Автоматический сбор · доступ не подтверждён"
+
+msgid "Browse by marketplace"
+msgstr "Товары по маркетплейсам"
+
+msgid "DEMO"
+msgstr "ДЕМО"
+
+msgid "Fictional examples, clearly labelled. No marketplace prices were fetched."
+msgstr "Явно обозначенные вымышленные примеры. Цены с маркетплейсов не загружались."
+
+msgid "First target marketplace"
+msgstr "Первый целевой маркетплейс"
+
+msgid "How data reaches this workspace"
+msgstr "Как данные попадают в систему"
+
+msgid "Included in the university MVP"
+msgstr "Входит в университетский MVP"
+
+msgid "Initialize the approved marketplaces using the local setup commands below."
+msgstr "Создайте согласованные площадки локальными командами настройки ниже."
+
+msgid "Marketplace labels are not connected feeds. Current records are demo or manually supplied."
+msgstr "Название площадки не означает подключение. Записи демонстрационные или предоставлены вручную."
+
+msgid "Mixed data"
+msgstr "Смешанные данные"
+
+msgid "Next: verify access, then connect"
+msgstr "Далее: подтвердить доступ и подключить источник"
+
+msgid "No live integrations yet"
+msgstr "Онлайн-интеграций пока нет"
+
+msgid "No offers"
+msgstr "Нет предложений"
+
+msgid "Refresh infrastructure exists; competitor acquisition requires a verified, permitted source."
+msgstr "Механизм обновления готов; для сбора цен конкурентов нужен проверенный и разрешённый источник."
+
+msgid "Search products or brands"
+msgstr "Поиск товаров или брендов"
+
+msgid "Source authorization and reliable product identities come before automated price collection."
+msgstr "Сначала — разрешение на использование источника и надёжное определение товаров, затем — автоматический сбор цен."
+
+msgid "Supplied data"
+msgstr "Внесённые данные"
+
+msgid "Supplied records with validation, a preview and actual import times."
+msgstr "Предоставленные записи с проверкой, предпросмотром и фактическим временем импорта."
+
+msgid "View import instructions"
+msgstr "Инструкция по импорту"
+
+msgid "View products"
+msgstr "Смотреть товары"
+
+msgid "View products:"
+msgstr "Товары площадки:"
+
+msgid "Workspace product search"
+msgstr "Поиск товаров в системе"
+
+msgid "demo offers"
+msgstr "демопредложений"
+
+msgid "supplied · unverified"
+msgstr "внесено · не проверено"
+
+msgid "Offer preview · up to 3 stored offers"
+msgstr "Обзор · до 3 сохранённых предложений"
+
+msgid "Listed prices only. Delivery and discounts are shown in product analytics; these offers are not a combined benchmark."
+msgstr "Только указанные цены. Доставка и скидки показаны в аналитике товара; предложения не объединены в общий ценовой ориентир."
+
+msgid "Review source coverage, import times and data quality."
+msgstr "Площадки, время импорта и качество данных."

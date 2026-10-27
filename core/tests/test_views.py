@@ -17,6 +17,7 @@ class ApplicationShellTests(TestCase):
         "product_search": "/products/",
         "watchlist": "/watchlist/",
         "analytics": "/analytics/",
+        "data_sources": "/data-sources/",
     }
 
     def test_dashboard_renders_the_shared_shell(self):
@@ -49,6 +50,7 @@ class ApplicationShellTests(TestCase):
                 response = self.client.get(url)
                 self.assertContains(response, "No live data connected.")
                 self.assertContains(response, "Demonstration MVP")
+                self.assertContains(response, "Built for small and medium-sized sellers in Kazakhstan")
 
     def test_analytics_is_a_product_selection_page(self):
         response = self.client.get(reverse("core:analytics"))

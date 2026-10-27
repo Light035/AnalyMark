@@ -1,6 +1,8 @@
+{% load i18n %}
 {% for item in products %}
 <article class="catalog-item">
-    <div><h3><a href="{% url 'core:product_detail' item.pk %}">{{ item.name }}</a></h3><p>{% if item.brand %}{{ item.brand }} · {% endif %}{{ item.category }}</p><p>{{ item.offer_count }} offer{{ item.offer_count|pluralize }} · {{ item.demo_offer_count }} demo · product identity unverified</p></div>
-    <a class="button button-secondary" href="{% url 'core:product_detail' item.pk %}" aria-label="View analytics: {{ item.name }}">View analytics <span aria-hidden="true">→</span></a>
+    <span class="catalog-icon" aria-hidden="true">{% include "core/includes/icon.html" with icon="box" %}</span>
+    <div><h3><a href="{% url 'core:product_detail' item.pk %}">{{ item.name }}</a></h3><p>{% if item.brand %}{{ item.brand }} · {% endif %}{{ item.category }}</p><p>{% blocktranslate count count=item.offer_count %}{{ count }} offer{% plural %}{{ count }} offers{% endblocktranslate %} · {{ item.demo_offer_count }} {% translate "demo · product identity unverified" %}</p></div>
+    <a class="button button-secondary" href="{% url 'core:product_detail' item.pk %}" aria-label="{% translate 'View analytics:' %} {{ item.name }}">{% translate "View analytics" %} <span aria-hidden="true">→</span></a>
 </article>
 {% endfor %}

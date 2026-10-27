@@ -1,0 +1,3 @@
+{% load i18n %}
+{% if observation.is_demo %}<span class="pill pill-demo">{% translate "Demonstration observation · not live" %}</span>{% elif observation.refresh_run_id %}<span class="pill pill-import">{% translate "Provider refresh · unverified" %}</span>{% elif observation.recorded_by_import %}<span class="pill pill-import">{% translate "CSV price change · unverified · not live" %}</span>{% else %}<span class="pill pill-neutral">{% translate "Manually recorded · unverified" %}</span>{% endif %}
+{% if observation.recorded_by_import or observation.refresh_run_id %}<small>{% translate "Source:" %} {{ observation.offer.import_record.source.key }}<br>{% translate "Recorded at import time, not marketplace update time." %}</small>{% endif %}

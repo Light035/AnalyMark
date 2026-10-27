@@ -1,37 +1,50 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load tz %}
 {% block content %}
 {% get_current_timezone as display_timezone %}
-<p class="comparison-explanation"><a href="{% url 'core:analytics' %}">All product analytics</a> <span aria-hidden="true">/</span> <a href="{% url 'core:product_search' %}?product={{ product.pk }}">Search this product’s offers</a></p>
-<section class="page-heading"><p class="eyebrow">Product analytics</p><h1>{{ product.name }}</h1><p class="page-description">{% if product.brand %}{{ product.brand }} · {% endif %}{{ product.category }}</p>{% if product.description %}<p class="comparison-explanation">{{ product.description }}</p>{% endif %}</section>
+<p class="comparison-explanation"><a href="{% url 'core:analytics' %}">{% translate "All product analytics" %}</a> <span aria-hidden="true">/</span> <a href="{% url 'core:product_search' %}?product={{ product.pk }}">{% translate "Search this product’s offers" %}</a></p>
+<section class="page-heading product-heading"><div><p class="eyebrow">{% translate "Product analytics · catalog #" %}{{ product.pk }}</p><h1>{{ product.name }}</h1><p class="page-description">{% if product.brand %}{{ product.brand }} · {% endif %}{{ product.category }}</p>{% if product.description %}<p class="comparison-explanation">{{ product.description }}</p>{% endif %}</div><span class="pill pill-warning">{% translate "Product identity unverified" %}</span></section>
+{% if not in_active_catalog %}<div class="feedback" role="status">{% translate "Archived catalog record: outside the active MVP scope. Existing records and history are preserved." %}</div>{% endif %}
 <div class="panel product-controls">
-    <p>Product associations are unverified. These offers are linked to this catalog product ID; that does not verify a marketplace match. Review model, variant, and bundle details.</p>
-    {% if user.is_authenticated %}
-    <form method="post" action="{% if is_saved %}{% url 'core:watchlist_remove' product.pk %}{% else %}{% url 'core:watchlist_add' product.pk %}{% endif %}">{% csrf_token %}<button class="button button-primary" type="submit">{% if is_saved %}Remove from your Watchlist{% else %}Save to your Watchlist{% endif %}</button></form>
-    {% else %}<a class="button button-primary" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">Log in to save product</a>{% endif %}
+    <p>{% translate "Product associations are unverified until individually reviewed. These offers are linked to this catalog product ID; that does not automatically verify a marketplace match. Review model, variant, and bundle details." %}</p>
+    {% if in_active_catalog or is_saved %}{% if user.is_authenticated %}
+    <form method="post" action="{% if is_saved %}{% url 'core:watchlist_remove' product.pk %}{% else %}{% url 'core:watchlist_add' product.pk %}{% endif %}">{% csrf_token %}<button class="button button-primary" type="submit">{% if is_saved %}{% translate "Remove from your Watchlist" %}{% else %}{% translate "Save to your Watchlist" %}{% endif %}</button></form>
+    {% else %}<a class="button button-primary" href="{% url 'core:login' %}?next={{ request.get_full_path|urlencode }}">{% translate "Log in to save product" %}</a>{% endif %}{% endif %}
 </div>
-<nav class="page-links" aria-label="Product sections"><a href="#price-benchmarks">Listed-price benchmarks</a><a href="#product-offers">Compare offers</a><a href="#price-history">Recorded history</a></nav>
-<section id="price-benchmarks" class="comparison-summary" aria-labelledby="summary-title"><div class="section-heading"><h2 id="summary-title">Listed-price benchmarks <span class="pill pill-neutral">KZT</span></h2><span class="results-count">{{ summary.count }} valid offer{{ summary.count|pluralize }}</span></div><p class="comparison-explanation">These statistics use valid listed prices for this product ID only, not the entire marketplace. Delivery and discounts are excluded. Demo and unverified records can appear together; no verified live benchmark is implied.</p>{% include "core/includes/price_summary.html" %}</section>
+<form class="panel search-form scope-form" method="get">
+{% for field in scope_form %}<div class="form-field">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}
+<button type="submit" class="button button-primary">{% translate "Apply filters" %}</button>
+</form>
+<nav class="page-links" aria-label="{% translate 'Product sections' %}"><a href="#price-benchmarks">{% translate "Listed-price benchmarks" %}</a><a href="#product-offers">{% translate "Compare offers" %}</a><a href="#price-history">{% translate "Recorded history" %}</a></nav>
+<div class="data-mix" aria-label="{% translate 'Association review counts' %}"><span>{{ review_counts.confirmed }} {% translate "manually confirmed" %}</span><span>{{ review_counts.unreviewed }} {% translate "unreviewed" %}</span><span>{{ review_counts.rejected }} {% translate "rejected" %}</span></div>
+<p class="comparison-explanation">{% translate "Provisional benchmarks include unreviewed associations. Rejected associations are excluded. Manual confirmation is an association review, not verification of prices or automatic cross-marketplace identity." %}</p>
+<section id="price-benchmarks" class="comparison-summary" aria-labelledby="summary-title"><div class="section-heading"><h2 id="summary-title">{% translate "Listed-price benchmarks" %} <span class="pill pill-neutral">KZT</span></h2><span class="results-count">{% blocktranslate count count=summary.count %}{{ count }} valid offer{% plural %}{{ count }} valid offers{% endblocktranslate %}</span></div><p class="comparison-explanation">{% translate "These statistics use valid listed prices for this product ID only, not the entire marketplace. Delivery and discounts are excluded. Each marketplace and provenance type has its own benchmark. Filters also apply to recorded history. Open" %} <a href="{% url 'core:product_search' %}?product={{ product.pk }}">{% translate "Search this product’s offers" %}</a> {% translate "for additional search and sorting controls." %}</p>{% include "core/includes/scoped_summaries.html" %}</section>
 <section id="product-offers" class="product-offers" aria-labelledby="product-offers-title">
-    <div class="section-heading"><h2 id="product-offers-title">Available offers</h2><span class="results-count">{{ offers|length }} offer{{ offers|length|pluralize }}</span></div>
-    <p class="comparison-explanation">Each offer identifies its marketplace and seller. Buyer total = listed price − discount amount + buyer delivery. Unknown inputs remain unknown.</p>
-    <div class="offer-list">{% for offer in offers %}{% include "core/includes/offer_card.html" %}{% empty %}<div class="empty-state"><h3>No offers for this product</h3><p>No current prices are available. Benchmarks are unavailable rather than zero.</p></div>{% endfor %}</div>
+    <div class="section-heading"><h2 id="product-offers-title">{% translate "Available offers" %}</h2><span class="results-count">{% blocktranslate count count=offer_page.paginator.count %}{{ count }} offer{% plural %}{{ count }} offers{% endblocktranslate %}</span></div>
+    <p class="comparison-explanation">{% translate "Each offer identifies its marketplace and seller. Buyer total = listed price − discount amount + buyer delivery. Unknown inputs remain unknown." %}</p>
+    <p class="comparison-explanation">{% translate "CSV offers show their actual import time; marketplace update times remain unknown. History timestamps are snapshot capture times, not marketplace refresh times." %}</p>
+    {% if offers %}{% include "core/includes/offer_table.html" %}{% else %}<div class="empty-state"><h3>{% translate "No offers for this product" %}</h3><p>{% translate "No current prices are available. Benchmarks are unavailable rather than zero." %}</p></div>{% endif %}
+    {% include "core/includes/pagination.html" with page_obj=offer_page page_parameter="offers_page" page_anchor="product-offers" %}
 </section>
 <section id="price-history" class="product-history" aria-labelledby="product-history-title">
-    <div class="section-heading"><h2 id="product-history-title">Recorded listed-price observations</h2><span class="results-count">{{ observations|length }} stored record{{ observations|length|pluralize }}</span></div>
-    <p class="comparison-explanation">Only actual stored observations are shown, oldest first. Demo observations are invented application snapshots, not real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend. Observations are discrete, not continuous or live monitoring. No synthetic points or interpolated prices are added. Times use {{ display_timezone }} with UTC offsets.</p>
+    <div class="section-heading"><h2 id="product-history-title">{% translate "Recorded listed-price observations" %}</h2><span class="results-count">{% blocktranslate count count=history_page.paginator.count %}{{ count }} stored record{% plural %}{{ count }} stored records{% endblocktranslate %}</span></div>
+    <p class="comparison-explanation">{% translate "The chart and table show this history page only, in timestamp order. Rejected associations are excluded; all original observations remain available in their individual offer histories." %}</p>
+    <p class="comparison-explanation">{% translate "Only actual stored observations are shown, oldest first. Demo observations are invented application snapshots, not real marketplace history. Illustrative sample price changes may be captured within one command run; they do not show an elapsed market trend. Observations are discrete, not continuous or live monitoring. No synthetic points or interpolated prices are added. Times use" %} {{ display_timezone }} {% translate "with UTC offsets." %}</p>
     {% if observations %}
-        {% include "core/includes/observation_chart.html" %}
-        <div class="panel history-panel"><div class="table-scroll" role="region" aria-label="Scrollable product observation table" tabindex="0"><table class="history-table">
-            <caption>Every stored observation for this product’s offers, in timestamp order. Prices exclude discounts and buyer delivery.</caption>
-            <thead><tr><th scope="col">Recorded at</th><th scope="col">Marketplace / seller</th><th scope="col">Listed price (KZT)</th><th scope="col">Data source</th></tr></thead>
+        {% for group in charts %}<h3>{% include "core/includes/marketplace_identity.html" with market=group.marketplace %} · {% if group.is_demo %}{% translate "DEMO · fictional prices" %}{% else %}{% translate "Imported / manual · not verified live" %}{% endif %}</h3>
+{% include "core/includes/observation_chart.html" with chart=group.chart chart_identifier=group.identifier %}{% endfor %}
+        <div class="panel history-panel"><div class="table-scroll" role="region" aria-label="{% translate 'Scrollable product observation table' %}" tabindex="0"><table class="history-table">
+            <caption>{% translate "Every stored observation on this history page, in timestamp order. Prices exclude discounts and buyer delivery." %}</caption>
+            <thead><tr><th scope="col">{% translate "Recorded at" %}</th><th scope="col">{% translate "Marketplace / seller" %}</th><th scope="col">{% translate "Listed price (KZT)" %}</th><th scope="col">{% translate "Data source" %}</th></tr></thead>
             <tbody>{% for observation in observations %}<tr>
                 <td><time datetime="{{ observation.observed_at|date:'c' }}">{{ observation.observed_at|date:"Y-m-d H:i:s O" }}</time></td>
-                <td><a href="{% url 'core:price_history' observation.offer_id %}">{{ observation.offer.marketplace.name }} / {{ observation.offer.seller_name }}</a></td>
+                <td><a href="{% url 'core:price_history' observation.offer_id %}">{% include "core/includes/marketplace_identity.html" with market=observation.offer.marketplace %} / {{ observation.offer.seller_name }}</a></td>
                 <td>{{ observation.price|floatformat:"2g" }} KZT</td>
-                <td>{% if observation.is_demo %}<span class="pill pill-demo">Demonstration observation · not live</span>{% else %}<span class="pill pill-neutral">Manually recorded · unverified</span>{% endif %}</td>
+                <td>{% include "core/includes/observation_source.html" %}</td>
             </tr>{% endfor %}</tbody>
         </table></div></div>
-    {% else %}<div class="empty-state"><h3>No observations recorded</h3><p>No stored history exists for this product’s offers. Visiting this page does not generate observations.</p></div>{% endif %}
+    {% else %}<div class="empty-state">{% if review_counts.rejected %}<h3>{% translate "No eligible observations" %}</h3><p>{% translate "Rejected associations are excluded here. Open an individual offer history to inspect its stored observations." %}</p>{% else %}<h3>{% translate "No observations recorded" %}</h3><p>{% translate "No observations exist for the active offers in this selection. Archived records are retained. Visiting this page does not generate observations." %}</p>{% endif %}</div>{% endif %}
 </section>
+{% include "core/includes/pagination.html" with page_obj=history_page page_parameter="history_page" page_anchor="price-history" %}
 {% endblock %}

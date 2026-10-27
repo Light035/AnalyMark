@@ -18,7 +18,7 @@ class PriceObservationTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         product = Product.objects.create(name="Demo lamp", category="Lighting")
-        marketplace = Marketplace.objects.create(name="Demo market")
+        marketplace = Marketplace.objects.create(name="Kaspi.kz")
         cls.offer = Offer.objects.create(product=product, marketplace=marketplace, seller_name="Demo seller", price="100.00")
         cls.other = Offer.objects.create(product=product, marketplace=marketplace, seller_name="Other demo", price="200.00", delivery_cost=None, discount=None)
         cls.manual = Offer.objects.create(product=product, marketplace=marketplace, seller_name="Manual", price="300.00", is_demo=False)

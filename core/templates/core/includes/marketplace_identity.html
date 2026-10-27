@@ -1,0 +1,7 @@
+{% load workspace %}
+{% with key=market|marketplace_style %}
+<span class="market-identity market-{{ key }}">
+    {% include "core/includes/marketplace_mark.html" with market=market %}
+    <span{% if key != 'archive' %} aria-hidden="true"{% endif %}>{% firstof market.name market %}</span>
+</span>
+{% endwith %}

@@ -14,7 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         recorded = unchanged = invalid = 0
         recorded_at = timezone.now()
-        for offer in Offer.objects.select_for_update().filter(is_demo=True).order_by("pk"):
+        for offer in Offer.objects.active().select_for_update().filter(is_demo=True).order_by("pk"):
             observation = PriceObservation(offer=offer, price=offer.price, observed_at=recorded_at, is_demo=True)
             try:
                 observation.full_clean(validate_unique=False, validate_constraints=False)

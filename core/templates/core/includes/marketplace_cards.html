@@ -1,0 +1,15 @@
+{% load i18n workspace %}
+<div class="marketplace-grid">
+{% for market in marketplace_coverage|marketplace_order %}
+<article class="marketplace-card market-{{ market|marketplace_style }}" aria-labelledby="market-title-{{ market.pk }}">
+    <div class="marketplace-card-top">{% include "core/includes/marketplace_mark.html" with market=market %}
+        {% if market.demo_count and market.supplied_count %}<span class="pill pill-neutral">{% translate "Mixed data" %}</span>{% elif market.demo_count %}<span class="pill pill-demo">{% translate "DEMO" %}</span>{% elif market.supplied_count %}<span class="pill pill-import">{% translate "Supplied data" %}</span>{% else %}<span class="pill pill-neutral">{% translate "No offers" %}</span>{% endif %}
+    </div>
+    <h3 id="market-title-{{ market.pk }}">{{ market.name }}</h3>
+    <p class="marketplace-card-description">{% if market.name == 'Kaspi.kz' %}{% translate "First target marketplace" %}{% else %}{% translate "Included in the university MVP" %}{% endif %}</p>
+    <dl class="marketplace-counts"><div><dt>{% translate "Products" %}</dt><dd>{{ market.product_count }}</dd></div><div><dt>{% translate "Offers" %}</dt><dd>{{ market.offer_count }}</dd></div></dl>
+    <p class="marketplace-data-mix"><span>{{ market.demo_count }} {% translate "demo offers" %}</span><span>{{ market.supplied_count }} {% translate "supplied · unverified" %}</span></p>
+    <a class="button market-button" href="{% url 'core:product_search' %}?marketplace={{ market.pk }}" aria-label="{% translate 'View products:' %} {{ market.name }}">{% translate "View products" %}<span aria-hidden="true">→</span></a>
+</article>
+{% empty %}<div class="empty-state"><h3>{% translate "No marketplace labels loaded." %}</h3><p>{% translate "Initialize the approved marketplaces using the local setup commands below." %}</p></div>{% endfor %}
+</div>

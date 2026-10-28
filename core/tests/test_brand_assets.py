@@ -13,8 +13,8 @@ class BrandAssetTests(SimpleTestCase):
     def test_supported_brands_render_local_images_with_accessible_names(self):
         for key, name, _ in MARKETPLACES:
             with self.subTest(marketplace=name):
-                extension = 'webp' if key in ('ozon', 'teez') else 'svg'
-                asset = f'images/marketplaces/{key}.{extension}'
+                filename = f'{key}-icon.png' if key in ('kaspi', 'wildberries') else ('halyk-app.webp' if key == 'halyk' else f'{key}.webp')
+                asset = f'images/marketplaces/{filename}'
                 self.assertTrue(finders.find(asset))
                 html = render_to_string('core/includes/marketplace_identity.html', {'market': name})
                 self.assertIn(f'src="/static/{asset}"', html)

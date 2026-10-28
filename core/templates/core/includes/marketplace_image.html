@@ -1,0 +1,4 @@
+{% load static %}
+{% with asset='images/marketplaces/'|add:key %}
+<img src="{% if key == 'kaspi' or key == 'wildberries' %}{% static asset|add:'-icon.png' %}{% elif key == 'halyk' %}{% static asset|add:'-app.webp' %}{% else %}{% static asset|add:'.webp' %}{% endif %}" alt="{% if not decorative %}{{ market_name }}{% endif %}" decoding="async">
+{% endwith %}

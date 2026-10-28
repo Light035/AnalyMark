@@ -90,7 +90,7 @@ class MarketplacePresentationTests(TestCase):
         response = self.client.get(reverse('core:data_sources'), HTTP_ACCEPT_LANGUAGE='ru')
         self.assertIn('ДЕМО', self.card(response))
         self.assertIn('Kaspi.kz', self.card(response))
-        self.assertContains(response, 'Онлайн-интеграций пока нет')
+        self.assertContains(response, 'Онлайн-данные не подключены.', count=1)
         self.assertContains(response, 'Как данные попадают в систему')
 
     def test_watchlist_preview_is_bounded_active_and_keeps_provenance(self):
@@ -139,3 +139,43 @@ class MarketplacePresentationTests(TestCase):
         response = self.client.get(reverse('core:dashboard'))
         self.assertContains(response, 'manually recorded or imported, unverified')
         self.assertNotContains(response, 'manually recorded, unverified')
+
+    def test_sidebar_has_one_text_label_per_market_and_no_wide_wordmarks(self):
+        response = self.client.get(reverse('core:data_sources'))
+        sidebar = response.content.decode().split('class="market-navigation"', 1)[1].split('</nav>', 1)[0]
+        for name in APPROVED_NAMES:
+            market = Marketplace.objects.get(name=name)
+            self.assertIn(f'?marketplace={market.pk}', sidebar)
+            self.assertEqual(sidebar.count(f'class="market-sidebar-label">{name}</span>'), 1)
+        self.assertNotIn('kaspi.svg', sidebar)
+        self.assertNotIn('halyk.svg', sidebar)
+        self.assertNotIn('market-sidebar-fallback', sidebar)
+        self.assertEqual(sidebar.count('alt=""'), 5)
+        for filename in ('kaspi-icon.png', 'halyk-app.webp', 'wildberries-icon.png', 'ozon.webp', 'teez.webp'):
+            self.assertIn('/static/images/marketplaces/' + filename, sidebar)
+        # The right-hand cards and sidebar must use the same non-seasonal assets.
+        for name, filename in [('Kaspi.kz', 'kaspi-icon.png'), ('Halyk Market', 'halyk-app.webp'),
+                               ('Wildberries', 'wildberries-icon.png')]:
+            self.assertIn('/static/images/marketplaces/' + filename,
+                          self.card(response, Marketplace.objects.get(name=name)))
+        self.assertNotIn('kaspi-app.webp', response.content.decode())
+        self.assertNotIn('wildberries-app.webp', response.content.decode())
+        self.assertContains(response, 'aria-current="page"')
+
+    def test_sidebar_selected_market_keeps_filter_link_and_current_state(self):
+        response = self.client.get(reverse('core:product_search'), {'marketplace': self.market.pk})
+        sidebar = response.content.decode().split('class="market-navigation"', 1)[1].split('</nav>', 1)[0]
+        self.assertIn(f'href="/products/?marketplace={self.market.pk}" aria-current="page"', sidebar)
+        self.assertEqual(sidebar.count('aria-current="page"'), 1)
+
+    def test_sources_keep_one_top_notice_and_detailed_provenance_below(self):
+        self.add_offer('Demo')
+        response = self.client.get(reverse('core:data_sources'))
+        self.assertContains(response, 'class="data-notice"', count=1)
+        self.assertContains(response, 'No live data connected.', count=1)
+        self.assertNotContains(response, 'class="connection-card"')
+        self.assertNotContains(response, 'Marketplace labels are not integrations.')
+        self.assertContains(response, 'Fictional examples, clearly labelled. No marketplace prices were fetched.')
+        self.assertContains(response, 'Supplied records with validation, a preview and actual import times.')
+        self.assertContains(response, 'Competitor feed blocked pending approved access')
+        self.assertIn('DEMO', self.card(response))

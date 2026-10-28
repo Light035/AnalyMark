@@ -1,7 +1,14 @@
-{% load i18n %}
+{% load i18n static workspace %}
 {% if markets %}<div class="marketplace-shortcuts">
     <p class="nav-label">{% translate "Marketplaces" %}</p>
     <nav class="market-navigation" aria-label="{% translate 'Browse by marketplace' %}">
-    {% for market in markets %}<a href="{% url 'core:product_search' %}?marketplace={{ market.pk }}">{% include "core/includes/marketplace_identity.html" with market=market %}</a>{% endfor %}
+    {% for market in markets %}{% with key=market|marketplace_style %}
+    <a href="{% url 'core:product_search' %}?marketplace={{ market.pk }}"{% if request.resolver_match.url_name == 'product_search' and request.GET.marketplace == market.pk|stringformat:'s' %} aria-current="page"{% endif %}>
+        <span class="market-sidebar-icon" aria-hidden="true">
+            {% include "core/includes/marketplace_image.html" with decorative=True %}
+        </span>
+        <span class="market-sidebar-label">{{ market.name }}</span>
+    </a>
+    {% endwith %}{% endfor %}
     </nav>
 </div>{% endif %}

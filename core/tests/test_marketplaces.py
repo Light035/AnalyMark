@@ -119,7 +119,8 @@ class MarketplaceFixtureTests(TestCase):
         with patch("core.refreshing.provider_for", side_effect=AssertionError("No network provider should run")):
             self.load()
         response = self.client.get(reverse("core:data_sources"))
-        self.assertContains(response, "No LIVE competitor feed is connected")
+        self.assertContains(response, "No live data connected.", count=1)
+        self.assertContains(response, "No marketplace integration is available.", count=1)
         self.assertContains(response, "DEMO · local fictional fixtures")
         self.assertContains(response, "mvp-demo-ozon-v1")
 

@@ -2,13 +2,12 @@
 {% load i18n %}
 {% block data_notice %}{% endblock %}
 {% block content %}
-<section class="page-heading source-hero">
+<section class="page-heading">
     <div><p class="eyebrow">{% translate "Your data, explained" %}</p><h1>{% translate "Data Sources" %}</h1><p class="page-description">{% translate "Review source coverage, import times and data quality." %}</p></div>
-    <aside class="connection-card"><span class="feature-icon feature-icon-amber">{% include "core/includes/icon.html" with icon="sources" %}</span><div><h2>{% translate "No live integrations yet" %}</h2></div></aside>
 </section>
 {% include "core/includes/data_notice.html" %}
 <section class="marketplace-section" aria-labelledby="coverage-title">
-    <div class="section-heading"><div><h2 id="coverage-title">{% translate "Marketplace coverage" %}</h2><p class="comparison-explanation">{% translate "Marketplace labels are not integrations. No LIVE competitor feed is connected. DEMO prices and sellers are fictional; imported or manual records remain unverified." %}</p></div></div>
+    <div class="section-heading"><h2 id="coverage-title">{% translate "Marketplace coverage" %}</h2></div>
     {% include "core/includes/marketplace_cards.html" %}
     <details class="demo-setup"><summary>{% translate "Load the multi-marketplace demonstration" %}</summary><pre tabindex="0"><code>.\.venv\Scripts\python.exe manage.py init_marketplaces
 .\.venv\Scripts\python.exe manage.py load_demo_data

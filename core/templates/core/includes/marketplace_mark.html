@@ -1,11 +1,9 @@
 {% load workspace static %}
 {% firstof market.name market as market_name %}
 {% with key=market|marketplace_style %}
-<span class="market-mark market-{{ key }}{% if key == 'kaspi' or key == 'halyk' %} market-wordmark{% endif %}">
+<span class="market-mark market-{{ key }}">
     {% if key != 'archive' %}
-    {% with asset='images/marketplaces/'|add:key %}
-    <img src="{% if key == 'ozon' or key == 'teez' %}{% static asset|add:'.webp' %}{% else %}{% static asset|add:'.svg' %}{% endif %}" alt="{{ market_name }}" decoding="async">
-    {% endwith %}
+    {% include "core/includes/marketplace_image.html" %}
     {% else %}<svg viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><rect x="9" y="13" width="22" height="19" rx="3" stroke="currentColor" stroke-width="3"/><path d="M8 9h24M17 20h6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>{% endif %}
 </span>
 {% endwith %}
